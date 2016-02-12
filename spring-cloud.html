@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.0">
 <title>Spring Cloud</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -274,8 +274,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -380,7 +380,7 @@ p{margin-bottom:1.25rem}
 *{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after,a[href^="mailto:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -797,7 +797,7 @@ and extensibility mechanism to cover others.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-Spring Cloud is released under the non-restrictive Apache 2.0 license. If you would like to contribute to this section of the documentation or if you find an error, please find the source code and issue trackers in the project at <a href="https://github.com/spring-cloud/spring-cloud-commons/tree/master/docs/src/main/asciidoc">github</a>.
+Spring Cloud is released under the non-restrictive Apache 2.0 license. If you would like to contribute to this section of the documentation or if you find an error, please find the source code and issue trackers in the project at {githubmaster}/docs/src/main/asciidoc[github].
 </td>
 </tr>
 </table>
@@ -2834,7 +2834,7 @@ fine if you ensure that your application has a
 ID, or VIP).</p>
 </div>
 <div class="paragraph">
-<p>See <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
+<p>See <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2969,7 +2969,7 @@ implementing your own <code>com.netflix.appinfo.HealthCheckHandler</code>.</p>
 <div class="sect3">
 <h4 id="_using_eureka_on_aws">Using Eureka on AWS</h4>
 <div class="paragraph">
-<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
+<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3927,9 +3927,7 @@ There is a limitation with the implementation of fallbacks in Feign and how Hyst
 <h3 id="spring-cloud-feign-inheritance">Feign Inheritance Support</h3>
 <div class="paragraph">
 <p>Feign supports boilerplate apis via single-inheritance interfaces.
-This allows grouping common operations into convenient base interfaces.
-Together with Spring MVC you can share the same contract for your
-REST endpoint and Feign client.</p>
+This allows grouping common operations into convenient base interfaces.</p>
 </div>
 <div class="listingblock">
 <div class="title">UserService.java</div>
@@ -3960,6 +3958,21 @@ public interface UserClient extends UserService {
 
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is generally not advisable to share an interface between a
+server and a client. It introduces tight coupling, and also actually
+doesn&#8217;t work with Spring MVC in its current form (method parameter
+mapping is not inherited).
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -4179,7 +4192,7 @@ and the serviceId independently:</p>
 <p>This means that http calls to "/myusers" get forwarded to the
 "users_service" service.  The route has to have a "path" which can be
 specified as an ant-style pattern, so "/myusers/*" only matches one
-level, but "/myusers/**" matches hierarchically.</p>
+level, but "/myusers/{asterisk}{asterisk}" matches hierarchically.</p>
 </div>
 <div class="paragraph">
 <p>The location of the backend can be specified as either a "serviceId"
@@ -4237,11 +4250,11 @@ public PatternServiceRouteMapper serviceRouteMapper() {
 </div>
 <div class="paragraph">
 <p>This means that a serviceId "myusers-v1" will be mapped to route
-"/v1/myusers/**".  Any regular expression is accepted but all named
+"/v1/myusers/{asterisk}{asterisk}".  Any regular expression is accepted but all named
 group must be present in both servicePattern and routePattern.  If
 servicePattern do not match a serviceId, the default behavior is
 used. In exemple above, a serviceId "myusers" will be mapped to route
-"/myusers/**" (no version detected) These feature is disable by
+"/myusers/{asterisk}{asterisk}" (no version detected) These feature is disable by
 default and is only applied to discovered services.</p>
 </div>
 <div class="paragraph">
@@ -4281,7 +4294,7 @@ above).</p>
 <div class="paragraph">
 <p>An application with the <code>@EnableZuulProxy</code> could act as a standalone
 server if you set a default route ("/"), for example <code>zuul.route.home:
-/</code> would route all traffic (i.e. "/**") to the "home" service.</p>
+/</code> would route all traffic (i.e. "/{asterisk}{asterisk}") to the "home" service.</p>
 </div>
 <div class="paragraph">
 <p>If more fine-grained ignoring is needed, you can specify specific patterns to ignore.
@@ -4337,10 +4350,10 @@ but redirect some of the requests to new ones.</p>
 <div class="paragraph">
 <p>In this example we are strangling the "legacy" app which is mapped to
 all requests that do not match one of the other patterns. Paths in
-<code>/first/**</code> have been extracted into a new service with an external
-URL. And paths in <code>/second/**</code> are forwared so they can be handled
+<code>/first/{asterisk}{asterisk}</code> have been extracted into a new service with an external
+URL. And paths in <code>/second/{asterisk}{asterisk}</code> are forwared so they can be handled
 locally, e.g. with a normal Spring <code>@RequestMapping</code>. Paths in
-<code>/third/**</code> are also forwarded, but with a different prefix
+<code>/third/{asterisk}{asterisk}</code> are also forwarded, but with a different prefix
 (i.e. <code>/third/foo</code> is forwarded to <code>/3rd/foo</code>).</p>
 </div>
 <div class="admonitionblock note">
@@ -4366,7 +4379,7 @@ upload files and it should just work as long as the files
 are small. For large files there is an alternative path
 which bypasses the Spring <code>DispatcherServlet</code> (to
 avoid multipart processing) in "/zuul/*". I.e. if
-<code>zuul.routes.customers=/customers/**</code> then you can
+<code>zuul.routes.customers=/customers/{asterisk}{asterisk}</code> then you can
 POST large files to "/zuul/customers/*". The servlet
 path is externalized via <code>zuul.servletPath</code>. Extremely
 large files will also require elevated timeout settings
@@ -4416,7 +4429,7 @@ ignored. For example:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>maps all paths in "/api/**" to the Zuul filter chain.</p>
+<p>maps all paths in "/api/{asterisk}{asterisk}" to the Zuul filter chain.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5203,13 +5216,13 @@ all the binders in use must be included in the configuration.</p>
           type: rabbit
           environment:
             spring:
-              rabbit:
+              rabbitmq:
                 host: &lt;host1&gt;
         rabbit2:
           type: rabbit
           environment:
             spring:
-              rabbit:
+              rabbitmq:
                 host: &lt;host2&gt;</code></pre>
 </div>
 </div>
@@ -7234,21 +7247,21 @@ Config clients with secret configuration values.</p>
 <p>To install, make
 sure you have
 <a href="https://github.com/spring-projects/spring-boot">Spring Boot CLI</a>
-(1.2.0 or better):</p>
+(1.3.0 or better):</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>$ spring version
-Spring CLI v1.2.3.RELEASE</pre>
+Spring CLI v1.3.2.RELEASE</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>E.g. for GVM users</p>
+<p>E.g. for SDKMan users</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ gvm install springboot 1.3.0.M5
-$ gvm use springboot 1.3.0.M5</code></pre>
+<pre class="highlight"><code>$ sdk install springboot 1.3.2.RELEASE
+$ sdk use springboot 1.3.2.RELEASE</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7570,7 +7583,7 @@ correct header.</p>
 traditional app), and that in turn triggers some autoconfiguration for
 a <code>ZuulFilter</code>, which itself is activated because Zuul is on the
 classpath (via <code>@EnableZuulProxy</code>). The
-<a href="https://github.com/spring-cloud/spring-cloud-security/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/OAuth2TokenRelayFilter.java">filter</a>
+{github}/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/OAuth2TokenRelayFilter.java[filter]
 just extracts an access token from the currently authenticated user,
 and puts it in a request header for the downstream requests.</p>
 </div>
@@ -7634,8 +7647,8 @@ relay if there is a token available, and passthru otherwise.</p>
 </div>
 <div class="paragraph">
 <p>See
-<a href="https://github.com/spring-cloud/spring-cloud-security/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/ProxyAuthenticationProperties">
-ProxyAuthenticationProperties</a> for full details.</p>
+{github}/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/ProxyAuthenticationProperties[
+ProxyAuthenticationProperties] for full details.</p>
 </div>
 </div>
 </div>
@@ -7889,7 +7902,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-02-03 17:19:34 GMT
+Last updated 2016-02-12 16:34:20 UTC
 </div>
 </div>
 </body>
