@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
 <title>Spring Cloud</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -274,8 +274,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -380,7 +380,7 @@ p{margin-bottom:1.25rem}
 *{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after,a[href^="mailto:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -478,6 +478,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_service_discovery_eureka_clients">Service Discovery: Eureka Clients</a>
 <ul class="sectlevel2">
 <li><a href="#_registering_with_eureka">Registering with Eureka</a></li>
+<li><a href="#_authenticating_with_the_eureka_server">Authenticating with the Eureka Server</a></li>
 <li><a href="#_status_page_and_health_indicator">Status Page and Health Indicator</a></li>
 <li><a href="#_registering_a_secure_application">Registering a Secure Application</a></li>
 <li><a href="#_eureka_s_health_checks">Eureka&#8217;s Health Checks</a></li>
@@ -532,6 +533,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_router_and_filter_zuul">Router and Filter: Zuul</a>
 <ul class="sectlevel2">
 <li><a href="#netflix-zuul-reverse-proxy">Embedded Zuul Reverse Proxy</a></li>
+<li><a href="#_cookies_and_sensitive_headers">Cookies and Sensitive Headers</a></li>
 <li><a href="#_strangulation_patterns_and_local_forwards">Strangulation Patterns and Local Forwards</a></li>
 <li><a href="#_uploading_files_through_zuul">Uploading Files through Zuul</a></li>
 <li><a href="#_plain_embedded_zuul">Plain Embedded Zuul</a></li>
@@ -562,23 +564,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#_spring_cloud_task">Spring Cloud Task</a>
-<ul class="sectlevel1">
-<li><a href="#getting-started">Getting started</a>
-<ul class="sectlevel2">
-<li><a href="#getting-started-introducing-spring-cloud-task">Introducing Spring Cloud Task</a></li>
-<li><a href="#getting-started-system-requirements">System Requirements</a></li>
-<li><a href="#getting-started-developing-first-task">Developing your first Spring Cloud Task application</a></li>
-</ul>
-</li>
-<li><a href="#features">Features</a>
-<ul class="sectlevel2">
-<li><a href="#features-lifecycle">The lifecycle of a Spring Cloud Task</a></li>
-<li><a href="#features-configuration">Configuration</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#_spring_cloud_task">Spring Cloud Task</a></li>
 <li><a href="#_spring_cloud_bus">Spring Cloud Bus</a>
 <ul class="sectlevel1">
 <li><a href="#_quick_start_2">Quick Start</a></li>
@@ -625,6 +611,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#spring-cloud-consul-config-format">YAML or Properties with Config</a></li>
+<li><a href="#spring-cloud-consul-failfast">Fail Fast</a></li>
 <li><a href="#spring-cloud-consul-retry">Consul Retry</a></li>
 <li><a href="#spring-cloud-consul-bus">Spring Cloud Bus with Consul</a></li>
 <li><a href="#spring-cloud-consul-hystrix">Circuit Breaker with Hystrix</a></li>
@@ -797,7 +784,7 @@ and extensibility mechanism to cover others.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-Spring Cloud is released under the non-restrictive Apache 2.0 license. If you would like to contribute to this section of the documentation or if you find an error, please find the source code and issue trackers in the project at {githubmaster}/docs/src/main/asciidoc[github].
+Spring Cloud is released under the non-restrictive Apache 2.0 license. If you would like to contribute to this section of the documentation or if you find an error, please find the source code and issue trackers in the project at <a href="https://github.com/spring-cloud/spring-cloud-commons/tree/master/docs/src/main/asciidoc">github</a>.
 </td>
 </tr>
 </table>
@@ -1554,6 +1541,22 @@ configuration repositories in production.
 </tr>
 </table>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+the initial clone of your configuration repository will
+be quick and efficient if you only keep text files in it. If you start
+to store binary files, especially large ones, you may experience
+delays on the first request for configuration and/or out of memory
+errors in the server.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="_environment_repository">Environment Repository</h3>
 <div class="paragraph">
@@ -1860,7 +1863,7 @@ you need it). Example:</p>
       server:
         git:
           uri: https://github.com/spring-cloud-samples/config-repo
-          searchPaths: {application}</code></pre>
+          searchPaths: '{application}'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2834,7 +2837,33 @@ fine if you ensure that your application has a
 ID, or VIP).</p>
 </div>
 <div class="paragraph">
-<p>See <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
+<p>See <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_authenticating_with_the_eureka_server">Authenticating with the Eureka Server</h3>
+<div class="paragraph">
+<p>HTTP basic authentication will be automatically added to your eureka
+client if one of the <code>eureka.client.serviceUrl.defaultZone</code> URLs has
+credentials embedded in it (curl style, like
+<code><a href="http://user:password@localhost:8761/eureka" class="bare">http://user:password@localhost:8761/eureka</a></code>). For more complex needs
+you can create a <code>@Bean</code> of type <code>DiscoveryClientOptionalArgs</code> and
+inject <code>ClientFilter</code> instances into it, all of which will be applied
+to the calls from the client to the server.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Because of a limitation in Eureka it isn&#8217;t possible to support
+per-server basic auth credentials, so only the first set that are
+found will be used.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -2969,7 +2998,7 @@ implementing your own <code>com.netflix.appinfo.HealthCheckHandler</code>.</p>
 <div class="sect3">
 <h4 id="_using_eureka_on_aws">Using Eureka on AWS</h4>
 <div class="paragraph">
-<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="http://github.com/{github-repo}/tree/{github-tag}/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
+<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4119,6 +4148,18 @@ public class FooConfiguration {
 <div class="paragraph">
 <p>Zuul&#8217;s rule engine allows rules and filters to be written in essentially any JVM language, with built in support for Java and Groovy.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The configuration property <code>zuul.max.host.connections</code> has been replaced by two new properties, <code>zuul.host.maxTotalConnections</code> and <code>zuul.host.maxPerRouteConnections</code> which default to 200 and 20 respectively.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="netflix-zuul-reverse-proxy">Embedded Zuul Reverse Proxy</h3>
 <div class="paragraph">
@@ -4192,7 +4233,7 @@ and the serviceId independently:</p>
 <p>This means that http calls to "/myusers" get forwarded to the
 "users_service" service.  The route has to have a "path" which can be
 specified as an ant-style pattern, so "/myusers/*" only matches one
-level, but "/myusers/{asterisk}{asterisk}" matches hierarchically.</p>
+level, but "/myusers/**" matches hierarchically.</p>
 </div>
 <div class="paragraph">
 <p>The location of the backend can be specified as either a "serviceId"
@@ -4250,11 +4291,11 @@ public PatternServiceRouteMapper serviceRouteMapper() {
 </div>
 <div class="paragraph">
 <p>This means that a serviceId "myusers-v1" will be mapped to route
-"/v1/myusers/{asterisk}{asterisk}".  Any regular expression is accepted but all named
+"/v1/myusers/**".  Any regular expression is accepted but all named
 group must be present in both servicePattern and routePattern.  If
 servicePattern do not match a serviceId, the default behavior is
 used. In exemple above, a serviceId "myusers" will be mapped to route
-"/myusers/{asterisk}{asterisk}" (no version detected) These feature is disable by
+"/myusers/**" (no version detected) These feature is disable by
 default and is only applied to discovered services.</p>
 </div>
 <div class="paragraph">
@@ -4278,7 +4319,7 @@ the service-specific prefix from individual routes, e.g.</p>
 <p>In this example requests to "/myusers/101" will be forwarded to "/myusers/101" on the "users" service.</p>
 </div>
 <div class="paragraph">
-<p>The <code>zuul.routes</code> entries actually bind to an object of type <code>ProxyRouteLocator</code>. If you
+<p>The <code>zuul.routes</code> entries actually bind to an object of type <code>ZuulProperties</code>. If you
 look at the properties of that object you will see that it also has a "retryable" flag.
 Set that flag to "true" to have the Ribbon client automatically retry failed requests
 (and if you need to you can modify the parameters of the retry operations using
@@ -4294,7 +4335,7 @@ above).</p>
 <div class="paragraph">
 <p>An application with the <code>@EnableZuulProxy</code> could act as a standalone
 server if you set a default route ("/"), for example <code>zuul.route.home:
-/</code> would route all traffic (i.e. "/{asterisk}{asterisk}") to the "home" service.</p>
+/</code> would route all traffic (i.e. "/**") to the "home" service.</p>
 </div>
 <div class="paragraph">
 <p>If more fine-grained ignoring is needed, you can specify specific patterns to ignore.
@@ -4314,6 +4355,75 @@ span all services and supersede any other route specification.</p>
 <div class="paragraph">
 <p>This means that all calls such as "/myusers/101" will be forwarded to "/101" on the "users" service.
 But calls including "/admin/" will not resolve.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cookies_and_sensitive_headers">Cookies and Sensitive Headers</h3>
+<div class="paragraph">
+<p>It&#8217;s OK to share headers between services in the same system, but you
+probably don&#8217;t want sensitive headers leaking downstream into external
+servers. You can specify a list of ignored headers as part of the
+route configuration. Cookies play a special role because they have
+well-defined semantics in browsers, and they are always to be treated
+as sensitive. If the consumer of your proxy is a browser, then cookies
+for downstream services also cause problems for the user because they
+all get jumbled up (all downstream services look like they come from
+the same place).</p>
+</div>
+<div class="paragraph">
+<p>If you are careful with the design of your services, for example if
+only one of the downstream services sets cookies, then you might be
+able to let them flow from the backend all the way up to the
+caller. Also, if your proxy sets cookies and all your back end
+services are part of the same system, it can be natural to simply
+share them (and for instance us Spring Session to link them up to some
+shared state). Other than that, any cookies that get set by downstream
+services are likely to be not very useful to the caller, so it is
+recommended that you make (at least) "Set-Cookie" and "Cookie" into
+sensitive headers for routes that are not part of your domain. Even
+for routes that <strong>are</strong> part of your domain, try to think carefully
+about what it means before allowing cookies to flow between them and
+the proxy.</p>
+</div>
+<div class="paragraph">
+<p>The sensitive headers can be configured as a comma-separate list per
+route, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml"> zuul:
+  routes:
+    users:
+      path: /myusers/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      url: https://dowstream</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+this is the default value for <code>sensitiveHeaders</code>, so you don&#8217;t
+need to set it unless you want it to be different. N.B. this is new in
+Spring Cloud Netflix 1.1 (in 1.0 the user had no control over headers
+and all cookies flow in both directions).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In addition to the per-route sensitive headers, you can set a global
+value for <code>zuul.ignoredHeaders</code> for values that should be discarded
+(both request and response) during interactions with downstream
+services. By default these are empty, if Spring Security is not on the
+classpath, and otherwise they are initialized to a set of well-known
+"security" headers (e.g. involving caching) as specified by Spring
+Security. The assumption in this case is that the downstream services
+might add these headers too, and we want the values from the proxy.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4350,10 +4460,10 @@ but redirect some of the requests to new ones.</p>
 <div class="paragraph">
 <p>In this example we are strangling the "legacy" app which is mapped to
 all requests that do not match one of the other patterns. Paths in
-<code>/first/{asterisk}{asterisk}</code> have been extracted into a new service with an external
-URL. And paths in <code>/second/{asterisk}{asterisk}</code> are forwared so they can be handled
+<code>/first/**</code> have been extracted into a new service with an external
+URL. And paths in <code>/second/**</code> are forwared so they can be handled
 locally, e.g. with a normal Spring <code>@RequestMapping</code>. Paths in
-<code>/third/{asterisk}{asterisk}</code> are also forwarded, but with a different prefix
+<code>/third/**</code> are also forwarded, but with a different prefix
 (i.e. <code>/third/foo</code> is forwarded to <code>/3rd/foo</code>).</p>
 </div>
 <div class="admonitionblock note">
@@ -4379,7 +4489,7 @@ upload files and it should just work as long as the files
 are small. For large files there is an alternative path
 which bypasses the Spring <code>DispatcherServlet</code> (to
 avoid multipart processing) in "/zuul/*". I.e. if
-<code>zuul.routes.customers=/customers/{asterisk}{asterisk}</code> then you can
+<code>zuul.routes.customers=/customers/**</code> then you can
 POST large files to "/zuul/customers/*". The servlet
 path is externalized via <code>zuul.servletPath</code>. Extremely
 large files will also require elevated timeout settings
@@ -4429,7 +4539,7 @@ ignored. For example:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>maps all paths in "/api/{asterisk}{asterisk}" to the Zuul filter chain.</p>
+<p>maps all paths in "/api/**" to the Zuul filter chain.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5342,632 +5452,16 @@ those group&#8217;s <code>LISTs</code>.</p>
 </div>
 </div>
 <h1 id="_spring_cloud_task" class="sect0">Spring Cloud Task</h1>
-<div class="sect1">
-<h2 id="getting-started">Getting started</h2>
-<div class="sectionbody">
-<div id="partintro" class="openblock">
+<div class="openblock partintro">
 <div class="content">
-<div class="paragraph">
-<p>If you&#8217;re just getting started with Spring Cloud Task, this is the section
-for you! Here we answer the basic &#8220;what?&#8221;, &#8220;how?&#8221; and &#8220;why?&#8221; questions. You&#8217;ll
-find a gentle introduction to Spring Cloud Task.  We&#8217;ll then build our first Spring Cloud
-Task application, discussing some core principles as we go.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="getting-started-introducing-spring-cloud-task">Introducing Spring Cloud Task</h3>
-<div class="paragraph">
-<p>Spring Cloud Task makes it easy to create short lived microservices.  We provide
-capabilities that allow short lived JVM processes to be executed on demand in a production
-environment.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="getting-started-system-requirements">System Requirements</h3>
-<div class="paragraph">
-<p>You need Java installed (Java 7 or better, we recommend Java 8) and to build you need to have Maven installed as well.</p>
-</div>
-<div class="sect3">
-<h4 id="_database_requirements">Database Requirements</h4>
-<div class="paragraph">
-<p>Spring Cloud Task uses a relational database to store the results of an executed task.
-While you can begin developing a task without a database (the status of the task is logged
- as part of the task repository&#8217;s updates), for production environments, you&#8217;ll want to
-utilize a supported database.  Below is a list of the ones currently supported:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>H2</p>
-</li>
-<li>
-<p>HSQLDB</p>
-</li>
-<li>
-<p>MySql</p>
-</li>
-<li>
-<p>Oracle</p>
-</li>
-<li>
-<p>Postgres</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="getting-started-developing-first-task">Developing your first Spring Cloud Task application</h3>
-<div class="paragraph">
-<p>A good place to start is with a simple "Hello World!" application so we&#8217;ll create the
-Spring Cloud Task equivalent to highlight the features of the framework.  We&#8217;ll use Apache
-Maven as a build tool for this project since most IDEs have good support for it.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The spring.io web site contains many “Getting Started” guides that use Spring Boot.
-If you’re looking to solve a specific problem; check there first.  You can shortcut the
-steps below by going to start.spring.io and creating a new project. This will
-automatically generate a new project structure so that you can start coding right the way.
-Check the documentation for more details.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Before we begin, open a terminal to check that you have valid versions of Java and Maven
-installed.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ java -version
-java version "1.8.0_31"
-Java(TM) SE Runtime Environment (build 1.8.0_31-b13)
-Java HotSpot(TM) 64-Bit Server VM (build 25.31-b07, mixed mode)</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ mvn -v
-Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T15:58:10-05:00)
-Maven home: /usr/local/Cellar/maven/3.2.3/libexec
-Java version: 1.8.0_31, vendor: Oracle Corporation</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-This sample needs to be created in its own folder.  Subsequent instructions assume
-you have created a suitable folder and that it is your "current directory".
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="getting-started-creating-the-pom">Creating the POM</h4>
-<div class="paragraph">
-<p>We need to start by creating a Maven <code>pom.xml</code> file.  The <code>pom.xml</code> is the recipe that
-will be used to build your project.  Open your favorite text editor and add the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
-
-	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
-	&lt;groupId&gt;com.example&lt;/groupId&gt;
-	&lt;artifactId&gt;myproject&lt;/artifactId&gt;
-	&lt;packaging&gt;jar&lt;/packaging&gt;
-	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-
-	&lt;parent&gt;
-		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
-		&lt;version&gt;1.3.2.RELEASE&lt;/version&gt;
-	&lt;/parent&gt;
-
-	&lt;properties&gt;
-		&lt;start-class&gt;com.example.SampleTask&lt;/start-class&gt;
-	&lt;/properties&gt;
-
-	&lt;dependencies&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
-		&lt;/dependency&gt;
-	&lt;/dependencies&gt;
-
-	&lt;build&gt;
-		&lt;plugins&gt;
-			&lt;plugin&gt;
-				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-			&lt;/plugin&gt;
-		&lt;/plugins&gt;
-	&lt;/build&gt;
-&lt;/project&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This should give you a working build.  You can test it out by running <code>mvn package</code> (you
-can ignore the "jar will be empty - no content was marked for inclusion!" warning for
-now).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-At this point you could import the project into an IDE (most modern Java IDE&#8217;s
-include built-in support for Maven).  For simplicity we will continue to use a plain text
-editor for this example.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="getting-started-adding-classpath-dependencies">Adding classpath dependencies</h4>
-<div class="paragraph">
-<p>A Spring Cloud Task is made up of a Spring Boot application that is expected to end.  In
-our POM above, we created the shell of a Spring Boot application from a dependency
-perspective by setting our parent to use the <code>spring-boot-starter-parent</code>.</p>
-</div>
-<div class="paragraph">
-<p>Spring Boot provides a number of additional "Starter POMs".  Some of which are appropriate
-for use within tasks (<code>spring-boot-starter-batch</code>, <code>spring-boot-starter-jdbc</code>, etc) and
-some may not be ('spring-boot-starter-web` is probably not going to be used in a task).
-The indicator of if a starter makes sense or not comes down to if the resulting
-application will end (batch based applications typically end, the
-<code>spring-boot-starter-web</code> dependency bootstraps a servlet container which probably wont').</p>
-</div>
-<div class="paragraph">
-<p>For this example, we&#8217;ll only need to add a single additional dependency, the one for
-Spring Cloud Task itself:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
-			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-cloud-task-core&lt;/artifactId&gt;
-			&lt;version&gt;1.0.0.BUILD-SNAPSHOT&lt;/version&gt;
-		&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="getting-started-writing-the-code">Writing the code</h4>
-<div class="paragraph">
-<p>To finish our application, we need to create a single Java file.  Maven will compile the
-sources from <code>src/main/java</code> by default so you need to create that folder structure.  Then
-add a file named <code>src/main/java/com/example/SampleTask.java</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package com.example;
-
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.task.configuration.EnableTask;
-import org.springframework.context.annotation.Bean;
-
-@SpringBootApplication
-@EnableTask
-public class SampleTask {
-
-	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return new HelloWorldCommandLineRunner();
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(SampleTask.class, args);
-	}
-
-	public static class HelloWorldCommandLineRunner implements CommandLineRunner {
-
-		@Override
-		public void run(String... strings) throws Exception {
-			System.out.println("Hello World!");
-		}
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>While it may not look like much, quite a bit is going on.  To read more about the Spring
-Boot specifics, take a look at their reference documentation here:
-<a href="http://docs.spring.io/spring-boot/docs/current/reference/html/">http://docs.spring.io/spring-boot/docs/current/reference/html/</a></p>
-</div>
-<div class="sect4">
-<h5 id="getting-started-at-task">The @EnableTask annotation</h5>
-<div class="paragraph">
-<p>The first non boot annotation in our example is the <code>@EnableTask</code> annotation.  This class
-level annotation tells Spring Cloud Task to bootstrap it&#8217;s functionality.  This occurs by
-importing an additional configuration class, <code>SimpleTaskConfiguration</code> by default.  This
-additional configuration registers the <code>TaskRepository</code> and the infrastructure for its
-use.</p>
-</div>
-<div class="paragraph">
-<p>Out of the box, the <code>TaskRepository</code> will use an in memory <code>Map</code> to record the results
-of a task.  Obviously this isn&#8217;t a practical solution for a production environment since
-the <code>Map</code> goes away once the task ends.  However, for a quick getting started
-experience we use this as a default as well as echoing to the logs what is being updated
-in that repository.  Later in this documentation we&#8217;ll cover how to customize the
-configuration of the pieces provided by Spring Cloud Task.</p>
-</div>
-<div class="paragraph">
-<p>When our sample application is run, Spring Boot will launch our
-<code>HelloWorldCommandLineRunner</code> outputting our "Hello World!" message to standard out.  The
-<code>TaskLifecyceListener</code> will record the start of the task and the end of the task in the
-repository.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="getting-started-main-method">The main method</h5>
-<div class="paragraph">
-<p>The main method serves as the entry point to any java application.  Our main method
-delegates to Spring Boot&#8217;s <code>SpringApplication</code> class.  You can read more about it in the
-Spring Boot documentation.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="getting-started-clr">The CommandLineRunner</h5>
-<div class="paragraph">
-<p>In Spring, there are many ways to bootstrap an application&#8217;s logic.  Spring Boot provides
-a convenient method of doing so in an organized manor via their <code>*Runner</code> interfaces
-(<code>CommandLineRunner</code> or <code>ApplicationRunner</code>).  A well behaved task will bootstrap any
-logic via one of these two runners.</p>
-</div>
-<div class="paragraph">
-<p>The lifecycle of a task is considered from before the <code>*Runner#run</code> methods are executed
-to once they are all complete.  Spring Boot allows an application to use multiple
-<code>*Runner</code> implementation and Spring Cloud Task doesn&#8217;t attempt to impede on this convention.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Any processing bootstrapped from mechanisms other than a <code>CommandLineRunner</code> or
-<code>ApplicationRunner</code> (using <code>InitializingBean#afterPropertiesSet</code> for example) will not be
- recorded by Spring Cloud Task.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="getting-started-running-the-example">Running the example</h4>
-<div class="paragraph">
-<p>At this point, your application should work.  Since this application is Spring Boot based,
- we can run it from the command line via the command <code>$ mvn spring-boot:run</code> from the root
- of our applicaiton:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ mvn clean spring-boot:run
-....... . . .
-....... . . . (Maven log output here)
-....... . . .
-
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.3.2.RELEASE)
-
-2016-01-25 11:08:10.183  INFO 12943 --- [           main] com.example.SampleTask                   : Starting SampleTask on Michaels-MacBook-Pro-2.local with PID 12943 (/Users/mminella/Documents/IntelliJWorkspace/spring-cloud-task-example/target/classes started by mminella in /Users/mminella/Documents/IntelliJWorkspace/spring-cloud-task-example)
-2016-01-25 11:08:10.185  INFO 12943 --- [           main] com.example.SampleTask                   : No active profile set, falling back to default profiles: default
-2016-01-25 11:08:10.226  INFO 12943 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@2a2c3676: startup date [Mon Jan 25 11:08:10 CST 2016]; root of context hierarchy
-2016-01-25 11:08:11.051  INFO 12943 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
-2016-01-25 11:08:11.065  INFO 12943 --- [           main] o.s.c.t.r.support.SimpleTaskRepository   : Creating: TaskExecution{executionId=0, externalExecutionID='null', exitCode=0, taskName='application', startTime=Mon Jan 25 11:08:11 CST 2016, endTime=null, statusCode='null', exitMessage='null', parameters=[]}
-Hello World!
-2016-01-25 11:08:11.071  INFO 12943 --- [           main] com.example.SampleTask                   : Started SampleTask in 1.095 seconds (JVM running for 3.826)
-2016-01-25 11:08:11.220  INFO 12943 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@2a2c3676: startup date [Mon Jan 25 11:08:10 CST 2016]; root of context hierarchy
-2016-01-25 11:08:11.222  INFO 12943 --- [       Thread-1] o.s.c.t.r.support.SimpleTaskRepository   : Updating: TaskExecution{executionId=0, externalExecutionID='null', exitCode=0, taskName='application', startTime=Mon Jan 25 11:08:11 CST 2016, endTime=Mon Jan 25 11:08:11 CST 2016, statusCode='null', exitMessage='null', parameters=[]}
-2016-01-25 11:08:11.222  INFO 12943 --- [       Thread-1] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you notice, there are three lines of interest in the above output:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>SimpleTaskRepository</code> logged out the creation of the entry in the <code>TaskRepository</code>.</p>
-</li>
-<li>
-<p>The execution of our <code>CommandLineRunner</code>, demonstrated by the "Helo World!" output.</p>
-</li>
-<li>
-<p><code>SimpleTaskREpository</code> logging the completion of the task in the <code>TaskRepository</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="features">Features</h2>
-<div class="sectionbody">
-<div id="partintro" class="openblock">
-<div class="content">
-<div class="paragraph">
-<p>This section goes into more detail about Spring Cloud Task.  How to use it, how to
-configure it, as well as the appropriate extension points are all covered in this section.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="features-lifecycle">The lifecycle of a Spring Cloud Task</h3>
-<div class="paragraph">
-<p>In most cases, the modern cloud environment is designed around the execution of processes
-that are not expected to end.  If they do, they are typically restarted.  While most
-platforms do have some method to execute a process that isn&#8217;t restarted when it ends, the
- results of that execution are typically not maintained in a consumable way.  Spring Cloud
- Task brings the ability to execute short lived processes in an environment and record the
- results.  This allows for a microservices architecture around short lived processes as
- well as longer running services.</p>
-</div>
-<div class="paragraph">
-<p>While this functionality is useful in a cloud environment, the same issues can arise in a
-traditional deployment model as well.  When executing Spring Boot applications via a
-scheduler like cron, it can be useful to be able to monitor the results of the application
-after it&#8217;s completion.</p>
-</div>
-<div class="paragraph">
-<p>A Spring Cloud Task takes the approach that a Spring Boot application can have a start and an
-end and still be successful.  Batch applications are just one example of where short lived
-processes can be helpful.  Spring Cloud Task records lifecycle events of a given task.</p>
-</div>
-<div class="paragraph">
-<p>The lifecycle consists of a single task execution.  This is a physical execution of a
-Spring Boot application configured to be a task (annotated with the <code>@EnableTask</code>
-annotation).</p>
-</div>
-<div class="paragraph">
-<p>At the beginning of a task, an entry in the <code>TaskRepository</code> is created recording the
-start event.  This event is triggered via the <code>ContextRefreshEvent</code> being triggered by
-Spring Framework.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-As Spring Cloud Task is expected to consist of a single application context.  If
-multiple application contexts are used (parent/child relationships for example), the first
-<code>ContextRefreshEvent</code> that is published by Spring will be recorded as the start of the
-task.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The recording of a task will only occur upon the successful bootstrapping of an
-<code>ApplicationContext</code>.  If the context fails to bootstrap at all, the task&#8217;s execution will
-not be recorded.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Upon completion of all of the <code>*Runner#run</code> calls from Spring Boot or the failure of an
-<code>ApplicationContext</code> (indicated via a <code>ApplicationFailedEvent</code>), the task execution is
-updated in the repository with the results.</p>
-</div>
-<div class="sect3">
-<h4 id="features-task-execution-details">The TaskExecution</h4>
-<div class="paragraph">
-<p>The information stored in the <code>TaskRepository</code> is modeled in the <code>TaskExecution</code> class and
-consists of the following information:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Field</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>executionid</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique id for the task&#8217;s execution.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exitCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The exit code generated from an <code>ExitCodeExceptionMapper</code> implementation.  If there is no
-exit code generated, but an <code>ApplicationFailedEvent</code> is thrown, 1 is set.  Otherwise, it&#8217;s
-assumed to be 0.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>taskName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name for the task as determined by the configured <code>TaskNameResolver</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>starTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The time the task was started as indicated by the <code>ContextRefreshEvent</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The time the task was completed as indicated by the <code>ContextClosedEvent</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exitMessage</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any information available at the time of exit.  If an exception is the cause of the end
-of the task (as indicated via an <code>ApplicationFailedEvent</code>), the stack trace for that
-exception will be stored here.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parameters</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>List</code> of the string parameters as they were passed into the executable boot
-application.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="features-lifecycle-exit-codes">Mapping Exit Codes</h4>
-<div class="paragraph">
-<p>When a task completes, it will want to return an exit code to the OS.  If we take a look
-at our original example, we can see that we are not controlling that aspect of our
-application. So if an exception is thrown, the JVM will return a code that may or may not
-be of any use to you in the debugging of that.</p>
-</div>
-<div class="paragraph">
-<p>As such, Spring Boot provides an interface, <code>ExitCodeExceptionMapper</code> that allows you to
-map uncaught exceptions to exit codes.  This allows you to be able to indicate at that
-level what went wrong.  Also, by mapping exit codes in this manor, Spring Cloud Task will
-record the exit code returned.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="features-configuration">Configuration</h3>
-<div class="paragraph">
-<p>Spring Cloud Task provides an out of the box configuration as defined in the
- <code>DefaultTaskConfigurer</code> and <code>SimpleTaskConfiguration</code>.  This section will walk through
-the defaults as well as how to customize Spring Cloud Task for your needs</p>
-</div>
-<div class="sect3">
-<h4 id="features-data-source">DataSource</h4>
-<div class="paragraph">
-<p>Spring Cloud Task utilizes a datasource for storing the results of task executions.  By
-default, we provide an in memory instance of H2 to provide a simple method of
-bootstrapping development.  However, in a production environment, you&#8217;ll want to configure
-your own <code>DataSource</code>.</p>
-</div>
-<div class="paragraph">
-<p>If your application utilizes only a single <code>DataSource</code> and that will serve as both your
-business schema as well as the task repository, all you need to do is provide any
-<code>DataSource</code> (via Spring Boot&#8217;s configuration conventions is the easiest way).  This will
-be automatically used by Spring Cloud Task for the repository.</p>
-</div>
-<div class="paragraph">
-<p>If your application utilizes more than one <code>DataSource</code>, you&#8217;ll need to configure the
-task repository with the appropriate <code>DataSource</code>.  This customization can be done via an
-implementation of the <code>TaskConfigurer</code>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="features-task-configurer">TaskConfigurer</h4>
-<div class="paragraph">
-<p>The <code>TaskConfigurer</code> is a strategy interface allowing for users to customize the way
-components of Spring Cloud Task are configured.  By default, we provide the
-<code>DefaultTaskConfigurer</code> that provides logical defaults (<code>Map</code> based in memory components
-useful for development if no <code>DataSource</code> is provided and JDBC based components if there
-is a <code>DataSource</code> available.</p>
-</div>
-<div class="paragraph">
-<p>The <code>TaskConfigurer</code> allows the configuration of three main components:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Component</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default (provided by <code>DefaultTaskConfigurer</code>)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TaskRepository</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The implementation of the <code>TaskRepository</code> to be used.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SimpleTaskRepository</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TaskExplorer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The implementation of the <code>TaskExplorer</code> (a component for read only access to the task
-repository) to be used.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SimpleTaskExplorer</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PlatformTransactionManager</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A transaction manager to be used when executing updates for tasks.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DataSourceTransactionManager</code> if a <code>DataSource</code> is used,
-<code>ResourcelessTransactionManager</code> if it is not.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="features-task-name">Task Name</h4>
-<div class="paragraph">
-<p>In most cases, the name of the task will be the application name as configured via Spring
-Boot.  However, there are some cases, where you may want to map the run of a task to a
-different name.  Spring Data Flow is an example of this (where you want the task to be run
-with the name of the task definition).  Because of this, we offer the ability to customize
-how the task is named via the <code>TaskNameResolver</code> interface.</p>
-</div>
-<div class="paragraph">
-<p>By default, Spring Cloud Task provides the <code>SimpleTaskNameResolver</code> which will use the
-following options (in order of precedence):</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>A Spring Boot property (configured any of the ways Spring Boot allows)
-<code>spring.cloud.task.name</code>.</p>
-</li>
-<li>
-<p>The application name as resolved using Spring Boot&#8217;s rules (obtained via
-<code>ApplicationContext#getId</code>).</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
+Unresolved directive in spring-cloud.adoc - include::../../../task/spring-cloud-task-docs/src/main/asciidoc/getting-started.adoc[leveloffset=+1]
+Unresolved directive in spring-cloud.adoc - include::../../../task/spring-cloud-task-docs/src/main/asciidoc/features.adoc[leveloffset=+1]
 </div>
 </div>
 <h1 id="_spring_cloud_bus" class="sect0">Spring Cloud Bus</h1>
 <div class="openblock partintro">
 <div class="content">
-<div class="paragraph">
-<p>Spring Cloud Bus links nodes of a distributed system with a lightweight message broker. This can then be used to broadcast state changes (e.g. configuration changes) or other management instructions. A key idea is that the Bus is like a distributed Actuator for a Spring Boot application that is scaled out, but it can also be used as a communication channel between apps. The only implementation currently is with an AMQP broker as the transport, but the same basic feature set (and some more depending on the transport) is on the roadmap for other transports.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc" class="bare">https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc</a></p>
-</div>
+Spring Cloud Bus links nodes of a distributed system with a lightweight message broker. This can then be used to broadcast state changes (e.g. configuration changes) or other management instructions. A key idea is that the Bus is like a distributed Actuator for a Spring Boot application that is scaled out, but it can also be used as a communication channel between apps. The only implementation currently is with an AMQP broker as the transport, but the same basic feature set (and some more depending on the transport) is on the roadmap for other transports.
 </div>
 </div>
 <div class="sect1">
@@ -6174,6 +5668,18 @@ queries on the data. Or forward it to a specialized tracing service.
 <div class="paragraph">
 <p>If using Zipkin or Stream, configure the percentage of spans exported using <code>spring.sleuth.sampler.percentage</code> (default 0.1, i.e. 10%).</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+the SLF4J MDC is always set and logback users will immediately see the trace and span ids in logs per the example above. Other logging systems have to configure their own formatter to get the same result. The default is <code>logging.pattern.level</code> set to <code>%clr(%5p) %clr([${spring.application.name:},%X{X-Trace-Id:-},%X{X-Span-Id:-},%X{X-Span-Export:-}]){yellow}</code> (this is a Spring Boot feature for logback users).
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -6216,7 +5722,7 @@ configure the exports using <code>spring.sleuth.sampler.percentage</code>.
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">@Bean
-public Sampler&lt;?&gt; defaultSampler() {
+public Sampler defaultSampler() {
     return new AlwaysSampler();
 }</code></pre>
 </div>
@@ -6639,6 +6145,14 @@ config/application/data</pre>
 </div>
 </div>
 <div class="sect1">
+<h2 id="spring-cloud-consul-failfast">Fail Fast</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It may be convenient in certain circumstances (like local development or certain test scenarios) to not fail if consul isn&#8217;t available for configuration. Setting <code>spring.cloud.consul.config.failFast=false</code> in <code>bootstrap.yml</code> will cause the configuration module to log a warning rather than throw an exception. This will allow the application to continue startup normally.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="spring-cloud-consul-retry">Consul Retry</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -6670,7 +6184,7 @@ Retry has a <code>RetryInterceptorBuilder</code> that makes it easy to create on
 <h2 id="spring-cloud-consul-bus">Spring Cloud Bus with Consul</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: document Spring Cloud Consul Bus</p>
+<p>Coming in a later release.</p>
 </div>
 </div>
 </div>
@@ -7229,15 +6743,10 @@ config/application</pre>
 <h1 id="_spring_boot_cloud_cli" class="sect0">Spring Boot Cloud CLI</h1>
 <div class="openblock partintro">
 <div class="content">
-<div class="paragraph">
-<p>Spring Boot CLI provides <a href="http://projects.spring.io/spring-boot">Spring Boot</a> command line features for
+Spring Boot CLI provides <a href="http://projects.spring.io/spring-boot">Spring Boot</a> command line features for
 <a href="https://github.com/spring-cloud">Spring Cloud</a>. You can write Groovy scripts to run Spring Cloud component applications
 (e.g. <code>@EnableEurekaServer</code>). You can also easily do things like encryption and decryption to support Spring Cloud
-Config clients with secret configuration values.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc" class="bare">https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc</a></p>
-</div>
+Config clients with secret configuration values.
 </div>
 </div>
 <div class="sect1">
@@ -7367,8 +6876,7 @@ AQAjPgt3eFZQXwt8tsHAVv/QHiY5sI2dRcR+...</pre>
 <h1 id="_spring_cloud_security" class="sect0">Spring Cloud Security</h1>
 <div class="openblock partintro">
 <div class="content">
-<div class="paragraph">
-<p>Spring Cloud Security offers a set of primitives for building secure
+Spring Cloud Security offers a set of primitives for building secure
 applications and services with minimum fuss. A declarative model which
 can be heavily configured externally (or centrally) lends itself to
 the implementation of large systems of co-operating, remote components,
@@ -7376,11 +6884,7 @@ usually with a central indentity management service. It is also extremely
 easy to use in a service platform like Cloud Foundry. Building on
 Spring Boot and Spring Security OAuth2 we can quickly create systems that
 implement common patterns like single sign on, token relay and token
-exchange.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc" class="bare">https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/contributing-docs.adoc</a></p>
-</div>
+exchange.
 </div>
 </div>
 <div class="sect1">
@@ -7583,7 +7087,7 @@ correct header.</p>
 traditional app), and that in turn triggers some autoconfiguration for
 a <code>ZuulFilter</code>, which itself is activated because Zuul is on the
 classpath (via <code>@EnableZuulProxy</code>). The
-{github}/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/OAuth2TokenRelayFilter.java[filter]
+<a href="https://github.com/spring-cloud/spring-cloud-security/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/OAuth2TokenRelayFilter.java">filter</a>
 just extracts an access token from the currently authenticated user,
 and puts it in a request header for the downstream requests.</p>
 </div>
@@ -7647,8 +7151,8 @@ relay if there is a token available, and passthru otherwise.</p>
 </div>
 <div class="paragraph">
 <p>See
-{github}/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/ProxyAuthenticationProperties[
-ProxyAuthenticationProperties] for full details.</p>
+<a href="https://github.com/spring-cloud/spring-cloud-security/tree/master/src/main/java/org/springframework/cloud/security/oauth2/proxy/ProxyAuthenticationProperties">
+ProxyAuthenticationProperties</a> for full details.</p>
 </div>
 </div>
 </div>
@@ -7902,7 +7406,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-02-12 18:29:03 UTC
+Last updated 2016-02-29 14:10:54 UTC
 </div>
 </div>
 </body>
