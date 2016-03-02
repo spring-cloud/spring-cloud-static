@@ -560,6 +560,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_binder_selection">Binder Selection</a></li>
 <li><a href="#_managed_vs_standalone">Managed vs Standalone</a></li>
 <li><a href="#_binder_spi">Binder SPI</a></li>
+<li><a href="#_samples">Samples</a></li>
 </ul>
 </li>
 </ul>
@@ -4396,7 +4397,7 @@ route, e.g.</p>
   routes:
     users:
       path: /myusers/**
-      sensitiveHeaders: Cookie,Set-Cookie
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
       url: https://dowstream</code></pre>
 </div>
 </div>
@@ -5447,6 +5448,12 @@ trigger <code>BRPOP</code> operations on its group&#8217;s <code>LIST</code>. A 
 currently have active consumers, and then for each message being sent, an <code>LPUSH</code> operation will be executed on each of
 those group&#8217;s <code>LISTs</code>.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_samples">Samples</h3>
+<div class="paragraph">
+<p>For Spring Cloud Stream samples, please refer: <a href="https://github.com/spring-cloud/spring-cloud-stream-samples" class="bare">https://github.com/spring-cloud/spring-cloud-stream-samples</a></p>
 </div>
 </div>
 </div>
@@ -7406,7 +7413,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-02-29 14:10:54 UTC
+Last updated 2016-03-02 18:20:40 UTC
 </div>
 </div>
 </body>
