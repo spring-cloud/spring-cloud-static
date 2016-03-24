@@ -1,0 +1,6 @@
+spring:
+  main:
+    webEnvironment: false
+  cloud:
+    consul:
+      enabled: false
