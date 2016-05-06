@@ -460,13 +460,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_serving_encrypted_properties">Serving Encrypted Properties</a></li>
 </ul>
 </li>
+<li><a href="#_serving_alternative_formats">Serving Alternative Formats</a></li>
 <li><a href="#_serving_plain_text">Serving Plain Text</a></li>
 <li><a href="#_embedding_the_config_server">Embedding the Config Server</a></li>
 <li><a href="#_push_notifications_and_spring_cloud_bus">Push Notifications and Spring Cloud Bus</a></li>
 <li><a href="#_spring_cloud_config_client">Spring Cloud Config Client</a>
 <ul class="sectlevel2">
 <li><a href="#config-first-bootstrap">Config First Bootstrap</a></li>
-<li><a href="#eureka-first-bootstrap">Eureka First Bootstrap</a></li>
+<li><a href="#discovery-first-bootstrap">Discovery First Bootstrap</a></li>
 <li><a href="#config-client-fail-fast">Config Client Fail Fast</a></li>
 <li><a href="#config-client-retry">Config Client Retry</a></li>
 <li><a href="#_locating_remote_configuration_resources">Locating Remote Configuration Resources</a></li>
@@ -752,11 +753,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_spring_cloud_for_cloud_foundry">Spring Cloud for Cloud Foundry</a>
 <ul class="sectlevel1">
-<li><a href="#_quickstart_2">Quickstart</a>
-<ul class="sectlevel2">
+<li><a href="#_discovery">Discovery</a></li>
 <li><a href="#_single_sign_on_2">Single Sign On</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#_spring_cloud_cluster">Spring Cloud Cluster</a>
@@ -788,6 +786,9 @@ Cloud developers can quickly stand up services and applications that
 implement those patterns. They will work well in any distributed
 environment, including the developer&#8217;s own laptop, bare metal data
 centres, and managed platforms such as Cloud Foundry.</p>
+</div>
+<div class="paragraph">
+<p>Version: $1.1.0.BUILD-SNAPSHOT</p>
 </div>
 </div>
 </div>
@@ -1465,11 +1466,6 @@ list of properties), and "label" is an optional git label (defaults to
 "master".)</p>
 </div>
 <div class="paragraph">
-<p>The YAML and properties forms are coalesced into a single
-map, even if the origin of the values (reflected in the
-"propertySources" of the "standard" form) has multiple sources.</p>
-</div>
-<div class="paragraph">
 <p>Spring Cloud Config Server pulls configuration for remote clients
 from a git repository (which must be provided):</p>
 </div>
@@ -2010,6 +2006,20 @@ that should be applicable. HTTPS proxy settings can be set in
 <code>~/.git/config</code> or in the same way as for any other JVM process via
 system properties (<code>-Dhttps.proxyHost</code> and <code>-Dhttps.proxyPort</code>).</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you don&#8217;t know where your <code>~/.git</code> directory is us <code>git config
+--global</code> to manipulate the settings (e.g. <code>git config --global
+http.sslVerify false</code>).
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_placeholders_in_git_search_paths">Placeholders in Git Search Paths</h5>
@@ -2529,6 +2539,51 @@ key nor the enabled flag.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_serving_alternative_formats">Serving Alternative Formats</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The default JSON format from the environment endpoints is perfect for
+consumption by Spring applications because it maps directly onto the
+<code>Environment</code> abstraction. If you prefer you can consume the same data
+as YAML or Java properties by adding a suffix to the resource path
+(".yml", ".yaml" or ".properties"). This can be useful for consumption
+by applications that do not care about the structure of the JSON
+endpoints, or the extra metadata they provide, for example an
+application that is not using Spring might benefit fro mthe simplicity
+of this approach.</p>
+</div>
+<div class="paragraph">
+<p>The YAML and properties representations have an additional flag
+(provided as a boolean query parameter <code>resolvePlaceholders</code>) to
+signal that placeholders in the source documents, in the standard
+Spring <code>${&#8230;&#8203;}</code> form, should be resolved in the output where possible
+before rendering. This is a useful feature for consumers that don&#8217;t
+know about the Spring placeholder conventions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+there are limitations in using the YAML or properties formats,
+mainly in relation to the loss of metadata. The JSON is structured as
+an ordered list of property sources, for example, with names that
+correlate with the source. The YAML and properties forms are coalesced
+into a single map, even if the origin of the values has multiple
+sources, and the names of the original source files are lost. The YAML
+representation is not necessarily a faithful representation of the
+YAML source in a backing repository either: it is constructed from a
+list of flat property sources, and assumptions have to be made about
+the form of the keys.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_serving_plain_text">Serving Plain Text</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2760,23 +2815,25 @@ with the server address in <code>spring.cloud.config.uri</code> (defaults to
 </div>
 </div>
 <div class="sect2">
-<h3 id="eureka-first-bootstrap">Eureka First Bootstrap</h3>
+<h3 id="discovery-first-bootstrap">Discovery First Bootstrap</h3>
 <div class="paragraph">
-<p>If you are using Spring Cloud Netflix and Eureka Service Discovery,
-then you can have the Config Server register with Eureka if you want
-to, but in the default "Config First" mode, clients won&#8217;t be able to
-take advantage of the registration.</p>
+<p>If you are using a `DiscoveryClient implementation, such as Spring Cloud Netflix
+and Eureka Service Discovery or Spring Cloud Consul (Spring Cloud Zookeeper does
+not support this yet), then you can have the Config Server register with the
+Discovery Service if you want to, but in the default "Config First" mode,
+clients won&#8217;t be able to take advantage of the registration.</p>
 </div>
 <div class="paragraph">
-<p>If you prefer to use Eureka to locate the Config Server, you can do
+<p>If you prefer to use <code>DiscoveryClient</code> to locate the Config Server, you can do
 that by setting <code>spring.cloud.config.discovery.enabled=true</code> (default
 "false"). The net result of that is that client apps all need a
-<code>bootstrap.yml</code> (or an environment variable) with the Eureka server
-address, e.g. in <code>eureka.client.serviceUrl.defaultZone</code>.  The price
-for using this option is an extra network round trip on start up to
+<code>bootstrap.yml</code> (or an environment variable) with the appropriate discovery
+configuration. For example, with Spring Cloud Netflix, you need to define the
+Eureka server address, e.g. in <code>eureka.client.serviceUrl.defaultZone</code>.  The
+price for using this option is an extra network round trip on start up to
 locate the service registration. The benefit is that the Config Server
-can change its co-ordinates, as long as Eureka is a fixed point. The
-default service id is "CONFIGSERVER" but you can change that on the
+can change its co-ordinates, as long as the Discovery Service is a fixed point. The
+default service id is "configserver" but you can change that on the
 client with <code>spring.cloud.config.discovery.serviceId</code> (and on the server
 in the usual way for a service, e.g. by setting <code>spring.application.name</code>).</p>
 </div>
@@ -4363,12 +4420,26 @@ independently for all the backends.</p>
 <div class="paragraph">
 <p>To enable it, annotate a Spring Boot main class with
 <code>@EnableZuulProxy</code>, and this forwards local calls to the appropriate
-service.  By convention, a service with the Eureka ID "users", will
+service.  By convention, a service with the ID "users", will
 receive requests from the proxy located at <code>/users</code> (with the prefix
 stripped). The proxy uses Ribbon to locate an instance to forward to
-via Eureka, and all requests are executed in a hystrix command, so
+via discovery, and all requests are executed in a hystrix command, so
 failures will show up in Hystrix metrics, and once the circuit is open
 the proxy will not try to contact the service.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+the Zuul starter does not include a discovery client, so for
+routes based on service IDs you need to provide one of those
+on the classpath as well (e.g. Eureka is one choice).
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To skip having a service automatically added, set
@@ -5906,6 +5977,182 @@ Spring Cloud Stream supports them as part of an extended internal protocol used 
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_aggregation">Aggregation</h4>
+<div class="paragraph">
+<p>Spring Cloud Stream provides support for aggregating multiple applications together, connecting their input and output channels directly and avoiding the additional cost of exchanging messages via a broker.
+As of version 1.0 of Spring Cloud Stream, aggregation is supported only for the following types of applications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>sources</em> - applications with a single output channel named <code>output</code>, typically having a single binding of the type <code>org.springframework.cloud.stream.messaging.Source</code></p>
+</li>
+<li>
+<p><em>sinks</em> - applications with a single input channel named <code>input</code>, typically having a single binding of the type <code>org.springframework.cloud.stream.messaging.Sink</code></p>
+</li>
+<li>
+<p><em>processors</em> - applications with a single input channel named <code>input</code> and a single output channel named <code>output</code>, typically having a single binding of the type <code>org.springframework.cloud.stream.messaging.Processor</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>They can be aggregated together by creating a sequence of interconnected applications, in which the output channel of an element in the sequence is connected to the input channel of the next element, if it exists.
+A sequence can start with either a <em>source</em> or a <em>processor</em>, it can contain an arbitrary number of <em>processors</em> and must end with either a <em>processor</em> or a <em>sink</em>.</p>
+</div>
+<div class="paragraph">
+<p>Depending on the nature of the starting and ending element, the sequence may have one or more bindable channels, as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if the sequence starts with a source and ends with a sink, all communication between the applications is direct and no channels will be bound</p>
+</li>
+<li>
+<p>if the sequence starts with a processor, then its input channel will become the <code>input</code> channel of the aggregate and will be bound accordingly</p>
+</li>
+<li>
+<p>if the sequence ends with a processor, then its output channel will become the <code>output</code> channel of the aggregate and will be bound accordingly</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Aggregation is performed using the <code>AggregateApplicationBuilder</code> utility class, as in the following example.
+Let&#8217;s consider a project in which we have source, processor and a sink, which may be defined in the project, or may be contained in one of the project&#8217;s dependencies.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@SpringBootApplication
+@EnableBinding(Sink.class)
+public class SinkApplication {
+
+	private static Logger logger = LoggerFactory.getLogger(SinkModuleDefinition.class);
+
+	@ServiceActivator(inputChannel=Sink.INPUT)
+	public void loggerSink(Object payload) {
+		logger.info("Received: " + payload);
+	}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@SpringBootApplication
+@EnableBinding(Processor.class)
+public class ProcessorApplication {
+
+	@Transformer
+	public String loggerSink(String payload) {
+		return payload.toUpperCase();
+	}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@SpringBootApplication
+@EnableBinding(Source.class)
+public class SourceApplication {
+
+	@Bean
+	@InboundChannelAdapter(value = Source.OUTPUT)
+	public String timerMessageSource() {
+		return new SimpleDateFormat().format(new Date());
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each configuration can be used for running a separate component, but in this case they can be aggregated together as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@SpringBootApplication
+public class SampleAggregateApplication {
+
+	public static void main(String[] args) {
+		new AggregateApplicationBuilder()
+			.from(SourceApplication.class).args("--fixedDelay=5000")
+			.via(ProcessorApplication.class)
+			.to(SinkApplication.class).args("--debug=true").run(args);
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The starting component of the sequence is provided as argument to the <code>from()</code> method.
+The ending component of the sequence is provided as argument to the <code>to()</code> method.
+Intermediate processors are provided as argument to the <code>via()</code> method.
+Multiple processors of the same type can be chained together (e.g. for pipelining transformations with different configurations).
+For each component, the builder can provide runtime arguments for Spring Boot configuration.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rxjava_support">RxJava support</h4>
+<div class="paragraph">
+<p>Spring Cloud Stream provides support for RxJava-based processors through the <code>RxJavaProcessor</code> available in <code>spring-cloud-stream-rxjava</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface RxJavaProcessor&lt;I, O&gt; {
+	Observable&lt;O&gt; process(Observable&lt;I&gt; input);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An implementation of <code>RxJavaProcessor</code> will receive <code>Observable</code> as an input that represents the flow of inbound message payloads.
+The <code>process</code> method is invoked once at startup for setting up the data flow.</p>
+</div>
+<div class="paragraph">
+<p>You can enable the use of RxJava-based processors and use them in your processor application by using the <code>@EnableRxJavaProcessor</code> annotation.
+<code>@EnableRxJavaProcessor</code> is meta-annotated with <code>@EnableBinding(Processor.class)</code> and will create the <code>Processor</code> binding.
+Here is an example of an RxJava-based processor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableRxJavaProcessor
+public class RxJavaTransformer {
+
+	private static Logger logger = LoggerFactory.getLogger(RxJavaTransformer.class);
+
+	@Bean
+	public RxJavaProcessor&lt;String,String&gt; processor() {
+		return inputStream -&gt; inputStream.map(data -&gt; {
+			logger.info("Got data = " + data);
+			return data;
+		})
+		.buffer(5)
+		.map(data -&gt; String.valueOf(avg(data)));
+	}
+
+	private static Double avg(List&lt;String&gt; data) {
+		double sum = 0;
+		double count = 0;
+		for(String d : data) {
+			count++;
+			sum += Double.valueOf(d);
+		}
+		return sum/count;
+	}
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When implementing an RxJava processor, it is important to handle exceptions as part of your processing flow.
+Uncaught exceptions will be treated as errors by RxJava and will cause the <code>Observable</code> to complete, disrupting the flow.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_binder_spi">Binder SPI</h3>
@@ -6478,6 +6725,43 @@ Mutually exclusive with <code>offsetUpdateTimeWindow</code>.</p>
 <dt class="hdlist1">spring.cloud.stream.kafka.binder.requiredAcks</dt>
 <dd>
 <p>The number of required acks on the broker.</p>
+<div class="paragraph">
+<p>Default: <code>1</code>.</p>
+</div>
+</dd>
+<dt class="hdlist1">spring.cloud.stream.kafka.binder.minPartitionCount</dt>
+<dd>
+<p>  Effective only if <code>autoCreateTopics</code> or <code>autoAddPartitions</code> is set.
+  The global minimum number of partitions that the binder will configure on topics on which it produces/consumes data.
+It can be superseded by the <code>partitionCount</code> setting of the producer or by the value of
+<code>instanceCount</code> * <code>concurrency</code> settings of the producer (if either is larger).</p>
+<div class="paragraph">
+<p>Default: <code>1</code>.</p>
+</div>
+</dd>
+<dt class="hdlist1">spring.cloud.stream.kafka.binder.replicationFactor</dt>
+<dd>
+<p>The replication factor of auto-created topics if <code>autoCreateTopics</code> is active.</p>
+<div class="paragraph">
+<p>Default: <code>1</code>.</p>
+</div>
+</dd>
+<dt class="hdlist1">spring.cloud.stream.kafka.binder.autoCreateTopics</dt>
+<dd>
+<p>  If set to <code>true</code>, the binder will create new topics automatically.
+If set to <code>false</code>, the binder will rely on the topics being already configured.
+In the latter case, if the topics do not exist, the binder will fail to start.
+Of note, this setting is independent of the <code>auto.topic.create.enable</code> setting of the broker and it does not influence it: if the server is set to auto-create topics, they may be created as part of the metadata retrieval request, with default broker settings.</p>
+<div class="paragraph">
+<p>Default: <code>true</code>.</p>
+</div>
+</dd>
+<dt class="hdlist1">spring.cloud.stream.kafka.binder.autoAddPartitions</dt>
+<dd>
+<p>  If set to <code>true</code>, the binder will create add new partitions if required.
+If set to <code>false</code>, the binder will rely on the partition size of the topic being already configured.
+If the partition count of the target topic is smaller than the expected value, the binder will fail to start.
+Default: <code>false</code>.</p>
 </dd>
 </dl>
 </div>
@@ -6513,11 +6797,13 @@ Allowed values: <code>earliest</code>, <code>latest</code>.</p>
 <p>Default: null (equivalent to <code>earliest</code>).</p>
 </div>
 </dd>
-<dt class="hdlist1">minPartitionCount</dt>
+<dt class="hdlist1">enableDlq</dt>
 <dd>
-<p>The minimum number of partitions expected by the consumer if it creates the consumed topic automatically.</p>
+<p>When set to true, it will send enable DLQ behavior for the consumer.
+Messages that result in errors will be forwarded to a topic named <code>error.&lt;destination&gt;.&lt;group&gt;</code>.
+This provides an alternative option to the more common Kafka replay scenario for the case when the number of errors is relatively small and replaying the entire original topic may be too cumbersome.</p>
 <div class="paragraph">
-<p>Default: <code>1</code>.</p>
+<p>Default: <code>false</code>.</p>
 </div>
 </dd>
 </dl>
@@ -6724,7 +7010,7 @@ Spring Cloud Stream does this through the <code>spring.cloud.stream.instanceCoun
 For example, if there are three instances of a HDFS sink application, all three instances will have <code>spring.cloud.stream.instanceCount</code> set to <code>3</code>, and the individual applications will have <code>spring.cloud.stream.instanceIndex</code> set to <code>0</code>, <code>1</code>, and <code>2</code>, respectively.</p>
 </div>
 <div class="paragraph">
-<p>When Spring Cloud Stream applications are deployed via Spring Cloud Dataflow, these properties are configured automatically; when Spring Cloud Stream applications are launched independently, these properties must be set correctly.
+<p>When Spring Cloud Stream applications are deployed via Spring Cloud Data Flow, these properties are configured automatically; when Spring Cloud Stream applications are launched independently, these properties must be set correctly.
 By default, <code>spring.cloud.stream.instanceCount</code> is <code>1</code>, and <code>spring.cloud.stream.instanceIndex</code> is <code>0</code>.</p>
 </div>
 <div class="paragraph">
@@ -6741,8 +7027,8 @@ For example, the following is a valid and typical configuration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>spring.cloud.stream.bindings.output.partitionKeyExpression=payload.id
-spring.cloud.stream.bindings.output.partitionCount=5</pre>
+<pre>spring.cloud.stream.bindings.output.producer.partitionKeyExpression=payload.id
+spring.cloud.stream.bindings.output.producer.partitionCount=5</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6775,6 +7061,24 @@ This can be customized on the binding, either by setting a SpEL expression to be
 <div class="paragraph">
 <p>Additional properties can be configured for more advanced scenarios, as described in the following section.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Kafka binder will use the <code>partitionCount</code> setting as a hint to create a topic with the given partition count (in conjunction with the <code>minPartitionCount</code>, the maximum of the two being the value being used).
+Exercise caution when configuring both <code>minPartitionCount</code> for a binder and <code>partitionCount</code> for an application, as the larger value will be used.
+If a topic already exists with a smaller partition count and <code>autoAddPartitions</code> is disabled (the default), then the binder will fail to start.
+If a topic already exists with a smaller partition count and <code>autoAddPartitions</code> is enabled, new partitions will be added.
+If a topic already exists with a larger number of partitions than the maximum of (<code>minPartitionCount</code> and <code>partitionCount</code>), the existing partition count will be used.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect4">
 <h5 id="_configuring_input_bindings_for_partitioning">Configuring Input Bindings for Partitioning</h5>
 <div class="paragraph">
@@ -6782,7 +7086,7 @@ This can be customized on the binding, either by setting a SpEL expression to be
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>spring.cloud.stream.bindings.input.partitioned=true
+<pre>spring.cloud.stream.bindings.input.consumer.partitioned=true
 spring.cloud.stream.instanceIndex=3
 spring.cloud.stream.instanceCount=5</pre>
 </div>
@@ -7025,7 +7329,7 @@ Spring Cloud Bus links nodes of a distributed system with a lightweight message 
 <h2 id="_quick_start_2">Quick Start</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Spring Cloud Bus works by adding Spring Boot autconfiguration if it detects itself on the classpath. All you need to do to enable the bus is to add <code>spring-cloud-starter-bus-amqp</code> to your dependency management and Spring Cloud takes care of the rest. Make sure RabbitMQ is available and configured to provide a <code>ConnectionFactory</code>: running on localhost you shouldn&#8217;t have to do anything, but if you are running remotely use Spring Cloud Connectors, or Spring Boot conventions to define the broker credentials, e.g.</p>
+<p>Spring Cloud Bus works by adding Spring Boot autconfiguration if it detects itself on the classpath. All you need to do to enable the bus is to add <code>spring-cloud-starter-bus-amqp</code> or <code>spring-cloud-starter-bus-kafka</code> to your dependency management and Spring Cloud takes care of the rest. Make sure the broker (RabbitMQ or Kafka) is available and configured: running on localhost you shouldn&#8217;t have to do anything, but if you are running remotely use Spring Cloud Connectors, or Spring Boot conventions to define the broker credentials, e.g. for Rabbit</p>
 </div>
 <div class="listingblock">
 <div class="title">application.yml</div>
@@ -7039,7 +7343,19 @@ Spring Cloud Bus links nodes of a distributed system with a lightweight message 
 </div>
 </div>
 <div class="paragraph">
-<p>The bus currently supports sending messages to all nodes listening or all nodes for a particular service (as defined by Eureka).  More selector criteria will be added in the future (ie. only service X nodes in data center Y, etc&#8230;&#8203;). The http endpoints are under the <code>/bus/*</code> actuator namespace.  There are currently two implemented.  The first, <code>/bus/env</code>, sends key/values pairs to update each nodes Spring Environment.  The second, <code>/bus/refresh</code>, will reload each application&#8217;s configuration, just as if they had all been pinged on their <code>/refresh</code> endpoint.</p>
+<p>The bus currently supports sending messages to all nodes listening or all nodes for a particular service (as defined by Eureka).  More selector criteria may be added in the future (ie. only service X nodes in data center Y, etc&#8230;&#8203;). There are also some http endpoints are under the <code>/bus/*</code> actuator namespace.  There are currently two implemented.  The first, <code>/bus/env</code>, sends key/values pairs to update each nodes Spring Environment.  The second, <code>/bus/refresh</code>, will reload each application&#8217;s configuration, just as if they had all been pinged on their <code>/refresh</code> endpoint.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+the Bus starters cover Rabbit and Kafka, because those are the two most common implementations, but Spring Cloud Stream is quite flexible and binder will work combined with <code>spring-cloud-bus</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -7341,9 +7657,11 @@ to Zipkin and merged there.</p>
 <p>So 1 span from <strong>A</strong>, 2 spans from <strong>B</strong>, 1 span from <strong>C</strong>, 2 spans from <strong>D</strong>, 1 span from <strong>E</strong>, 2 spans from <strong>F</strong> and 1 from <strong>G</strong>.
 Altogether <strong>10</strong> spans.</p>
 </div>
-<div class="paragraph">
-<div class="title">Click Pivotal Web Services icon to see it live!</div>
-<p><span class="image"><a class="image" href="http://docssleuth-zipkin-server.cfapps.io/"><img src="images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a></span></p>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+</div>
+<div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
 <div class="paragraph">
 <p>The dependency graph in Zipkin would look like this:</p>
@@ -7353,9 +7671,11 @@ Altogether <strong>10</strong> spans.</p>
 <img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/dependencies.png" alt="Dependencies">
 </div>
 </div>
-<div class="paragraph">
-<div class="title">Click Pivotal Web Services icon to see it live!</div>
-<p><span class="image"><a class="image" href="http://docssleuth-zipkin-server.cfapps.io/dependency"><img src="images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a></span></p>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/dependency"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+</div>
+<div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
 </div>
 <div class="sect3">
@@ -8359,8 +8679,8 @@ however will be still there.</p>
 <div class="sect3">
 <h4 id="__async_annotated_methods">@Async annotated methods</h4>
 <div class="paragraph">
-<p>In Spring Cloud Sleuth we&#8217;re instrumenting async related components so that the tracing information is passed between threads. You can disable this behaviour
-by setting the value of <code>spring.sleuth.async.enabled</code> to <code>false</code>.</p>
+<p>In Spring Cloud Sleuth we&#8217;re instrumenting async related components so that the tracing information is passed between threads.
+You can disable this behaviour by setting the value of <code>spring.sleuth.async.enabled</code> to <code>false</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you annotate your method with <code>@Async</code> then we&#8217;ll automatically create a new Span with the following characteristics:</p>
@@ -9817,8 +10137,8 @@ implementation of Spring Cloud Commons <code>DiscoveryClient</code> so you can
 <code>@EnableDiscoveryClient</code> and provide your credentials as
 <code>spring.cloud.cloudfoundry.discovery.[email,password]</code> and then you
 can use the <code>DiscoveryClient</code> directly or via a <code>LoadBalancerClient</code>
-(also <code>*.url</code> if you are not connecting to [Pivotal Web
-Services](<a href="https://run.pivotal.io)" class="bare">https://run.pivotal.io)</a>).</p>
+(also <code>*.url</code> if you are not connecting to
+<a href="https://run.pivotal.io">Pivotal Web Services</a>).</p>
 </div>
 <div class="paragraph">
 <p>The first time you use it the discovery client might be slow owing to
@@ -9827,7 +10147,7 @@ the fact that it has to get an access token from Cloud Foundry.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quickstart_2">Quickstart</h2>
+<h2 id="_discovery">Discovery</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Here&#8217;s a Spring Cloud app with Cloud Foundry discovery:</p>
@@ -9863,8 +10183,17 @@ $ cf push -p app.jar</pre>
 <div class="paragraph">
 <p>It will show its app name in the home page.</p>
 </div>
-<div class="sect2">
-<h3 id="_single_sign_on_2">Single Sign On</h3>
+<div class="paragraph">
+<p>The <code>DiscoveryClient</code> can lists all the apps in a space, according to
+the credentials it is authenticated with, where the space defaults to
+the one the client is running in (if any). If neither org nor space
+are configured, they default per the user&#8217;s profile in Cloud Foundry.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_single_sign_on_2">Single Sign On</h2>
+<div class="sectionbody">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -9887,7 +10216,6 @@ service called "sso", for instance, with credentials containing
 automatically to the Spring OAuth2 client that you enable with
 <code>@EnableOAuth2Sso</code> (from Spring Boot). The name of the service can be
 parameterized using <code>spring.oauth2.sso.serviceId</code>.</p>
-</div>
 </div>
 </div>
 </div>
@@ -12024,7 +12352,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-29 12:16:41 UTC
+Last updated 2016-05-06 16:15:17 UTC
 </div>
 </div>
 </body>
