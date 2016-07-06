@@ -2058,6 +2058,21 @@ search).</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_version_control_backend_filesystem_use">Version Control Backend Filesystem Use</h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+With VCS based backends (git, svn) files are checked out or cloned to the local filesystem. By default they are put in the system temporary directory with a prefix of <code>config-repo-</code>. On linux, for example it could be <code>/tmp/config-repo-&lt;randomid&gt;</code>. Some operating systems <a href="http://serverfault.com/questions/377348/when-does-tmp-get-cleared/377349#377349">routinely clean out</a> temporary directories. This can lead to unexpected behaviour such as missing properties. To avoid this problem, change the directory Config Server uses, by setting <code>spring.cloud.config.server.git.basedir</code> or <code>spring.cloud.config.server.svn.basedir</code> to a directory that does not reside in the system temp structure.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_file_system_backend">File System Backend</h4>
 <div class="paragraph">
 <p>There is also a "native" profile in the Config Server that doesn&#8217;t use
@@ -2559,7 +2574,7 @@ as YAML or Java properties by adding a suffix to the resource path
 (".yml", ".yaml" or ".properties"). This can be useful for consumption
 by applications that do not care about the structure of the JSON
 endpoints, or the extra metadata they provide, for example an
-application that is not using Spring might benefit fro mthe simplicity
+application that is not using Spring might benefit from the simplicity
 of this approach.</p>
 </div>
 <div class="paragraph">
@@ -3728,7 +3743,7 @@ for details on the properties available.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-by default Spring Cloud allows Turbine to use the host and port to allow multiple processes per host, per cluster. If you want the native Netflix behaviour built into Turbine that does <em>not</em> allow multiple processes per host, per cluster (the key to the instance id is the hostname), then set the property <code>turbine.combineHostPort=false</code>.
+by default the native Netflix behaviour built into Turbine does <em>not</em> allow multiple processes per host, per cluster (the key to the instance id is the hostname). Spring Cloud generalizes this a bit, allowing the host and port to be used as the key, but only if you set the property <code>turbine.combineHostPort=true</code>
 </td>
 </tr>
 </table>
@@ -5585,8 +5600,8 @@ When doing this, different instances of an application are placed in a competing
 <div class="paragraph">
 <p>Spring Cloud Stream models this behavior through the concept of a <em>consumer group</em>.
 (Spring Cloud Stream consumer groups are similar to and inspired by Kafka consumer groups.)
-Each consumer binding can use the <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group</code> property to specify a group name.
-For the consumers shown in the following figure, this property would be set as <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group=hdfsWrite</code> or <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group=average</code>.</p>
+Each consumer binding can use the <code>spring.cloud.stream.bindings.input.group</code> property to specify a group name.
+For the consumers shown in the following figure, this property would be set as <code>spring.cloud.stream.bindings.input.group=hdfsWrite</code> or <code>spring.cloud.stream.bindings.input.group=average</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -6325,7 +6340,7 @@ The key represents an identifying name for the binder implementation, whereas th
 </div>
 <div class="paragraph">
 <p>Binder selection can either be performed globally, using the <code>spring.cloud.stream.defaultBinder</code> property (e.g., <code>spring.cloud.stream.defaultBinder=rabbit</code>) or individually, by configuring the binder on each channel binding.
-For instance, a processor application (that has channels with the names <code>input</code> and <code>output</code> for read/write respectively) which reads from Kafka and writes to RabbitMQ can specify the following configuration:</p>
+For instance, a processor application which reads from Kafka and writes to RabbitMQ can specify the following configuration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7357,7 +7372,7 @@ You can achieve this scenario by correlating the input and output destinations o
 <p>Supposing that a design calls for the Time Source application to send data to the Log Sink application, you can use a common destination named <code>ticktock</code> for bindings within both applications.</p>
 </div>
 <div class="paragraph">
-<p>Time Source (that has the channel name <code>output</code>) will set the following property:</p>
+<p>Time Source will set the following property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7365,7 +7380,7 @@ You can achieve this scenario by correlating the input and output destinations o
 </div>
 </div>
 <div class="paragraph">
-<p>Log Sink (that has the channel name <code>input</code>) will set the following property:</p>
+<p>Log Sink will set the following property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7453,7 +7468,7 @@ If a topic already exists with a larger number of partitions than the maximum of
 <div class="sect4">
 <h5 id="_configuring_input_bindings_for_partitioning">Configuring Input Bindings for Partitioning</h5>
 <div class="paragraph">
-<p>An input binding (with the channel name <code>input</code>) is configured to receive partitioned data by setting its <code>partitioned</code> property, as well as the <code>instanceIndex</code> and <code>instanceCount</code> properties on the application itself, as in the following example:</p>
+<p>An input binding is configured to receive partitioned data by setting its <code>partitioned</code> property, as well as the <code>instanceIndex</code> and <code>instanceCount</code> properties on the application itself, as in the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7496,7 +7511,7 @@ The following example shows how to test both input and output channels on a proc
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@RunWith(SpringJUnit4ClassRunner.class)
+<pre class="highlight"><code>@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ExampleTest.MyProcessor.class)
 @IntegrationTest({"server.port=-1"})
 @DirtiesContext
@@ -10458,7 +10473,7 @@ $ sdk use springboot 1.3.5.RELEASE</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ mvn install
-$ spring install org.springframework.cloud:spring-cloud-cli:1.1.0.RELEASE</code></pre>
+$ spring install org.springframework.cloud:spring-cloud-cli:1.1.2.RELEASE</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -13074,7 +13089,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-11 09:53:48 UTC
+Last updated 2016-07-06 07:53:36 UTC
 </div>
 </div>
 </body>
