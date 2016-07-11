@@ -600,7 +600,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#mime-types">MIME types</a></li>
 <li><a href="#mime-types-and-java-types">MIME types and Java types</a></li>
-<li><a href="#__code_streamlistener_code_and_message_conversion"><code>`@StreamListener</code> and Message Conversion</a></li>
+<li><a href="#__code_streamlistener_code_and_message_conversion"><code>@StreamListener</code> and Message Conversion</a></li>
 </ul>
 </li>
 <li><a href="#_inter_application_communication">Inter-Application Communication</a>
@@ -7319,7 +7319,7 @@ For the conversion of inbound messages, especially when the target is a POJO, th
 </div>
 </div>
 <div class="sect2">
-<h3 id="__code_streamlistener_code_and_message_conversion"><code>`@StreamListener</code> and Message Conversion</h3>
+<h3 id="__code_streamlistener_code_and_message_conversion"><code>@StreamListener</code> and Message Conversion</h3>
 <div class="paragraph">
 <p>The <code>@StreamListener</code> annotation provides a convenient way for converting incoming messages without the need to specify the content type of an input channel.
 During the dispatching process to methods annotated with <code>@StreamListener</code>, a conversion will be applied automatically if the argument requires it.</p>
@@ -8889,7 +8889,7 @@ artificial like:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>http:path</code> when received an http request on a given path</p>
+<p><code>controller-method-name</code> when received by a Controller with a method name <code>conrollerMethodName</code></p>
 </li>
 <li>
 <p><code>async</code> for asynchronous operations done via wrapped <code>Callable</code> and <code>Runnable</code>.</p>
@@ -9367,6 +9367,17 @@ of regular expressions in the <code>spring.sleuth.rxjava.schedulers.ignoredthrea
  the request was sent. E.g. if the request was sent to <code>/foo/bar</code> then the name will be <code>http:/foo/bar</code>. You can configure which URIs you would
  like to skip via the <code>spring.sleuth.web.skipPattern</code> property. If you have <code>ManagementServerProperties</code> on classpath then
  its value of <code>contextPath</code> gets appended to the provided skip pattern.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handlerinterceptor">HandlerInterceptor</h4>
+<div class="paragraph">
+<p>Since we want the span names to be precise we&#8217;re using a <code>TraceHandlerInterceptor</code> that either wraps an
+ existing <code>HandlerInterceptor</code> or is added directly to the list of existing <code>HandlerInterceptors</code>. The
+ <code>TraceHandlerInterceptor</code> adds a special request attribute to the given <code>HttpServletRequest</code>. If the
+ the <code>TraceFilter</code> doesn&#8217;t see this attribute set it will create a "fallback" span which is an additional
+ span created on the server side so that the trace is presented properly in the UI. Seeing that most likely
+ signifies that there is a missing instrumentation. In that case please file an issue in Spring Cloud Sleuth.</p>
 </div>
 </div>
 <div class="sect3">
@@ -13176,7 +13187,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 08:25:47 UTC
+Last updated 2016-07-11 13:45:41 UTC
 </div>
 </div>
 </body>
