@@ -472,6 +472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#config-client-retry">Config Client Retry</a></li>
 <li><a href="#_locating_remote_configuration_resources">Locating Remote Configuration Resources</a></li>
 <li><a href="#_security_2">Security</a></li>
+<li><a href="#_vault_2">Vault</a></li>
 </ul>
 </li>
 </ul>
@@ -600,6 +601,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#mime-types">MIME types</a></li>
 <li><a href="#mime-types-and-java-types">MIME types and Java types</a></li>
+<li><a href="#_customizing_message_conversion">Customizing message conversion</a></li>
+<li><a href="#_schema_based_message_converters">Schema-based message converters</a></li>
+<li><a href="#_schema_registry_support">Schema Registry Support</a></li>
 <li><a href="#__code_streamlistener_code_and_message_conversion"><code>@StreamListener</code> and Message Conversion</a></li>
 </ul>
 </li>
@@ -632,6 +636,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_terminology">Terminology</a></li>
 <li><a href="#_purpose">Purpose</a></li>
 <li><a href="#_adding_to_the_project">Adding to the project</a></li>
+<li><a href="#_additional_resources">Additional resources</a></li>
 <li><a href="#_features_2">Features</a></li>
 <li><a href="#_sampling">Sampling</a></li>
 <li><a href="#_instrumentation">Instrumentation</a></li>
@@ -740,6 +745,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_spring_boot_cloud_cli">Spring Boot Cloud CLI</a>
 <ul class="sectlevel1">
 <li><a href="#_installation">Installation</a></li>
+<li><a href="#_running_spring_cloud_services_in_development">Running Spring Cloud Services in Development</a></li>
 <li><a href="#_writing_groovy_scripts_and_running_applications">Writing Groovy Scripts and Running Applications</a></li>
 <li><a href="#_encryption_and_decryption_3">Encryption and Decryption</a></li>
 </ul>
@@ -798,7 +804,7 @@ environment, including the developer&#8217;s own laptop, bare metal data
 centres, and managed platforms such as Cloud Foundry.</p>
 </div>
 <div class="paragraph">
-<p>Version: Brixton.SR3</p>
+<p>Version: Brixton.BUILD-SNAPSHOT</p>
 </div>
 </div>
 </div>
@@ -2010,8 +2016,9 @@ e.g.</p>
 <p>If you don&#8217;t use HTTPS and user credentials, SSH should also work out
 of the box when you store keys in the default directories (<code>~/.ssh</code>)
 and the uri points to an SSH location,
-e.g. "<a href="mailto:git@github.com">git@github.com</a>:configuration/cloud-configuration". The
-repository is accessed using JGit, so any documentation you find on
+e.g. "<a href="mailto:git@github.com">git@github.com</a>:configuration/cloud-configuration". It is important that all
+keys in ~/.ssh/known_hosts are in "ssh-rsa" format. The new "ecdsa-sha2-nistp256" format is NOT supported.
+The repository is accessed using JGit, so any documentation you find on
 that should be applicable. HTTPS proxy settings can be set in
 <code>~/.git/config</code> or in the same way as for any other JVM process via
 system properties (<code>-Dhttps.proxyHost</code> and <code>-Dhttps.proxyPort</code>).</p>
@@ -2149,7 +2156,157 @@ is the same as <code>file:/tmp/config,file:/tmp/config/{label}</code></p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_vault_backend">Vault Backend</h4>
+<div class="paragraph">
+<p>Spring Cloud Config Server also supports <a href="https://www.vaultproject.io">Vault</a> as a backend.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Vault is a tool for securely accessing secrets. A secret is anything
+that you want to tightly control access to, such as API keys, passwords,
+certificates, and more. Vault provides a unified interface to any secret,
+while providing tight access control and recording a detailed audit log.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information on Vault see the <a href="https://www.vaultproject.io/intro/index.html">Vault quickstart guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>To enable the config server to use a Vault backend you must run your config server
+with the <code>vault</code> profile.  For example in your config server&#8217;s <code>application.properties</code>
+you can add <code>spring.profiles.active=vault</code>.</p>
+</div>
+<div class="paragraph">
+<p>By default the config server will assume your Vault server is running at
+<code><a href="http://127.0.0.1:8200" class="bare">http://127.0.0.1:8200</a></code>.  It also will assume that the name of backend
+is <code>secret</code> and the key is <code>application</code>.  All of these defaults can be
+configured in your config server&#8217;s <code>application.properties</code>.  Below is a
+table of configurable Vault properties.  All properties are prefixed with
+<code>spring.cloud.config.server.vault</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">127.0.0.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8200</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scheme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">backend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secret</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">defaultKey</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">profileSeparator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">,</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>All configurable properties can be found in
+<code>org.springframework.cloud.config.server.environment.VaultEnvironmentRepository</code>.</p>
+</div>
+<div class="paragraph">
+<p>With your config server running you can make HTTP requests to the server to retrieve
+values from the Vault backend.  To do this you will need a token for your Vault server.</p>
+</div>
+<div class="paragraph">
+<p>First place some data in you Vault.  For example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ vault write secret/application foo=bar baz=bam
+$ vault write secret/myapp foo=myappsbar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now make the HTTP request to your config server to retrieve the values.</p>
+</div>
+<div class="paragraph">
+<p><code>$ curl -X "GET" "http://localhost:8888/myapp/default" -H "X-Config-Token: yourtoken"</code></p>
+</div>
+<div class="paragraph">
+<p>You should see a response similar to this after making the above request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+   "name":"myapp",
+   "profiles":[
+      "default"
+   ],
+   "label":null,
+   "version":null,
+   "state":null,
+   "propertySources":[
+      {
+         "name":"vault:myapp",
+         "source":{
+            "foo":"myappsbar"
+         }
+      },
+      {
+         "name":"vault:application",
+         "source":{
+            "baz":"bam",
+            "foo":"bar"
+         }
+      }
+   ]
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_multiple_properties_sources">Multiple Properties Sources</h5>
+<div class="paragraph">
+<p>When using Vault you can provide your applications with multiple properties sources.
+For example, assume you have written data to the following paths in Vault.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">secret/myApp,dev
+secret/myApp
+secret/application,dev
+secret/application</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Properties written to <code>secret/application</code> are available to
+<a href="#_vault_server">all applications using the Config Server</a>.  An
+application with the name <code>myApp</code> would have any properties
+written to <code>secret/myApp</code> and <code>secret/application</code> available to it.
+When <code>myApp</code> has the <code>dev</code> profile enabled than properties written to
+all of the above paths would be available to it, with properties in
+the first path in the list taking priority over the others.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_sharing_configuration_with_all_applications">Sharing Configuration With All Applications</h4>
+<div class="sect4">
+<h5 id="_file_based_repositories">File Based Repositories</h5>
 <div class="paragraph">
 <p>With file-based (i.e. git, svn and native) repositories, resources
 with file names in <code>application*</code> are shared between all client
@@ -2178,6 +2335,24 @@ part of the server.
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_vault_server">Vault Server</h5>
+<div class="paragraph">
+<p>When using Vault as a backend you can share configuration with
+all applications by placing configuration in
+<code>html5/application</code>.  For example, if you run this Vault command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ vault write secret/application foo=bar baz=bam</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All applications using the config server will have the properties
+<code>foo</code> and <code>baz</code> available to them.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -3007,6 +3182,49 @@ works locally and for a user-provided service on Cloud Foundry named
 <code>RestTemplate</code> to the <code>ConfigServicePropertySourceLocator</code> (e.g. by
 grabbing it in the bootstrap context and injecting one).</p>
 </div>
+<div class="sect3">
+<h4 id="_vault">Vault</h4>
+<div class="paragraph">
+<p>When using Vault as a backend to your config server the client will need to
+supply a token for the server to retrieve values from Vault.  This token
+can be provided within the client by setting <code>spring.cloud.config.token</code>
+in <code>bootstrap.yml</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">bootstrap.yml</div>
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">spring:
+  cloud:
+    config:
+      token: YourVaultToken</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vault_2">Vault</h3>
+<div class="sect3">
+<h4 id="_nested_keys_in_vault">Nested Keys In Vault</h4>
+<div class="paragraph">
+<p>Vault supports the ability to nest keys in a value stored in Vault.  For example</p>
+</div>
+<div class="paragraph">
+<p><code>echo -n '{"appA": {"secret": "appAsecret"}, "bar": "baz"}' | vault write secret/myapp -</code></p>
+</div>
+<div class="paragraph">
+<p>This command will write a JSON object to your Vault.  To access these values in Spring
+you would use the traditional dot(.) annotation.  For example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Value("${appA.secret}")
+String name = "World";</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above code would set the <code>name</code> variable to <code>appAsecret</code>.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3743,7 +3961,7 @@ for details on the properties available.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-by default the native Netflix behaviour built into Turbine does <em>not</em> allow multiple processes per host, per cluster (the key to the instance id is the hostname). Spring Cloud generalizes this a bit, allowing the host and port to be used as the key, but only if you set the property <code>turbine.combineHostPort=true</code>
+by default Spring Cloud allows Turbine to use the host and port to allow multiple processes per host, per cluster. If you want the native Netflix behaviour built into Turbine that does <em>not</em> allow multiple processes per host, per cluster (the key to the instance id is the hostname), then set the property <code>turbine.combineHostPort=false</code>.
 </td>
 </tr>
 </table>
@@ -5600,8 +5818,8 @@ When doing this, different instances of an application are placed in a competing
 <div class="paragraph">
 <p>Spring Cloud Stream models this behavior through the concept of a <em>consumer group</em>.
 (Spring Cloud Stream consumer groups are similar to and inspired by Kafka consumer groups.)
-Each consumer binding can use the <code>spring.cloud.stream.bindings.input.group</code> property to specify a group name.
-For the consumers shown in the following figure, this property would be set as <code>spring.cloud.stream.bindings.input.group=hdfsWrite</code> or <code>spring.cloud.stream.bindings.input.group=average</code>.</p>
+Each consumer binding can use the <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group</code> property to specify a group name.
+For the consumers shown in the following figure, this property would be set as <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group=hdfsWrite</code> or <code>spring.cloud.stream.bindings.&lt;channelName&gt;.group=average</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -6039,6 +6257,184 @@ Spring Cloud Stream supports them as part of an extended internal protocol used 
 </div>
 </div>
 <div class="sect3">
+<h4 id="_reactive_programming_support">Reactive Programming Support</h4>
+<div class="paragraph">
+<p>Spring Cloud Stream also supports the use of reactive APIs where incoming and outgoing data is handled as continuous data flows.
+Support for reactive APIs is available via the <code>spring-cloud-stream-reactive</code>, which needs to be added explicitly to your project.</p>
+</div>
+<div class="paragraph">
+<p>The programming model with reactive APIs is declarative, where instead of specifying how each individual message should be handled, you can use operators that describe functional transformations from inbound to outbound data flows.</p>
+</div>
+<div class="paragraph">
+<p>Spring Cloud Stream supports the following reactive APIs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reactor</p>
+</li>
+<li>
+<p>RxJava 1.x</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the future, it is intended to support a more generic model based on Reactive Streams.</p>
+</div>
+<div class="paragraph">
+<p>The reactive programming model is also using the <code>@StreamListener</code> annotation for setting up reactive handlers. The differences are that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <code>@StreamListener</code> annotation must not specify an input or output, as they are provided as arguments and return values from the method;</p>
+</li>
+<li>
+<p>the arguments of the method must be annotated with <code>@Input</code> and <code>@Output</code> indicating which input or output will the incoming and respectively outgoing data flows connect to;</p>
+</li>
+<li>
+<p>the return value of the method, if any, will be annotated with <code>@Output</code>, indicating the input where data shall be sent.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reactive programming support requires Java 1.8.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reactive programming support requires the use of Reactor 3.0.0 and higher. <code>spring-cloud-stream-reactive</code> will transitively retrieve the proper version, but it is possible for the project structure to manage the version of the <code>io.projectreactor:reactor-core</code> to an earlier release, especially when using Maven. This is the case for projects generated via Spring Initializr with Spring Boot 1.4, which will override the Reactor version to <code>2.0.8.RELEASE</code>. In such cases you must ensure that the proper version of the artifact is released. This can be simply achieved by adding a direct dependency on <code>io.projectreactor:reactor-core</code> with a version of <code>3.0.0.RC1</code> or later on your project.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The use of term <code>reactive</code> is currently referring to the reactive APIs being used and not to the execution model being reactive (i.e. the bound endpoints are still using a 'push' rather than 'pull' model). While some backpressure support is provided by the use of Reactor, we do intend on the long run to support entirely reactive pipelines by the use of native reactive clients for the connected middleware.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_reactor_based_handlers">Reactor-based handlers</h5>
+<div class="paragraph">
+<p>A Reactor based handler can have the following argument types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For arguments annotated with <code>@Input</code>, it supports the  Reactor type <code>Flux</code>.
+The parameterization of the inbound Flux follows the same rules as in the case of individual message handling: it can be the entire <code>Message</code>, a POJO which can be the <code>Message</code> payload, or a POJO which is the result of a transformation based on the <code>Message</code> content-type header. Multiple inputs are provided;</p>
+</li>
+<li>
+<p>For arguments annotated with <code>Output</code>, it supports the type <code>FluxSender</code> which connects a <code>Flux</code> produced by the method with an output. Generally speaking, specifying outputs as arguments is only recommended when the method can have multiple outputs;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A Reactor based handler supports a return type of <code>Flux</code>, case in which it must be annotated with <code>@Output</code>. We recommend using the return value of the method when a single output flux is available.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example of a simple Reactor-based Processor.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Processor.class)
+@EnableAutoConfiguration
+public static class UppercaseTransformer {
+
+  @StreamListener
+  @Output(Processor.OUTPUT)
+  public Flux&lt;String&gt; receive(@Input(Processor.INPUT) Flux&lt;String&gt; input) {
+    return input.map(s -&gt; s.toUpperCase());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The same processor using output arguments looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Processor.class)
+@EnableAutoConfiguration
+public static class UppercaseTransformer {
+
+  @StreamListener
+  public void receive(@Input(Processor.INPUT) Flux&lt;String&gt; input,
+     @Output(Processor.OUTPUT) FluxSender output) {
+     output.send(input.map(s -&gt; s.toUpperCase()));
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rxjava_1_x_support">RxJava 1.x support</h5>
+<div class="paragraph">
+<p>RxJava 1.x handlers follow the same rules as Reactor-based one, but will use <code>Observable</code> and <code>ObservableSender</code> arguments and return types.</p>
+</div>
+<div class="paragraph">
+<p>So the first example above will become:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Processor.class)
+@EnableAutoConfiguration
+public static class UppercaseTransformer {
+
+  @StreamListener
+  @Output(Processor.OUTPUT)
+  public Observable&lt;String&gt; receive(@Input(Processor.INPUT) Observable&lt;String&gt; input) {
+    return input.map(s -&gt; s.toUpperCase());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second example above will become:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Processor.class)
+@EnableAutoConfiguration
+public static class UppercaseTransformer {
+
+  @StreamListener
+  public void receive(@Input(Processor.INPUT) Observable&lt;String&gt; input,
+     @Output(Processor.OUTPUT) ObservableSender output) {
+     output.send(input.map(s -&gt; s.toUpperCase()));
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_aggregation">Aggregation</h4>
 <div class="paragraph">
 <p>Spring Cloud Stream provides support for aggregating multiple applications together, connecting their input and output channels directly and avoiding the additional cost of exchanging messages via a broker.
@@ -6146,72 +6542,6 @@ The ending component of the sequence is provided as argument to the <code>to()</
 Intermediate processors are provided as argument to the <code>via()</code> method.
 Multiple processors of the same type can be chained together (e.g. for pipelining transformations with different configurations).
 For each component, the builder can provide runtime arguments for Spring Boot configuration.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_rxjava_support">RxJava support</h4>
-<div class="paragraph">
-<p>Spring Cloud Stream provides support for RxJava-based processors through the <code>RxJavaProcessor</code> available in <code>spring-cloud-stream-rxjava</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public interface RxJavaProcessor&lt;I, O&gt; {
-	Observable&lt;O&gt; process(Observable&lt;I&gt; input);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>An implementation of <code>RxJavaProcessor</code> will receive <code>Observable</code> as an input that represents the flow of inbound message payloads.
-The <code>process</code> method is invoked once at startup for setting up the data flow.</p>
-</div>
-<div class="paragraph">
-<p>You can enable the use of RxJava-based processors and use them in your processor application by using the <code>@EnableRxJavaProcessor</code> annotation.
-<code>@EnableRxJavaProcessor</code> is meta-annotated with <code>@EnableBinding(Processor.class)</code> and will create the <code>Processor</code> binding.
-Here is an example of an RxJava-based processor:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@EnableRxJavaProcessor
-public class RxJavaTransformer {
-
-	private static Logger logger = LoggerFactory.getLogger(RxJavaTransformer.class);
-
-	@Bean
-	public RxJavaProcessor&lt;String,String&gt; processor() {
-		return inputStream -&gt; inputStream.map(data -&gt; {
-			logger.info("Got data = " + data);
-			return data;
-		})
-		.buffer(5)
-		.map(data -&gt; String.valueOf(avg(data)));
-	}
-
-	private static Double avg(List&lt;String&gt; data) {
-		double sum = 0;
-		double count = 0;
-		for(String d : data) {
-			count++;
-			sum += Double.valueOf(d);
-		}
-		return sum/count;
-	}
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>When implementing an RxJava processor, it is important to handle exceptions as part of your processing flow.
-Uncaught exceptions will be treated as errors by RxJava and will cause the <code>Observable</code> to complete, disrupting the flow.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -6340,7 +6670,7 @@ The key represents an identifying name for the binder implementation, whereas th
 </div>
 <div class="paragraph">
 <p>Binder selection can either be performed globally, using the <code>spring.cloud.stream.defaultBinder</code> property (e.g., <code>spring.cloud.stream.defaultBinder=rabbit</code>) or individually, by configuring the binder on each channel binding.
-For instance, a processor application which reads from Kafka and writes to RabbitMQ can specify the following configuration:</p>
+For instance, a processor application (that has channels with the names <code>input</code> and <code>output</code> for read/write respectively) which reads from Kafka and writes to RabbitMQ can specify the following configuration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7318,6 +7648,308 @@ For the conversion of inbound messages, especially when the target is a POJO, th
 </div>
 </div>
 <div class="sect2">
+<h3 id="_customizing_message_conversion">Customizing message conversion</h3>
+<div class="paragraph">
+<p>Besides the conversions that it supports out of the box, Spring Cloud Stream also supports registering your own message conversion implementations.
+This allows you to send and receive data in a variety of custom formats, including binary, and associate them with specific <code>contentTypes</code>.
+In order to do so, you can create a class that extends <code>AbstractMessageConverter</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_schema_based_message_converters">Schema-based message converters</h3>
+<div class="paragraph">
+<p>Spring Cloud Stream provides support for schema-based message converters through its <code>spring-cloud-stream-schema</code> module.
+Currently, the only serialization format supported out of the box is Apache Avro, with more formats to be added in future versions.</p>
+</div>
+<div class="sect3">
+<h4 id="_apache_avro_message_converters">Apache Avro Message Converters</h4>
+<div class="paragraph">
+<p>The <code>spring-cloud-stream-schema</code> module contains two  types of message converters that can be used for Apache Avro serialization:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>converters using the class information of the serialized/deserialized objects, or a schema with a location known at startup;</p>
+</li>
+<li>
+<p>converters using a schema registry - they locate the schemas at runtime, as well as dynamically registering new schemas as domain objects evolve.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_converters_with_schema_support">Converters with schema support</h5>
+<div class="paragraph">
+<p>The <code>AvroSchemaMessageConverter</code> supports serializing and deserializing messages either using a predefined schema or by using the schema information available in the class (either reflectively, or contained in the <code>SpecificRecord</code>).
+If the target type of the conversion is a <code>GenericRecord</code>, then a schema must be set.</p>
+</div>
+<div class="paragraph">
+<p>For using it, you can simply add it to the application context, optionally specifying one ore more <code>MimeTypes</code> to associate it with.
+The default <code>MimeType</code> is <code>application/avro</code>.
+Here is an example of configuring it in a processor application registering the Apache Avro, without a predefined schema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Sink.class)
+@SpringBootApplication
+public static class SinkApplication {
+
+  ...
+
+  @Bean
+  public MessageConverter userMessageConverter() throws IOException {
+    AvroSchemaMessageConverter avroSchemaMessageConverter {
+      return new AvroSchemaMessageConverter(MimeType.valueOf("avro/bytes");
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Conversely, here is an application that registers a converter with a predefined schema, to be found on the classpath:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableBinding(Sink.class)
+@SpringBootApplication
+public static class SinkApplication {
+
+  ...
+
+  @Bean
+  public MessageConverter userMessageConverter() throws IOException {
+    AvroSchemaMessageConverter avroSchemaMessageConverter {
+      MessageConverter converter = new AvroSchemaMessageConverter(MimeType.valueOf("avro/bytes");
+      converter.setSchemaLocation("classpath:schemas/User.avro");
+      return converter;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to understand the schema registry client converter, we will describe the schema registry support first.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_schema_registry_support">Schema Registry Support</h3>
+<div class="paragraph">
+<p>Most serialization models, especially the ones that aim for portability across different platforms and languages, rely on a schema that describes how the data is serialized in the binary payload.
+In order to serialize the data and then to interpret it, both the sending and receiving sides must have access to a schema that describes the binary format.
+In certain cases, the schema can be inferred from the payload type on serialization, or from the target type on deserialization, but in a lot of cases applications benefit from having access to an explicit schema that describes the binary data format.
+A schema registry allows you to store schema information in a textual format (typically JSON) and makes that information accessible to various applications that need it to receive and send data in binary format.
+A schema is referenceable as a tuple consisting of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a <em>subject</em> that is the logical name of the schema;</p>
+</li>
+<li>
+<p>the schema <em>version</em>;</p>
+</li>
+<li>
+<p>the schema <em>format</em>  which describes the binary format of the data.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_schema_registry_server">Schema Registry Server</h4>
+<div class="paragraph">
+<p>Spring Cloud Stream provides a schema registry server implementation.
+In order to use it, you can simply add the <code>spring-cloud-stream-server</code> artifact to your project and use the <code>@EnableSchemaRegistryServer</code> annotation, adding the schema registry server REST controller to your application.
+This annotation is intended to be used with Spring Boot web applications, and the listening port of the server is controlled by the <code>server.port</code> setting.
+The <code>spring.cloud.stream.schema.server.path</code> setting can be used to control the root path of the schema server (especially when it is embedded in other applications).</p>
+</div>
+<div class="paragraph">
+<p>The schema registry server uses a relational database to store the schemas.
+ By default, it uses an embedded database.
+You can customize the schema storage using the <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-sql">Spring Boot SQL database and JDBC configuration options</a>.</p>
+</div>
+<div class="paragraph">
+<p>A Spring Boot application enabling the schema registry looks as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@SpringBootApplication
+@EnableSchemaRegistryServer
+public class SchemaRegistryServerApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(SchemaRegistryServerApplication.class, args);
+	}
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_schema_registry_server_api">Schema Registry Server API</h5>
+<div class="paragraph">
+<p>The Schema Registry Server API consists of the following operations:</p>
+</div>
+<div class="sect5">
+<h6 id="__code_post_code"><code>POST /</code></h6>
+<div class="paragraph">
+<p>Register a new schema.</p>
+</div>
+<div class="paragraph">
+<p>Accepts JSON payload  with the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>subject</code> the schema subject;</p>
+</li>
+<li>
+<p><code>format</code> the schema format;</p>
+</li>
+<li>
+<p><code>definition</code> the schema definition.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response is a schema object in JSON format, with the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code> the schema id;</p>
+</li>
+<li>
+<p><code>subject</code> the schema subject;</p>
+</li>
+<li>
+<p><code>format</code> the schema format;</p>
+</li>
+<li>
+<p><code>version</code> the schema version;</p>
+</li>
+<li>
+<p><code>definition</code> the schema definition.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="__code_get_subject_format_version_code"><code>GET /{subject}/{format}/{version}</code></h6>
+<div class="paragraph">
+<p>Retrieve an existing schema by its subject, format and version.</p>
+</div>
+<div class="paragraph">
+<p>Response is a schema object in JSON format, with the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code> the schema id;</p>
+</li>
+<li>
+<p><code>subject</code> the schema subject;</p>
+</li>
+<li>
+<p><code>format</code> the schema format;</p>
+</li>
+<li>
+<p><code>version</code> the schema version;</p>
+</li>
+<li>
+<p><code>definition</code> the schema definition.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="__code_get_schemas_id_code"><code>GET /schemas/{id}</code></h6>
+<div class="paragraph">
+<p>Retrieve an existing schema by its id.</p>
+</div>
+<div class="paragraph">
+<p>Response is a schema object in JSON format, with the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code> the schema id;</p>
+</li>
+<li>
+<p><code>subject</code> the schema subject;</p>
+</li>
+<li>
+<p><code>format</code> the schema format;</p>
+</li>
+<li>
+<p><code>version</code> the schema version;</p>
+</li>
+<li>
+<p><code>definition</code> the schema definition.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schema_registry_client">Schema Registry Client</h4>
+<div class="paragraph">
+<p>The client-side abstraction for interacting with schema registry servers is the <code>SchemaRegistryClient</code> interface, with the following structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface SchemaRegistryClient {
+
+	SchemaRegistrationResponse register(String subject, String format, String schema);
+
+	String fetch(SchemaReference schemaReference);
+
+	String fetch(Integer id);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring Cloud Stream provides out of the box implementations for interacting with its own schema server, as well as for interacting with the Confluent Schema Registry.</p>
+</div>
+<div class="paragraph">
+<p>A client for the Spring Cloud Stream schema registry can be configured using the <code>@EnableSchemaRegistryClient</code> as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">  @EnableBinding(Sink.class)
+  @SpringBootApplication
+  @EnableSchemaRegistryClient
+  public static class AvroSinkApplication {
+    ...
+  }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_avro_schema_registry_client_message_converters">Avro Schema Registry Client Message Converters</h4>
+<div class="paragraph">
+<p>For Spring Boot applications that have a <code>SchemaRegistryClient</code> bean registered with the application context, Spring Cloud Stream will auto-configure an Apache Avro message converter that uses the schema registry client for schema management.
+This eases schema evolution, as applications that receive messages can get easy access to a writer schema that can be reconciled with their own reader schema.</p>
+</div>
+<div class="paragraph">
+<p>For outbound messages, the <code>MessageConverter</code> will be activated if the content type of the channel is set to <code>application/*+avro</code>, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-properties" data-lang="properties">spring.cloud.stream.bindings.output.contentType=application/*+avro</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>During the outbound conversion, the message converter will try to infer the schemas of the outbound messages based on their type and register them to a subject based on the payload type using the <code>SchemaRegistryClient</code>.
+If an identical schema is already found, then a reference to it will be retrieved.
+If not, the schema will be registered and a new version number will be provided.
+The message will be sent with a <code>contentType</code> header using the scheme <code>application/[prefix].[subject].v[version]+avro</code>, where <code>prefix</code> is configurable and <code>subject</code> is deduced from the payload type.</p>
+</div>
+<div class="paragraph">
+<p>For example, a message of the type <code>User</code> may be sent as a binary payload with a content type of <code>application/vnd.user.v2+avro</code>, where <code>user</code> is the subject and <code>2</code> is the version number.</p>
+</div>
+<div class="paragraph">
+<p>When receiving messages, the converter will infer the schema reference from the header of the incoming message and will try to retrieve it. The schema will be used as the writer schema in the deserialization process.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="__code_streamlistener_code_and_message_conversion"><code>@StreamListener</code> and Message Conversion</h3>
 <div class="paragraph">
 <p>The <code>@StreamListener</code> annotation provides a convenient way for converting incoming messages without the need to specify the content type of an input channel.
@@ -7372,7 +8004,7 @@ You can achieve this scenario by correlating the input and output destinations o
 <p>Supposing that a design calls for the Time Source application to send data to the Log Sink application, you can use a common destination named <code>ticktock</code> for bindings within both applications.</p>
 </div>
 <div class="paragraph">
-<p>Time Source will set the following property:</p>
+<p>Time Source (that has the channel name <code>output</code>) will set the following property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7380,7 +8012,7 @@ You can achieve this scenario by correlating the input and output destinations o
 </div>
 </div>
 <div class="paragraph">
-<p>Log Sink will set the following property:</p>
+<p>Log Sink (that has the channel name <code>input</code>) will set the following property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7468,7 +8100,7 @@ If a topic already exists with a larger number of partitions than the maximum of
 <div class="sect4">
 <h5 id="_configuring_input_bindings_for_partitioning">Configuring Input Bindings for Partitioning</h5>
 <div class="paragraph">
-<p>An input binding is configured to receive partitioned data by setting its <code>partitioned</code> property, as well as the <code>instanceIndex</code> and <code>instanceCount</code> properties on the application itself, as in the following example:</p>
+<p>An input binding (with the channel name <code>input</code>) is configured to receive partitioned data by setting its <code>partitioned</code> property, as well as the <code>instanceIndex</code> and <code>instanceCount</code> properties on the application itself, as in the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7511,7 +8143,7 @@ The following example shows how to test both input and output channels on a proc
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>@RunWith(SpringJUnit4ClassRunner.class)
+<pre class="highlight"><code class="language-java" data-lang="java">@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ExampleTest.MyProcessor.class)
 @IntegrationTest({"server.port=-1"})
 @DirtiesContext
@@ -8485,6 +9117,22 @@ the Spring BOM</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_additional_resources">Additional resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Marcin Grzejszczak talking about Spring Cloud Sleuth and Zipkin</strong></p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe src="//www.youtube.com/embed/eQV71Mw1u1c?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://www.youtube.com/watch?v=eQV71Mw1u1c">click here to see the video</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_features_2">Features</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -9226,6 +9874,25 @@ the consumer app).
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>In order to customize the polling mechanism you can create a bean of <code>PollerMetadata</code> type
+with name equal to <code>StreamSpanReporter.POLLER</code>. Here you can find an example of such a configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Configuration
+public static class CustomPollerConfiguration {
+
+    @Bean(name = StreamSpanReporter.POLLER)
+    PollerMetadata customPoller() {
+        PollerMetadata poller = new PollerMetadata();
+        poller.setMaxMessagesPerPoll(500);
+        poller.setTrigger(new PeriodicTrigger(5000L));
+        return poller;
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -9395,13 +10062,44 @@ of regular expressions in the <code>spring.sleuth.rxjava.schedulers.ignoredthrea
 call is made a new Span is created. It gets closed upon receiving the response. In order to block the synchronous <code>RestTemplate</code> features
 just set <code>spring.sleuth.web.client.enabled</code> to <code>false</code>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+You have to register <code>RestTemplate</code> as a bean so that the interceptors will get injected.
+If you create a <code>RestTemplate</code> instance with a <code>new</code> keyword then the instrumentation WILL NOT work.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_asynchronous_rest_template">Asynchronous Rest Template</h4>
 <div class="paragraph">
 <p>Custom instrumentation is set to create and close Spans upon sending and receiving requests. You can customize the <code>ClientHttpRequestFactory</code>
 and the <code>AsyncClientHttpRequestFactory</code> by registering your beans. Remember to use tracing compatible implementations (e.g. don&#8217;t forget to
-wrap <code>ThreadPoolTaskScheduler</code> in a <code>TraceAsyncListenableTaskExecutor</code>).</p>
+wrap <code>ThreadPoolTaskScheduler</code> in a <code>TraceAsyncListenableTaskExecutor</code>). Example of custom request factories:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableAutoConfiguration
+@Configuration
+public static class TestConfiguration {
+
+    @Bean
+    ClientHttpRequestFactory mySyncClientFactory() {
+        return new MySyncClientHttpRequestFactory();
+    }
+
+    @Bean
+    AsyncClientHttpRequestFactory myAsyncClientFactory() {
+        return new MyAsyncClientHttpRequestFactory();
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>To block the <code>AsyncRestTemplate</code> features set <code>spring.sleuth.web.async.client.enabled</code> to <code>false</code>.
@@ -9495,6 +10193,30 @@ are creating Spans each time a new task is submitted, invoked or scheduled.</p>
 <div class="paragraph">
 <p>Spring Cloud Sleuth integrates with <a href="http://projects.spring.io/spring-integration/">Spring Integration</a>. It creates spans for publish and
 subscribe events. To disable Spring Integration instrumentation, set <code>spring.sleuth.integration.enabled</code> to false.</p>
+</div>
+<div class="paragraph">
+<p>Spring Cloud Sleuth up till version 1.0.4 is sending invalid tracing headers when using messaging. Those headers are actually
+the same as the ones sent in HTTP (they contain a <code>-</code>) in its name. For the sake of
+backwards compatibility in 1.0.4 we&#8217;ve started sending both valid and invalid headers. Please upgrade to 1.0.4 because
+in Spring Cloud Sleuth 1.1 we will remove the support for the deprecated headers.</p>
+</div>
+<div class="paragraph">
+<p>You can provide the <code>spring.sleuth.integration.patterns</code> pattern to explicitly
+provide the names of channels that you want to include for tracing. By default all channels
+are included.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+When using the <code>Executor</code> to build a Spring Integration <code>IntegrationFlow</code> remember to use the <strong>untraced</strong> version of the <code>Executor</code>.
+Decorating Spring Integration Executor Channel with <code>TraceableExecutorService</code> will cause the spans to be improperly closed.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -9672,11 +10394,11 @@ If you use <a href="#spring-cloud-consul-config">Spring Cloud Consul Config</a>,
   cloud:
     consul:
       discovery:
-        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}</pre>
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>With this metadata, and multiple service instances deployed on localhost, the random value will kick in there to make the instance unique. In Cloudfoundry the <code>spring.application.instance_id</code> will be populated automatically in a Spring Boot Actuator application, so the random value will not be needed.</p>
+<p>With this metadata, and multiple service instances deployed on localhost, the random value will kick in there to make the instance unique. In Cloudfoundry the <code>vcap.application.instance_id</code> will be populated automatically in a Spring Boot application, so the random value will not be needed.</p>
 </div>
 </div>
 </div>
@@ -10448,10 +11170,15 @@ config/application</pre>
 <h1 id="_spring_boot_cloud_cli" class="sect0">Spring Boot Cloud CLI</h1>
 <div class="openblock partintro">
 <div class="content">
-Spring Boot CLI provides <a href="http://projects.spring.io/spring-boot">Spring Boot</a> command line features for
-<a href="https://github.com/spring-cloud">Spring Cloud</a>. You can write Groovy scripts to run Spring Cloud component applications
-(e.g. <code>@EnableEurekaServer</code>). You can also easily do things like encryption and decryption to support Spring Cloud
-Config clients with secret configuration values.
+Spring Boot CLI provides <a href="http://projects.spring.io/spring-boot">Spring
+Boot</a> command line features for <a href="https://github.com/spring-cloud">Spring
+Cloud</a>. You can write Groovy scripts to run Spring Cloud component
+applications (e.g. <code>@EnableEurekaServer</code>). You can also easily do
+things like encryption and decryption to support Spring Cloud Config
+clients with secret configuration values. With the Launcher CLI you
+can also launch services like Eureka, Zipkin, Config Server
+conveniently all at once from the command line (very useful at
+development time).
 </div>
 </div>
 <div class="sect1">
@@ -10479,12 +11206,13 @@ $ sdk use springboot 1.3.5.RELEASE</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and install the Spring Cloud plugin:</p>
+<p>and install the Spring Cloud plugins (they are independent, so you can install one or the other or both):</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ mvn install
-$ spring install org.springframework.cloud:spring-cloud-cli:1.1.2.RELEASE</code></pre>
+$ spring install org.springframework.cloud:spring-cloud-cli:1.2.0.BUILD-SNAPSHOT
+$ spring install org.springframework.cloud.launcher:spring-cloud-launcher-cli:1.2.0.BUILD-SNAPSHOT</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -10503,6 +11231,86 @@ in the JRE lib/security directory with the ones that you downloaded).
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_spring_cloud_services_in_development">Running Spring Cloud Services in Development</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Launcher CLI can be used to run common services like Eureka,
+Config Server etc. from the command line. To list the available
+services you can do <code>spring cloud --list</code>, and to launch a default set
+of services just <code>spring cloud</code>. To choose the services to deploy,
+just list them on the command line, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ spring cloud eureka configserver h2 kafka zipkin</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Summary of supported deployables:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Service</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Address</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eureka</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eureka Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:8761" class="bare">http://localhost:8761</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eureka server for service registration and discovery. All the other services show up in its catalog by default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configserver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:8888" class="bare">http://localhost:8888</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Cloud Config Server running in the "native" profile and serving configuration from the local directory ./launcher</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">h2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H2 Database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:9095" class="bare">http://localhost:9095</a> (console), jdbc:h2:tcp://localhost:9096/{data}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relation database service. Use a file path for <code>{data}</code> (e.g. <code>./target/test</code>) when you connect. Remember that you can add <code>;MODE=MYSQL</code> or <code>;MODE=POSTGRESQL</code> to connect with compatibility to other server types.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kafka</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kafka Broker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:9091" class="bare">http://localhost:9091</a> (actuator endpoints), localhost:9092</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hystrixdashboard</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hystrix Dashboard</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:7979" class="bare">http://localhost:7979</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any Spring Cloud app that declares Hystrix circuit breakers publishes metrics on <code>/hystrix.stream</code>. Type that address into the dashboard to visualize all the metrics,</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dataflow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dataflow Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:9393" class="bare">http://localhost:9393</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Cloud Dataflow server with UI at /admin-ui. Connect the Dataflow shell to target at root path.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">zipkin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zipkin Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:9411" class="bare">http://localhost:9411</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zipkin Server with UI for visualizing traces. Stores span data in memory and accepts them via HTTP POST of JSON data.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -13100,7 +13908,7 @@ created during auto-configuration.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 20:48:15 UTC
+Last updated 2016-08-15 09:05:39 UTC
 </div>
 </div>
 </body>
