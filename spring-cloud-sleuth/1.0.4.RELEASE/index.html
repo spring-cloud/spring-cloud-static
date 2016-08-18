@@ -2097,7 +2097,20 @@ wrap <code>ThreadPoolTaskScheduler</code> in a <code>TraceAsyncListenableTaskExe
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">Unresolved directive in spring-cloud-sleuth.adoc - include::../../../../spring-cloud-sleuth-core/src/test/java/org/springframework/cloud/sleuth/instrument/web/client/TraceWebAsyncClientAutoConfigurationTest.java[tags=async_template_factories,indent=0]</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">@EnableAutoConfiguration
+@Configuration
+public static class TestConfiguration {
+
+	@Bean
+	ClientHttpRequestFactory mySyncClientFactory() {
+		return new MySyncClientHttpRequestFactory();
+	}
+
+	@Bean
+	AsyncClientHttpRequestFactory myAsyncClientFactory() {
+		return new MyAsyncClientHttpRequestFactory();
+	}
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2235,7 +2248,7 @@ To disable Zuul support set the <code>spring.sleuth.zuul.enabled</code> property
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-18 13:41:20 CEST
+Last updated 2016-08-18 13:54:11 CEST
 </div>
 </div>
 </body>
