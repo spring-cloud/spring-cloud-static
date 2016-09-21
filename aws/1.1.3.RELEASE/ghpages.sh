@@ -17,7 +17,7 @@ function set_default_props() {
     COMMIT_CHANGES="no"
     MAVEN_PATH=${MAVEN_PATH:-}
     echo "Path to Maven is [${MAVEN_PATH}]"
-    REPO_NAME=${PWD##*/}
+    [ -z $REPO_NAME ] && REPO_NAME=${PWD##*/}
     echo "Repo name is [${REPO_NAME}]"
     SPRING_CLOUD_STATIC_REPO=${SPRING_CLOUD_STATIC_REPO:-git@github.com:spring-cloud/spring-cloud-static.git}
     echo "Spring Cloud Static repo is [${SPRING_CLOUD_STATIC_REPO}"
