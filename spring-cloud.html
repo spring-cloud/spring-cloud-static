@@ -434,6 +434,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_spring_cloud_commons_common_abstractions">Spring Cloud Commons: Common Abstractions</a>
 <ul class="sectlevel2">
+<li><a href="#__enablediscoveryclient">@EnableDiscoveryClient</a></li>
+<li><a href="#_serviceregistry">ServiceRegistry</a></li>
 <li><a href="#_spring_resttemplate_as_a_load_balancer_client">Spring RestTemplate as a Load Balancer Client</a></li>
 <li><a href="#_multiple_resttemplate_objects">Multiple RestTemplate objects</a></li>
 <li><a href="#ignore-network-interfaces">Ignore Network Interfaces</a></li>
@@ -632,6 +634,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_terminology">Terminology</a></li>
 <li><a href="#_purpose">Purpose</a></li>
 <li><a href="#_adding_to_the_project">Adding to the project</a></li>
+<li><a href="#_additional_resources">Additional resources</a></li>
 <li><a href="#_features_2">Features</a></li>
 <li><a href="#_sampling">Sampling</a></li>
 <li><a href="#_instrumentation">Instrumentation</a></li>
@@ -654,6 +657,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_http">HTTP</a></li>
 <li><a href="#_example">Example</a></li>
 <li><a href="#_custom_sa_tag_in_zipkin">Custom SA tag in Zipkin</a></li>
+<li><a href="#_custom_service_name">Custom service name</a></li>
 </ul>
 </li>
 <li><a href="#_span_data_as_messages">Span Data as Messages</a>
@@ -741,7 +745,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_spring_boot_cloud_cli">Spring Boot Cloud CLI</a>
 <ul class="sectlevel1">
 <li><a href="#_installation">Installation</a></li>
-<li><a href="#_running_spring_cloud_services_in_development">Running Spring Cloud Services in Development</a></li>
+<li><a href="#_running_spring_cloud_services_in_development">Running Spring Cloud Services in Development</a>
+<ul class="sectlevel2">
+<li><a href="#_adding_additional_applications">Adding Additional Applications</a></li>
+</ul>
+</li>
 <li><a href="#_writing_groovy_scripts_and_running_applications">Writing Groovy Scripts and Running Applications</a></li>
 <li><a href="#_encryption_and_decryption_3">Encryption and Decryption</a></li>
 </ul>
@@ -1132,10 +1140,10 @@ application that includes that jar on its classpath.</p>
 <div class="sect2">
 <h3 id="_environment_changes">Environment Changes</h3>
 <div class="paragraph">
-<p>The application will listen for an <code>EnvironmentChangedEvent</code> and react
+<p>The application will listen for an <code>EnvironmentChangeEvent</code> and react
 to the change in a couple of standard ways (additional
 <code>ApplicationListeners</code> can be added as <code>@Beans</code> by the user in the
-normal way). When an <code>EnvironmentChangedEvent</code> is observed it will
+normal way). When an <code>EnvironmentChangeEvent</code> is observed it will
 have a list of key values that have changed, and the application will
 use those to:</p>
 </div>
@@ -1154,13 +1162,13 @@ use those to:</p>
 the <code>Environment</code>, and generally we would not recommend that approach
 for detecting changes (although you could set it up with a
 <code>@Scheduled</code> annotation). If you have a scaled-out client application
-then it is better to broadcast the <code>EnvironmentChangedEvent</code> to all
+then it is better to broadcast the <code>EnvironmentChangeEvent</code> to all
 the instances instead of having them polling for changes (e.g. using
 the <a href="https://github.com/spring-cloud/spring-cloud-bus">Spring Cloud
 Bus</a>).</p>
 </div>
 <div class="paragraph">
-<p>The <code>EnvironmentChangedEvent</code> covers a large class of refresh use
+<p>The <code>EnvironmentChangeEvent</code> covers a large class of refresh use
 cases, as long as you can actually make a change to the <code>Environment</code>
 and publish the event (those APIs are public and part of core
 Spring). You can verify the changes are bound to
@@ -1286,6 +1294,27 @@ the full strength JCE extensions in your JVM.</p>
 <p>Patterns such as service discovery, load balancing and circuit breakers lend themselves to a common abstraction layer that can be consumed by all Spring Cloud clients, independent of the implementation (e.g. discovery via Eureka or Consul).</p>
 </div>
 <div class="sect2">
+<h3 id="__enablediscoveryclient">@EnableDiscoveryClient</h3>
+<div class="paragraph">
+<p>Commons provides the <code>@EnableDiscoveryClient</code> annotation. This looks for implementations of the <code>DiscoveryClient</code> interface via <code>META-INF/spring.factories</code>. Implementations of Discovery Client will add a configuration class to <code>spring.factories</code> under the <code>org.springframework.cloud.client.discovery.EnableDiscoveryClient</code> key. Examples of <code>DiscoveryClient</code> implementations: are <a href="http://cloud.spring.io/spring-cloud-netflix/">Spring Cloud Netflix Eureka</a>, <a href="http://cloud.spring.io/spring-cloud-consul/">Spring Cloud Consul Discovery</a> and <a href="http://cloud.spring.io/spring-cloud-zookeeper/">Spring Cloud Zookeeper Discovery</a>.</p>
+</div>
+<div class="paragraph">
+<p>By default, implementations of <code>DiscoveryClient</code> will auto-register the local Spring Boot server with the remote discovery server. This can be disabled by setting <code>autoRegister=false</code> in <code>@EnableDiscoveryClient</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_serviceregistry">ServiceRegistry</h3>
+<div class="paragraph">
+<p>Commons now provides a <code>ServiceRegistry</code> interface which provides methods like <code>register(Registration)</code> and <code>deregister(Registration)</code> which allow you to provide custom registered services. <code>Registration</code> is a marker interface.</p>
+</div>
+<div class="sect3">
+<h4 id="_service_registry_actuator_endpoint">Service Registry Actuator Endpoint</h4>
+<div class="paragraph">
+<p>A <code>/service-registry</code> actuator endpoint is provided by Commons. This endpoint relys on a <code>Registration</code> bean in the Spring Application Context. Calling <code>/service-registry/instance-status</code> via a GET will return the status of the <code>Registration</code>. A POST to the same endpoint with a <code>String</code> body will change the status of the current <code>Registration</code> to the new value. Please see the documentation of the <code>ServiceRegistry</code> implementation you are using for the allowed values for updating the status and the values retured for the status.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_spring_resttemplate_as_a_load_balancer_client">Spring RestTemplate as a Load Balancer Client</h3>
 <div class="paragraph">
 <p><code>RestTemplate</code> can be automatically configured to use ribbon. To create a load balanced <code>RestTemplate</code> create a <code>RestTemplate</code> <code>@Bean</code> and use the <code>@LoadBalanced</code> qualifier.</p>
@@ -1330,6 +1359,32 @@ public class MyClass {
 The Ribbon client is used to create a full physical address. See
 <a href="https://github.com/spring-cloud/spring-cloud-netflix/blob/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/ribbon/RibbonAutoConfiguration.java">RibbonAutoConfiguration</a>
 for details of how the <code>RestTemplate</code> is set up.</p>
+</div>
+<div class="sect3">
+<h4 id="_retrying_failed_requests">Retrying Failed Requests</h4>
+<div class="paragraph">
+<p>A load balanced <code>RestTemplate</code> can be configured to retry failed requests.
+By default this logic is disabled, you can enable it by setting
+<code>spring.cloud.loadbalancer.retry.enabled=true</code>.  The load balanced <code>RestTemplate</code> will
+honor some of the Ribbon configuration values related to retrying failed requests.
+The properties you can use are <code>client.ribbon.MaxAutoRetries</code>,
+<code>client.ribbon.MaxAutoRetriesNextServer</code>, and <code>client.ribbon.OkToRetryOnAllOperations</code>.
+See the <a href="https://github.com/Netflix/ribbon/wiki/Getting-Started#the-properties-file-sample-clientproperties">Ribbon documentation</a>
+for a description of what there properties do.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>client</code> in the above examples should be replaced with your Ribbon client&#8217;s
+name.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -8034,7 +8089,7 @@ will receive the whole time needed by the client to receive the response from th
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/trace-id.png" alt="Trace Info propagation">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/trace-id.png" alt="Trace Info propagation">
 </div>
 </div>
 <div class="paragraph">
@@ -8056,7 +8111,7 @@ Client Sent</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/parents.png" alt="Parent child relationship">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/parents.png" alt="Parent child relationship">
 </div>
 </div>
 </div>
@@ -8068,19 +8123,19 @@ Client Sent</code></pre>
 <div class="sect3">
 <h4 id="_distributed_tracing_with_zipkin">Distributed tracing with Zipkin</h4>
 <div class="paragraph">
-<p>Altogether there are <strong>10 spans</strong> . If you go to traces in Zipkin you will see this number:</p>
+<p>Altogether there are <strong>7 spans</strong> . If you go to traces in Zipkin you will see this number in the second trace:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/zipkin-traces.png" alt="Traces">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/zipkin-traces.png" alt="Traces">
 </div>
 </div>
 <div class="paragraph">
-<p>However if you pick a particular trace then you will see <strong>7 spans</strong>:</p>
+<p>However if you pick a particular trace then you will see <strong>4 spans</strong>:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/zipkin-ui.png" alt="Traces Info propagation">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/zipkin-ui.png" alt="Traces Info propagation">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -8098,47 +8153,71 @@ annotations then they will presented as a single span.
 </table>
 </div>
 <div class="paragraph">
-<p>In the image depicting the visualization of what <strong>Span</strong> and <strong>Trace</strong> is you can see 20
-colorful labels. How does it happen that in Zipkin 10 spans are received?</p>
+<p>Why is there a difference between the 7 and 4 spans in this case?</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>2 span <strong>A</strong> labels signify span started and closed. Upon closing a single span is sent to Zipkin.</p>
+<p>2 spans come from <code>http:/start</code> span. It has the Server Received (SR) and Server Sent (SS) annotations.</p>
 </li>
 <li>
-<p>4 span <strong>B</strong> labels are in fact are single span with 4 annotations. However this span is composed of
-two separate instances. One sent from service 1 and one from service 2. So in fact two span instances will be sent
-to Zipkin and merged there.</p>
+<p>2 spans come from the RPC call from <code>service1</code> to <code>service2</code> to the <code>http:/foo</code> endpoint. It has the Client Sent (CS)
+and Client Received (CR) annotations on <code>service1</code> side. It also has Server Received (SR) and Server Sent (SS) annotations
+on the <code>service2</code> side. Physically there are 2 spans but they form 1 logical span related to an RPC call.</p>
 </li>
 <li>
-<p>2 span <strong>C</strong> labels signify span started and closed. Upon closing a single span is sent to Zipkin.</p>
+<p>2 spans come from the RPC call from <code>service2</code> to <code>service3</code> to the <code>http:/bar</code> endpoint. It has the Client Sent (CS)
+and Client Received (CR) annotations on <code>service2</code> side. It also has Server Received (SR) and Server Sent (SS) annotations
+on the <code>service3</code> side. Physically there are 2 spans but they form 1 logical span related to an RPC call.</p>
 </li>
 <li>
-<p>4 span <strong>B</strong> labels are in fact are single span with 4 annotations. However this span is composed of
-two separate instances. One sent from service 2 and one from service 3. So in fact two span instances will be sent
-to Zipkin and merged there.</p>
-</li>
-<li>
-<p>2 span <strong>E</strong> labels signify span started and closed. Upon closing a single span is sent to Zipkin.</p>
-</li>
-<li>
-<p>4 span <strong>B</strong> labels are in fact are single span with 4 annotations. However this span is composed of
-two separate instances. One sent from service 2 and one from service 4. So in fact two span instances will be sent
-to Zipkin and merged there.</p>
-</li>
-<li>
-<p>2 span <strong>G</strong> labels signify span started and closed. Upon closing a single span is sent to Zipkin.</p>
+<p>2 spans come from the RPC call from <code>service2</code> to <code>service4</code> to the <code>http:/baz</code> endpoint. It has the Client Sent (CS)
+and Client Received (CR) annotations on <code>service2</code> side. It also has Server Received (SR) and Server Sent (SS) annotations
+on the <code>service4</code> side. Physically there are 2 spans but they form 1 logical span related to an RPC call.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>So 1 span from <strong>A</strong>, 2 spans from <strong>B</strong>, 1 span from <strong>C</strong>, 2 spans from <strong>D</strong>, 1 span from <strong>E</strong>, 2 spans from <strong>F</strong> and 1 from <strong>G</strong>.
-Altogether <strong>10</strong> spans.</p>
+<p>So if we count the physical spans we have <strong>1</strong> from <code>http:/start</code>, <strong>2</strong> from <code>service1</code> calling <code>service2</code>, <strong>2</strong> form <code>service2</code>
+calling <code>service3</code> and <strong>2</strong> from <code>service2</code> calling <code>service4</code>. Altogether <strong>7</strong> spans.</p>
+</div>
+<div class="paragraph">
+<p>Logically we see the information of <strong>Total Spans: 4</strong> because we have <strong>1</strong> span related to the incoming request
+to <code>service1</code> and <strong>3</strong> spans related to RPC calls.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_visualizing_errors">Visualizing errors</h4>
+<div class="paragraph">
+<p>Zipkin allows you to visualize errors in your trace. When an exception was thrown and wasn&#8217;t caught then we&#8217;re
+setting proper tags on the span which Zipkin can properly colorize. You could see in the list of traces one
+  trace that was in red color. That&#8217;s because there was an exception thrown.</p>
+</div>
+<div class="paragraph">
+<p>If you click that trace then you&#8217;ll see a similar picture</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/zipkin-error-traces.png" alt="Error Traces">
+</div>
+</div>
+<div class="paragraph">
+<p>Then if you click on one of the spans you&#8217;ll see the following</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/zipkin-error-trace-screenshot.png" alt="Error Traces Info propagation">
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see you can easily see the reason for an error and the whole stacktrace related to it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_live_examples">Live examples</h4>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
 </div>
 <div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
@@ -8147,12 +8226,12 @@ Altogether <strong>10</strong> spans.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/dependencies.png" alt="Dependencies">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/dependencies.png" alt="Dependencies">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/dependency"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/dependency"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
 </div>
 <div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
@@ -8180,7 +8259,7 @@ Kibana would look like this:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/master/docs/src/main/asciidoc/images/kibana.png" alt="Log correlation with Kibana">
+<img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.0.x/docs/src/main/asciidoc/images/kibana.png" alt="Log correlation with Kibana">
 </div>
 </div>
 <div class="paragraph">
@@ -8241,7 +8320,7 @@ we&#8217;re passing the dependencies in the <code>groupId:artifactId:version</co
 <p><strong>Logback setup</strong></p>
 </div>
 <div class="paragraph">
-<p>Below you can find an example of a Logback configuration (file named <code><a href="https://github.com/spring-cloud-samples/sleuth-documentation-apps/blob/master/service1/src/main/resources/logback-spring.xml">logback-spring.xml</a></code>) that:</p>
+<p>Below you can find an example of a Logback configuration (file named <a href="https://github.com/spring-cloud-samples/sleuth-documentation-apps/blob/master/service1/src/main/resources/logback-spring.xml">logback-spring.xml</a>) that:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -8591,6 +8670,22 @@ the Spring BOM</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_additional_resources">Additional resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Marcin Grzejszczak talking about Spring Cloud Sleuth and Zipkin</strong></p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe src="//www.youtube.com/embed/eQV71Mw1u1c?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://www.youtube.com/watch?v=eQV71Mw1u1c">click here to see the video</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_features_2">Features</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -8734,7 +8829,9 @@ fixed fraction of spans.</p>
 <td class="content">
 the <code>PercentageBasedSampler</code> is the default if you are using
 <code>spring-cloud-sleuth-zipkin</code> or <code>spring-cloud-sleuth-stream</code>. You can
-configure the exports using <code>spring.sleuth.sampler.percentage</code>.
+configure the exports using <code>spring.sleuth.sampler.percentage</code>. The passed
+value needs to be a double from <code>0.0</code> to <code>1.0</code> so it&#8217;s not a percentage.
+For backwards compatibility reasons we&#8217;re not changing the property name.
 </td>
 </tr>
 </table>
@@ -9134,18 +9231,12 @@ to your bean definition.</p>
 <div class="sect2">
 <h3 id="_http">HTTP</h3>
 <div class="paragraph">
-<p>For HTTP these are the beans responsible for creation of a Span from a <code>HttpServletRequest</code>
-  and filling in the <code>HttpServletResponse</code> with tracing information.</p>
+<p>For HTTP these are the beans responsible for creation of a Span from a <code>HttpServletRequest</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">@Bean
 public SpanExtractor&lt;HttpServletRequest&gt; httpServletRequestSpanExtractor() {
-    ...
-}
-
-@Bean
-public SpanInjector&lt;HttpServletResponse&gt; httpServletResponseSpanInjector() {
     ...
 }</code></pre>
 </div>
@@ -9192,7 +9283,20 @@ you have</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The following <code>SpanInjector</code> could be created</p>
+<p>And you could register it like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Bean
+@Primary
+SpanExtractor&lt;HttpServletRequest&gt; customHttpServletRequestSpanExtractor() {
+    return new CustomHttpServletRequestSpanExtractor();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring Cloud Sleuth does not add trace/span related headers to the Http Response for security reasons. If you need the headers then a custom <code>SpanInjector</code>
+that injects the headers into the Http Response and a Servlet filter which makes use of this can be added the following way:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9201,9 +9305,27 @@ you have</p>
 
     @Override
     public void inject(Span span, HttpServletResponse carrier) {
-        carrier.addHeader("correlationId", Span.idToHex(span.getTraceId()));
-        carrier.addHeader("mySpanId", Span.idToHex(span.getSpanId()));
-        // inject the rest of Span values to the header
+        carrier.addHeader(Span.TRACE_ID_NAME, span.traceIdString());
+        carrier.addHeader(Span.SPAN_ID_NAME, Span.idToHex(span.getSpanId()));
+    }
+}
+
+static class HttpResponseInjectingTraceFilter extends GenericFilterBean {
+
+    private final Tracer tracer;
+    private final SpanInjector&lt;HttpServletResponse&gt; spanInjector;
+
+    public HttpResponseInjectingTraceFilter(Tracer tracer, SpanInjector&lt;HttpServletResponse&gt; spanInjector) {
+        this.tracer = tracer;
+        this.spanInjector = spanInjector;
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        Span currentSpan = this.tracer.getCurrentSpan();
+        this.spanInjector.inject(currentSpan, response);
+        filterChain.doFilter(request, response);
     }
 }</code></pre>
 </div>
@@ -9214,15 +9336,13 @@ you have</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">@Bean
-@Primary
-SpanExtractor&lt;HttpServletRequest&gt; customHttpServletRequestSpanExtractor() {
-    return new CustomHttpServletRequestSpanExtractor();
+SpanInjector&lt;HttpServletResponse&gt; customHttpServletResponseSpanInjector() {
+    return new CustomHttpServletResponseSpanInjector();
 }
 
 @Bean
-@Primary
-SpanInjector&lt;HttpServletResponse&gt; customHttpServletResponseSpanInjector() {
-    return new CustomHttpServletResponseSpanInjector();
+HttpResponseInjectingTraceFilter responseInjectingTraceFilter(Tracer tracer) {
+    return new HttpResponseInjectingTraceFilter(tracer, customHttpServletResponseSpanInjector());
 }</code></pre>
 </div>
 </div>
@@ -9263,6 +9383,21 @@ Remember not to add both <code>peer.service</code> tag and the <code>SA</code> t
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_service_name">Custom service name</h3>
+<div class="paragraph">
+<p>By default Sleuth assumes that when you send a span to Zipkin, you want the span&#8217;s service name
+ to be equal to <code>spring.application.name</code> value. That&#8217;s not always the case though. There
+ are situations in which you want to explicitly provide a different service name for all spans coming
+ from your application. To achieve that it&#8217;s enough to just pass the following property
+ to your application to override that value (example for <code>foo</code> service name):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">spring.zipkin.service.name: foo</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -9576,6 +9711,21 @@ If you create a <code>RestTemplate</code> instance with a <code>new</code> keywo
 </div>
 <div class="sect3">
 <h4 id="_asynchronous_rest_template">Asynchronous Rest Template</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+A traced version of an <code>AsyncRestTemplate</code> bean is registered for you out of the box. If you
+have your own bean you have to wrap it in a <code>TraceAsyncRestTemplate</code> representation. The best solution
+is to only customize the <code>ClientHttpRequestFactory</code> and / or <code>AsyncClientHttpRequestFactory</code>.
+<strong>If you have your own <code>AsyncRestTemplate</code> and you don&#8217;t wrap it your calls WILL NOT GET TRACED</strong>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Custom instrumentation is set to create and close Spans upon sending and receiving requests. You can customize the <code>ClientHttpRequestFactory</code>
 and the <code>AsyncClientHttpRequestFactory</code> by registering your beans. Remember to use tracing compatible implementations (e.g. don&#8217;t forget to
@@ -9663,6 +9813,18 @@ by setting the value of <code>spring.sleuth.scheduled.enabled</code> to <code>fa
 <p>If you want to skip Span creation for some <code>@Scheduled</code> annotated classes you can set the
 <code>spring.sleuth.scheduled.skipPattern</code> with a regular expression that will match the fully qualified name of the
 <code>@Scheduled</code> annotated class.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you are using <code>spring-cloud-sleuth-stream</code> and <code>spring-cloud-netflix-hystrix-stream</code> together, Span will be created for each Hystrix metrics and sent to Zipkin. This may be annoying. You can prevent this by setting <code>spring.sleuth.scheduled.skipPattern=org.springframework.cloud.netflix.hystrix.stream.HystrixStreamTask</code>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -10673,12 +10835,12 @@ development time).
 <p>To install, make
 sure you have
 <a href="https://github.com/spring-projects/spring-boot">Spring Boot CLI</a>
-(1.3.5 or better):</p>
+(1.4.1 or better):</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>$ spring version
-Spring CLI v1.3.5.RELEASE</pre>
+Spring CLI v1.4.1.RELEASE</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10686,18 +10848,17 @@ Spring CLI v1.3.5.RELEASE</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ sdk install springboot 1.3.5.RELEASE
-$ sdk use springboot 1.3.5.RELEASE</code></pre>
+<pre class="highlight"><code>$ sdk install springboot 1.4.1.RELEASE
+$ sdk use springboot 1.4.1.RELEASE</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and install the Spring Cloud plugins (they are independent, so you can install one or the other or both):</p>
+<p>and install the Spring Cloud plugin</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ mvn install
-$ spring install org.springframework.cloud:spring-cloud-cli:1.2.0.BUILD-SNAPSHOT
-$ spring install org.springframework.cloud.launcher:spring-cloud-launcher-cli:1.2.0.BUILD-SNAPSHOT</code></pre>
+$ spring install org.springframework.cloud:spring-cloud-cli:1.2.3.BUILD-SNAPSHOT</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -10798,7 +10959,7 @@ just list them on the command line, e.g.</p>
 </table>
 <div class="paragraph">
 <p>Each of these apps can be configured using a local YAML file with the same name (in the current
-working directory or a subdirectory called "config"). E.g. in <code>configserver.yml</code> you might want to
+working directory or a subdirectory called "config" or in <code>~/.spring-cloud</code>). E.g. in <code>configserver.yml</code> you might want to
 do something like this to locate a local git repository for the backend:</p>
 </div>
 <div class="listingblock">
@@ -10812,6 +10973,40 @@ do something like this to locate a local git repository for the backend:</p>
       server:
         git:
           uri: file://${user.home}/dev/demo/config-repo</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_additional_applications">Adding Additional Applications</h3>
+<div class="paragraph">
+<p>Additional applications can be added to <code>./config/cloud.yml</code> (not
+<code>./config.yml</code> because that would replace the defaults), e.g. with</p>
+</div>
+<div class="listingblock">
+<div class="title">config/cloud.yml</div>
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">spring:
+  cloud:
+    launcher:
+      deployables:
+        source:
+          coordinates: maven://com.example:source:0.0.1-SNAPSHOT
+          port: 7000
+        sink:
+          coordinates: maven://com.example:sink:0.0.1-SNAPSHOT
+          port: 7001</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>when you list the apps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ spring cloud --list
+source sink configserver dataflow eureka h2 hystrixdashboard kafka zipkin</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(notice the additional apps at the start of the list).</p>
 </div>
 </div>
 </div>
@@ -11081,6 +11276,22 @@ autowired <code>OAuth2ProtectedResourceDetails</code>, and then the context will
 always forward the access token downstream, also refreshing the access
 token automatically if it expires. (These are features of Spring
 Security and Spring Boot.)</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Spring Boot (1.4.1) does not create an
+<code>OAuth2ProtectedResourceDetails</code> automatically if you are using
+<code>client_credentials</code> tokens. In that case you need to create your own
+<code>ClientCredentialsResourceDetails</code> and configure it with
+<code>@ConfigurationProperties("security.oauth2.client")</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
