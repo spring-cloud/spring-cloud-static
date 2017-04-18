@@ -18,6 +18,11 @@
 @Grab('org.springframework.cloud:spring-cloud-starter-cloudfoundry:1.0.0.BUILD-SNAPSHOT')
 @Grab('org.springframework.cloud:spring-cloud-cloudfoundry-discovery:1.0.0.BUILD-SNAPSHOT')
 @Grab('org.springframework.cloud:spring-cloud-cluster-autoconfigure:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-vault-config:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-aws:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-databases:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-consul:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-rabbitmq:1.0.0.BUILD-SNAPSHOT')
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.core.io.Resource
