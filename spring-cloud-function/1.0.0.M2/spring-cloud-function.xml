@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Spring Cloud Function</title>
+<date>2017-07-21</date>
+</info>
+<preface>
+<title></title>
+<simpara>Mark Fisher, Dave Syer</simpara>
+<simpara><?asciidoc-hr?></simpara>
+</preface>
+<chapter xml:id="_introduction">
+<title>Introduction</title>
+<simpara>Spring Cloud Function is a project with the following high-level goals:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis>Promote the implementation of business logic via functions.</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara><emphasis>Decouple the development lifecycle of business logic from any specific runtime target so that the same code can run as a web endpoint, a stream processor, or a task.</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara><emphasis>Support a uniform programming model across serverless providers, as well as the ability to run standalone (locally or in a PaaS).</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara><emphasis>Enable Spring Boot features (auto-configuration, dependency injection, metrics) on serverless providers.</emphasis></simpara>
+</listitem>
+</itemizedlist>
+<simpara>It abstracts away all of the transport details and
+infrastructure, allowing the developer to keep all the familiar tools
+and processes, and focus firmly on business logic.</simpara>
+<simpara>Here&#8217;s a complete, executable, testable Spring Boot application
+(implementing a simple string manipulation):</simpara>
+<programlisting language="java" linenumbering="unnumbered">@SpringBootApplication
+public class Application {
+
+  @Bean
+  public Function&lt;Flux&lt;String&gt;, Flux&lt;String&gt;&gt; uppercase() {
+    return flux -&gt; flux.map(value -&gt; value.toUpperCase());
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}</programlisting>
+<simpara>It&#8217;s just a Spring Boot application, so it can be built, run and
+tested, locally and in a CI build, the same way as any other Spring
+Boot application. The <literal>Function</literal> is from <literal>java.util</literal> and <literal>Flux</literal> is a
+<link xl:href="http://www.reactive-streams.org/">Reactive Streams</link> <literal>Publisher</literal> from
+<link xl:href="https://projectreactor.io/">Project Reactor</link>. The function can be
+accessed over HTTP or messaging.</simpara>
+<simpara>Spring Cloud Function has 4 main features:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Wrappers for <literal>@Beans</literal> of type <literal>Function</literal>, <literal>Consumer</literal> and
+<literal>Supplier</literal>, exposing them to the outside world as either HTTP
+endpoints and/or message stream listeners/publishers with RabbitMQ, Kafka etc.</simpara>
+</listitem>
+<listitem>
+<simpara>Compiling strings which are Java function bodies into bytecode, and
+then turning them into <literal>@Beans</literal> that can be wrapped as above.</simpara>
+</listitem>
+<listitem>
+<simpara>Deploying a JAR file containing such an application context with an
+isolated classloader, so that you can pack them together in a single
+JVM.</simpara>
+</listitem>
+<listitem>
+<simpara>Adapters for <link xl:href="https://github.com/spring-cloud/spring-cloud-function/tree/master/spring-cloud-function-adapters/spring-cloud-function-adapter-aws">AWS Lambda</link>, <link xl:href="https://github.com/spring-cloud/spring-cloud-function/tree/master/spring-cloud-function-adapters/spring-cloud-function-adapter-openwhisk">Apache OpenWhisk</link> and possibly other "serverless" service providers.</simpara>
+</listitem>
+</orderedlist>
+<note>
+<simpara>Spring Cloud is released under the non-restrictive Apache 2.0 license. If you would like to contribute to this section of the documentation or if you find an error, please find the source code and issue trackers in the project at <link xl:href="https://github.com/spring-cloud/spring-cloud-function/tree/master/docs/src/main/asciidoc">github</link>.</simpara>
+</note>
+</chapter>
+<chapter xml:id="_getting_started">
+<title>Getting Started</title>
+<simpara>Build from the command line (and "install" the samples):</simpara>
+<screen>$ ./mvnw clean install</screen>
+<simpara>(If you like to YOLO add <literal>-DskipTests</literal>.)</simpara>
+<simpara>Run one of the samples, e.g.</simpara>
+<screen>$ java -jar spring-cloud-function-samples/spring-cloud-function-sample/target/*.jar</screen>
+<simpara>This runs the app and exposes its functions over HTTP, so you can
+convert a string to uppercase, like this:</simpara>
+<screen>$ curl -H "Content-Type: text/plain" localhost:8080/uppercase -d Hello
+HELLO</screen>
+<simpara>You can convert multiple strings (a <literal>Flux&lt;String&gt;</literal>) by separating them
+with new lines</simpara>
+<screen>$ curl -H "Content-Type: text/plain" localhost:8080/uppercase -d 'Hello
+&gt; World'
+HELLOWORLD</screen>
+<simpara>(You can use <literal><superscript>Q</superscript>J</literal> in a terminal to insert a new line in a literal
+string like that.)</simpara>
+</chapter>
+<chapter xml:id="_building_and_running_a_function">
+<title>Building and Running a Function</title>
+<simpara>The sample <literal>@SpringBootApplication</literal> above has a function that can be
+decorated at runtime by Spring Cloud Function to be an HTTP endpoint,
+or a Stream processor, for instance with RabbitMQ, Apache Kafka or
+JMS.</simpara>
+<simpara>The <literal>@Beans</literal> can be <literal>Function</literal>, <literal>Consumer</literal> or <literal>Supplier</literal> (all from
+<literal>java.util</literal>), and their parametric types can be String or POJO. A
+<literal>Function</literal> is exposed as an HTTP POST if <literal>spring-cloud-function-web</literal>
+is on the classpath, and as a Spring Cloud Stream <literal>Processor</literal> if
+<literal>spring-cloud-function-stream</literal> is on the classpath and a
+<literal>spring.cloud.function.stream.endpoint</literal> property is configured in the Spring
+environment. A <literal>Consumer</literal> is also exposed as an HTTP POST, or as a Stream
+<literal>Sink</literal>. A <literal>Supplier</literal> translates to an HTTP GET, or a Stream <literal>Source</literal>.</simpara>
+<simpara>Functions can be of <literal>Flux&lt;String&gt;</literal> or <literal>Flux&lt;Pojo&gt;</literal> and Spring Cloud
+Function takes care of converting the data to and from the desired
+types, as long as it comes in as plain text or (in the case of the
+POJO) JSON. TBD: support for <literal>Flux&lt;Message&lt;Pojo&gt;&gt;</literal> and maybe plain
+<literal>Pojo</literal> types (Fluxes implied and implemented by the framework).</simpara>
+<simpara>Functions can be grouped together in a single application, or deployed
+one-per-jar. It&#8217;s up to the developer to choose. An app with multiple
+functions can be deployed multiple times in different "personalities",
+exposing different functions over different physical transports.</simpara>
+</chapter>
+<chapter xml:id="_deploying_a_packaged_function">
+<title>Deploying a Packaged Function</title>
+<simpara>TBD: describe the deployer app.</simpara>
+</chapter>
+<chapter xml:id="_dynamic_compilation">
+<title>Dynamic Compilation</title>
+<simpara>To run these examples, change into the <literal>scripts</literal> directory:</simpara>
+<screen>cd scripts</screen>
+<simpara>Also, start a RabbitMQ server locally (e.g. execute <literal>rabbitmq-server</literal>).</simpara>
+<section xml:id="_start_the_function_registry_service">
+<title>Start the Function Registry Service:</title>
+<screen>./function-registry.sh</screen>
+</section>
+<section xml:id="_register_a_function">
+<title>Register a Function:</title>
+<screen>./registerFunction.sh -n uppercase -f "f-&gt;f.map(s-&gt;s.toString().toUpperCase())"</screen>
+</section>
+<section xml:id="_run_a_rest_microservice_using_that_function">
+<title>Run a REST Microservice using that Function:</title>
+<screen>./web.sh -f uppercase -p 9000
+curl -H "Content-Type: text/plain" -H "Accept: text/plain" localhost:9000/uppercase -d foo</screen>
+</section>
+<section xml:id="_register_a_supplier">
+<title>Register a Supplier:</title>
+<screen>./registerSupplier.sh -n words -f "()-&gt;Flux.just(\"foo\",\"bar\")"</screen>
+</section>
+<section xml:id="_run_a_rest_microservice_using_that_supplier">
+<title>Run a REST Microservice using that Supplier:</title>
+<screen>./web.sh -s words -p 9001
+curl -H "Accept: application/json" localhost:9001/words</screen>
+</section>
+<section xml:id="_register_a_consumer">
+<title>Register a Consumer:</title>
+<screen>./registerConsumer.sh -n print -t String -f "System.out::println"</screen>
+</section>
+<section xml:id="_run_a_rest_microservice_using_that_consumer">
+<title>Run a REST Microservice using that Consumer:</title>
+<screen>./web.sh -c print -p 9002
+curl -X POST -H "Content-Type: text/plain" -d foo localhost:9002/print</screen>
+</section>
+<section xml:id="_run_stream_processing_microservices">
+<title>Run Stream Processing Microservices:</title>
+<simpara>First register a streaming words supplier:</simpara>
+<screen>./registerSupplier.sh -n wordstream -f "()-&gt;Flux.intervalMillis(1000).map(i-&gt;\"message-\"+i)"</screen>
+<simpara>Then start the source (supplier), processor (function), and sink (consumer) apps
+(in reverse order):</simpara>
+<screen>./stream.sh -p 9103 -i uppercaseWords -c print
+./stream.sh -p 9102 -i words -f uppercase -o uppercaseWords
+./stream.sh -p 9101 -s wordstream -o words</screen>
+<simpara>The output will appear in the console of the sink app (one message per second, converted to uppercase):</simpara>
+<screen>MESSAGE-0
+MESSAGE-1
+MESSAGE-2
+MESSAGE-3
+MESSAGE-4
+MESSAGE-5
+MESSAGE-6
+MESSAGE-7
+MESSAGE-8
+MESSAGE-9
+...</screen>
+</section>
+</chapter>
+</book>
