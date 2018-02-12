@@ -17,7 +17,7 @@ Cloud developers can quickly stand up services and applications that
 implement those patterns. They will work well in any distributed
 environment, including the developer&#8217;s own laptop, bare metal data
 centres, and managed platforms such as Cloud Foundry.</simpara>
-<simpara>Version: 1.3.5.BUILD-SNAPSHOT</simpara>
+<simpara>Version: Finchley.M6</simpara>
 </preface>
 <chapter xml:id="_features">
 <title>Features</title>
@@ -686,7 +686,7 @@ HasFeatures localFeatures() {
 <part xml:id="_spring_cloud_config">
 <title>Spring Cloud Config</title>
 <partintro>
-<simpara><emphasis role="strong">1.3.5.BUILD-SNAPSHOT</emphasis></simpara>
+<simpara><emphasis role="strong">Finchley.M6</emphasis></simpara>
 <simpara>Spring Cloud Config provides server and client-side support for externalized configuration in a distributed system. With the Config Server you have a central place to manage external properties for applications across all environments. The concepts on both client and server map identically to the Spring <literal>Environment</literal> and <literal>PropertySource</literal> abstractions, so they fit very well with Spring applications, but can be used with any application running in any language. As an application moves through the deployment pipeline from dev to test and into production you can manage the configuration between those environments and be certain that applications have everything they need to run when they migrate. The default implementation of the server storage backend uses git so it easily supports labelled versions of configuration environments, as well as being accessible to a wide range of tooling for managing the content.  It is easy to add alternative implementations and plug them in with Spring configuration.</simpara>
 </partintro>
 <chapter xml:id="_quick_start">
@@ -2177,7 +2177,7 @@ String name = "World";</programlisting>
 <part xml:id="_spring_cloud_netflix">
 <title>Spring Cloud Netflix</title>
 <partintro>
-<simpara><emphasis role="strong">1.3.5.BUILD-SNAPSHOT</emphasis></simpara>
+<simpara><emphasis role="strong">Finchley.M6</emphasis></simpara>
 <simpara>This project provides Netflix OSS integrations for Spring Boot apps through autoconfiguration
 and binding to the Spring Environment and other Spring programming model idioms. With a few
 simple annotations you can quickly enable and configure the common patterns inside your
@@ -9505,7 +9505,7 @@ packages to scan.</simpara>
 <title>Spring Cloud Sleuth</title>
 <partintro>
 <simpara>Adrian Cole, Spencer Gibb, Marcin Grzejszczak, Dave Syer</simpara>
-<simpara><emphasis role="strong">1.3.5.BUILD-SNAPSHOT</emphasis></simpara>
+<simpara><emphasis role="strong">Finchley.M6</emphasis></simpara>
 </partintro>
 <chapter xml:id="_introduction">
 <title>Introduction</title>
@@ -11357,7 +11357,7 @@ To disable Zuul support set the <literal>spring.sleuth.zuul.enabled</literal> pr
 <part xml:id="_spring_cloud_consul">
 <title>Spring Cloud Consul</title>
 <partintro>
-<simpara><emphasis role="strong">1.3.5.BUILD-SNAPSHOT</emphasis></simpara>
+<simpara><emphasis role="strong">Finchley.M6</emphasis></simpara>
 <simpara>This project provides Consul integrations for Spring Boot apps through autoconfiguration
 and binding to the Spring Environment and other Spring programming model idioms. With a few
 simple annotations you can quickly enable and configure the common patterns inside your
@@ -12430,7 +12430,7 @@ parameterized using <literal>spring.oauth2.sso.serviceId</literal>.</simpara>
 <partintro>
 <simpara>_Documentation Authors: Adam Dudczak, Mathias Düsterhöft, Marcin Grzejszczak, Dennis Kieselhorst, Jakub Kubryński, Karol Lassak,
 Olga Maciaszek-Sharma, Mariusz Smykuła, Dave Syer, Jay Bryant</simpara>
-<simpara>1.3.5.BUILD-SNAPSHOT</simpara>
+<simpara>Finchley.M6</simpara>
 </partintro>
 <chapter xml:id="_spring_cloud_contract_2">
 <title>Spring Cloud Contract</title>
@@ -21065,7 +21065,7 @@ the test cases). Example Maven configuration:</simpara>
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
         &lt;artifactId&gt;spring-cloud-starter-vault-config&lt;/artifactId&gt;
-        &lt;version&gt;1.3.5.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;Finchley.M6&lt;/version&gt;
     &lt;/dependency&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -21789,7 +21789,7 @@ dependency.</simpara>
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
         &lt;artifactId&gt;spring-cloud-vault-config-consul&lt;/artifactId&gt;
-        &lt;version&gt;1.3.5.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;Finchley.M6&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;</programlisting>
 </example>
@@ -21835,7 +21835,7 @@ dependency.</simpara>
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
         &lt;artifactId&gt;spring-cloud-vault-config-rabbitmq&lt;/artifactId&gt;
-        &lt;version&gt;1.3.5.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;Finchley.M6&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;</programlisting>
 </example>
@@ -21886,7 +21886,7 @@ dependency.</simpara>
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
         &lt;artifactId&gt;spring-cloud-vault-config-aws&lt;/artifactId&gt;
-        &lt;version&gt;1.3.5.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;Finchley.M6&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;</programlisting>
 </example>
@@ -21965,7 +21965,7 @@ backend path, e.g. <literal>spring.cloud.vault.mysql.role.backend=database</lite
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
         &lt;artifactId&gt;spring-cloud-vault-config-databases&lt;/artifactId&gt;
-        &lt;version&gt;1.3.5.BUILD-SNAPSHOT&lt;/version&gt;
+        &lt;version&gt;Finchley.M6&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;</programlisting>
 </example>
@@ -22326,7 +22326,7 @@ after application shutdown.</simpara>
 <part xml:id="_spring_cloud_gateway">
 <title>Spring Cloud Gateway</title>
 <partintro>
-<simpara><emphasis role="strong">1.3.5.BUILD-SNAPSHOT</emphasis></simpara>
+<simpara><emphasis role="strong">Finchley.M6</emphasis></simpara>
 <simpara>This project provides an API Gateway built on top of the Spring Ecosystem, including: Spring 5, Spring Boot 2 and Project Reactor. Spring Cloud Gateway aims to provide a simple, yet effective way to route to APIs and provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.</simpara>
 </partintro>
 <chapter xml:id="gateway-starter">
