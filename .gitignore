@@ -12,3 +12,8 @@ bin
 *.sw*
 *.iml
 .idea
+*.class
+build
+libs
+_site/
+Gemfile.lock
