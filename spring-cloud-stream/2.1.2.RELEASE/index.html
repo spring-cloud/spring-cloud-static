@@ -11,14 +11,12 @@
 .hidden {
 	display: none;
 }
-
 .switch {
 	border-width: 1px 1px 0 1px;
 	border-style: solid;
 	border-color: #7a2518;
 	display: inline-block;
 }
-
 .switch--item {
 	padding: 10px;
 	background-color: #ffffff;
@@ -26,7 +24,6 @@
 	display: inline-block;
 	cursor: pointer;
 }
-
 .switch--item.selected {
 	background-color: #7a2519;
 	color: #ffffff;
@@ -49,13 +46,11 @@ function addBlockSwitches() {
 		secondary.remove();
 	});
 }
-
 function createBlockSwitch(primary) {
 	blockSwitch = $('<div class="switch"></div>');
 	primary.prepend(blockSwitch);
 	return blockSwitch;
 }
-
 function findPrimary(secondary) {
 	candidate = secondary.prev();
 	while (!candidate.is('.primary')) {
@@ -63,7 +58,6 @@ function findPrimary(secondary) {
 	}
 	return candidate;
 }
-
 function createSwitchItem(block, blockSwitch) {
 	blockName = block.children('.title').text();
 	content = block.children('.content').first().append(block.next('.colist'));
@@ -77,48 +71,36 @@ function createSwitchItem(block, blockSwitch) {
 	blockSwitch.append(item);
 	return {'item': item, 'content': content};
 }
-
 $(addBlockSwitches);
 </script>
 </head>
 
 <body class="article">
 <div id="header">
+<h1>spring-cloud-stream</h1>
 </div>
 <div id="content">
-<div class="literalblock">
-<div class="content">
-<pre>:linkcss:
-:stylesdir: css
-:stylesheet: manual-singlepage.css</pre>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>2.1.2.RELEASE</p>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>= {docs-main}</pre>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{spring-cloud-version}</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>== Pick The Documentation Option</pre>
-</div>
-</div>
+<div class="sect1">
+<h2 id="_pick_the_documentation_option">Pick The Documentation Option</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="single/spring-cloud-stream.html">Single
-HTML</a></p>
+<p><a href="single/spring-cloud-stream.html">Single HTML</a></p>
 </li>
 <li>
-<p><a href="multi/multi_spring-cloud-stream.html">Multi
-HTML</a></p>
+<p><a href="multi/multi_spring-cloud-stream.html">Multi HTML</a></p>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
