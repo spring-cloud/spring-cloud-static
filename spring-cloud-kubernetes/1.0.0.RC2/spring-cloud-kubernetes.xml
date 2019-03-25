@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?asciidoc-toc?>
 <?asciidoc-numbered?>
-<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<book xmlns="https://docbook.org/ns/docbook" xmlns:xl="https://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Spring Cloud Kubernetes</title>
 <date>2018-12-21</date>
@@ -14,8 +14,8 @@ The main objective of the projects provided in this repository is to facilitate 
 <chapter xml:id="_discoveryclient_for_kubernetes">
 <title>DiscoveryClient for Kubernetes</title>
 <simpara>This project provides an implementation of <link xl:href="https://github.com/spring-cloud/spring-cloud-commons/blob/master/spring-cloud-commons/src/main/java/org/springframework/cloud/client/discovery/DiscoveryClient.java">Discovery Client</link>
-for <link xl:href="http://kubernetes.io">Kubernetes</link>.
-This allows you to query Kubernetes endpoints <emphasis role="strong">(see <link xl:href="http://kubernetes.io/docs/user-guide/services/">services</link>)</emphasis> by name.
+for <link xl:href="https://kubernetes.io">Kubernetes</link>.
+This allows you to query Kubernetes endpoints <emphasis role="strong">(see <link xl:href="https://kubernetes.io/docs/user-guide/services/">services</link>)</emphasis> by name.
 A service is typically exposed by the Kubernetes API server as a collection of endpoints which represent <literal>http</literal>, <literal>https</literal> addresses that a client can
 access from a Spring Boot application running as a pod. This discovery feature is also used by the Spring Cloud Kubernetes Ribbon project
 to fetch the list of the endpoints defined for an application to be load balanced.</simpara>
@@ -64,7 +64,7 @@ application or Spring Boot starters. Users may override these properties by spec
 variables.</simpara>
 <section xml:id="_configmap_propertysource">
 <title>ConfigMap PropertySource</title>
-<simpara>Kubernetes provides a resource named <link xl:href="http://kubernetes.io/docs/user-guide/configmap/">ConfigMap</link> to externalize the
+<simpara>Kubernetes provides a resource named <link xl:href="https://kubernetes.io/docs/user-guide/configmap/">ConfigMap</link> to externalize the
 parameters to pass to your application in the form of key-value pairs or embedded <literal>application.properties|yaml</literal> files.
 The <link xl:href="./spring-cloud-kubernetes-config">Spring Cloud Kubernetes Config</link> project makes Kubernetes `ConfigMap`s available
 during application bootstrapping and triggers hot reloading of beans or Spring context when changes are detected on
@@ -599,7 +599,7 @@ within the Kubernetes platform <emphasis role="strong">(e.g. different dev and p
 <section xml:id="_istio_awareness">
 <title>Istio Awareness</title>
 <simpara>When including the <emphasis role="strong">spring-cloud-kubernetes-istio</emphasis> module into the application classpath a new profile will be added to the application,
-if the application is running inside a Kubernetes Cluster with <link xl:href="http://istio.io">Istio</link> installed. Then you can use
+if the application is running inside a Kubernetes Cluster with <link xl:href="https://istio.io">Istio</link> installed. Then you can use
 spring <emphasis role="strong">@Profile("istio")</emphasis> annotations into your Beans and <emphasis role="strong">@Configuration</emphasis>'s.</simpara>
 <simpara>The Istio awareness module uses the <emphasis role="strong">me.snowdrop:istio-client</emphasis> to interact with Istio APIs enabling us to discover traffic rules, circuit breakers, etc.
 Making it easy for our Spring Boot applications to consume this data to dynamically configure themselves according the environment.</simpara>
@@ -684,7 +684,7 @@ The same applies for PropertySourceLocator, where you need to add to the classpa
 <simpara><link xl:href="https://salaboy.com/2018/07/18/ljc-july-18-spring-cloud-docker-k8s/">Spring Cloud, Docker, Kubernetes &#8594; London Java Community July 2018</link></simpara>
 </listitem>
 </itemizedlist>
-<simpara>Please feel free to submit other resources via PR to <link xl:href="http://github.com/spring-cloud/spring-cloud-kubernetes">this repository</link>.</simpara>
+<simpara>Please feel free to submit other resources via PR to <link xl:href="https://github.com/spring-cloud/spring-cloud-kubernetes">this repository</link>.</simpara>
 </chapter>
 <chapter xml:id="_building">
 <title>Building</title>
@@ -717,7 +717,7 @@ that you might find in "before_install" since they&#8217;re related to setting g
 credentials and you already have those.</simpara>
 <simpara>The projects that require middleware generally include a
 <literal>docker-compose.yml</literal>, so consider using
-<link xl:href="http://compose.docker.io/">Docker Compose</link> to run the middeware servers
+<link xl:href="https://compose.docker.io/">Docker Compose</link> to run the middeware servers
 in Docker containers. See the README in the
 <link xl:href="https://github.com/spring-cloud-samples/scripts">scripts demo
 repository</link> for specific instructions about the common cases of mongo,
@@ -741,13 +741,13 @@ a modified file in the correct place. Just commit it and push the change.</simpa
 <section xml:id="_working_with_the_code">
 <title>Working with the code</title>
 <simpara>If you don&#8217;t have an IDE preference we would recommend that you use
-<link xl:href="http://www.springsource.com/developer/sts">Spring Tools Suite</link> or
-<link xl:href="http://eclipse.org">Eclipse</link> when working with the code. We use the
-<link xl:href="http://eclipse.org/m2e/">m2eclipse</link> eclipse plugin for maven support. Other IDEs and tools
+<link xl:href="https://www.springsource.com/developer/sts">Spring Tools Suite</link> or
+<link xl:href="https://eclipse.org">Eclipse</link> when working with the code. We use the
+<link xl:href="https://eclipse.org/m2e/">m2eclipse</link> eclipse plugin for maven support. Other IDEs and tools
 should also work without issue as long as they use Maven 3.3.3 or better.</simpara>
 <section xml:id="_importing_into_eclipse_with_m2eclipse">
 <title>Importing into eclipse with m2eclipse</title>
-<simpara>We recommend the <link xl:href="http://eclipse.org/m2e/">m2eclipse</link> eclipse plugin when working with
+<simpara>We recommend the <link xl:href="https://eclipse.org/m2e/">m2eclipse</link> eclipse plugin when working with
 eclipse. If you don&#8217;t already have m2eclipse installed it is available from the "eclipse
 marketplace".</simpara>
 <note>
@@ -804,7 +804,7 @@ you can import formatter settings using the
 <literal>eclipse-code-formatter.xml</literal> file from the
 <link xl:href="https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/spring-cloud-dependencies-parent/eclipse-code-formatter.xml">Spring
 Cloud Build</link> project. If using IntelliJ, you can use the
-<link xl:href="http://plugins.jetbrains.com/plugin/6546">Eclipse Code Formatter
+<link xl:href="https://plugins.jetbrains.com/plugin/6546">Eclipse Code Formatter
 Plugin</link> to import the same file.</simpara>
 </listitem>
 <listitem>
@@ -831,7 +831,7 @@ than cosmetic changes).</simpara>
 other target branch in the main project).</simpara>
 </listitem>
 <listitem>
-<simpara>When writing a commit message please follow <link xl:href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">these conventions</link>,
+<simpara>When writing a commit message please follow <link xl:href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">these conventions</link>,
 if you are fixing an existing issue please add <literal>Fixes gh-XXXX</literal> at the end of the commit
 message (where XXXX is the issue number).</simpara>
 </listitem>

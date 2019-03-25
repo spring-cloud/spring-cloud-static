@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?asciidoc-toc?>
 <?asciidoc-numbered?>
-<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<book xmlns="https://docbook.org/ns/docbook" xmlns:xl="https://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Spring Cloud Vault</title>
 <date>2018-10-16</date>
@@ -183,8 +183,8 @@ Supported schemes are <literal>http</literal> and <literal>https</literal>.</sim
 <simpara>Enabling further integrations requires additional dependencies and
 configuration. Depending on how you have set up Vault you might need
 additional configuration like
-<link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.ssl">SSL</link> and
-<link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication</link>.</simpara>
+<link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.ssl">SSL</link> and
+<link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication</link>.</simpara>
 <simpara>If the application imports the <literal>spring-boot-starter-actuator</literal> project, the
 status of the vault server will be available via the <literal>/health</literal> endpoint.</simpara>
 <simpara>The vault health indicator can be enabled or disabled through the
@@ -192,7 +192,7 @@ property <literal>health.vault.enabled</literal> (default <literal>true</literal
 <section xml:id="_authentication">
 <title>Authentication</title>
 <simpara>Vault requires an <link xl:href="https://www.vaultproject.io/docs/concepts/auth.html">authentication mechanism</link> to <link xl:href="https://www.vaultproject.io/docs/concepts/tokens.html">authorize client requests</link>.</simpara>
-<simpara>Spring Cloud Vault supports multiple <link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication mechanisms</link> to authenticate applications with Vault.</simpara>
+<simpara>Spring Cloud Vault supports multiple <link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication mechanisms</link> to authenticate applications with Vault.</simpara>
 <simpara>For a quickstart, use the root token printed by the <link linkend="quickstart.vault.start">Vault initialization</link>.</simpara>
 <example>
 <title>bootstrap.yml</title>
