@@ -8,7 +8,7 @@
 <title>Spring Cloud</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
-/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Remove comment around @import statement below when using as a custom stylesheet */
 /*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
@@ -947,10 +947,10 @@ and extensibility mechanism to cover others.</p>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<p><a href="http://pivotal.io/platform-as-a-service/migrating-to-cloud-native-application-architectures-ebook">Cloud Native</a> is a style of application development that encourages easy adoption of best practices in the areas of continuous delivery and value-driven development. A related discipline is that of building <a href="http://12factor.net/">12-factor Apps</a> in which development practices are aligned with delivery and operations goals, for instance by using declarative programming and management and monitoring. Spring Cloud facilitates these styles of development in a number of specific ways and the starting point is a set of features that all components in a distributed system either need or need easy access to when required.</p>
+<p><a href="https://pivotal.io/platform-as-a-service/migrating-to-cloud-native-application-architectures-ebook">Cloud Native</a> is a style of application development that encourages easy adoption of best practices in the areas of continuous delivery and value-driven development. A related discipline is that of building <a href="https://12factor.net/">12-factor Apps</a> in which development practices are aligned with delivery and operations goals, for instance by using declarative programming and management and monitoring. Spring Cloud facilitates these styles of development in a number of specific ways and the starting point is a set of features that all components in a distributed system either need or need easy access to when required.</p>
 </div>
 <div class="paragraph">
-<p>Many of those features are covered by <a href="http://projects.spring.io/spring-boot">Spring Boot</a>, which we build on in Spring Cloud. Some more are delivered by Spring Cloud as two libraries: Spring Cloud Context and Spring Cloud Commons. Spring Cloud Context provides utilities and special services for the <code>ApplicationContext</code> of a Spring Cloud application (bootstrap context, encryption, refresh scope and environment endpoints). Spring Cloud Commons is a set of abstractions and common classes used in different Spring Cloud implementations (eg. Spring Cloud Netflix vs. Spring Cloud Consul).</p>
+<p>Many of those features are covered by <a href="https://projects.spring.io/spring-boot">Spring Boot</a>, which we build on in Spring Cloud. Some more are delivered by Spring Cloud as two libraries: Spring Cloud Context and Spring Cloud Commons. Spring Cloud Context provides utilities and special services for the <code>ApplicationContext</code> of a Spring Cloud application (bootstrap context, encryption, refresh scope and environment endpoints). Spring Cloud Commons is a set of abstractions and common classes used in different Spring Cloud implementations (eg. Spring Cloud Netflix vs. Spring Cloud Consul).</p>
 </div>
 <div class="paragraph">
 <p>If you are getting an exception due to "Illegal key size" and you are using Sun&#8217;s JDK, you need to install the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files. See the following links for more information:</p>
@@ -958,13 +958,13 @@ and extensibility mechanism to cover others.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</a></p>
 </li>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</a></p>
 </li>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</a></p>
 </li>
 </ul>
 </div>
@@ -1340,13 +1340,13 @@ the full strength JCE extensions in your JVM.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</a></p>
 </li>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</a></p>
 </li>
 <li>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</a></p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</a></p>
 </li>
 </ul>
 </div>
@@ -1508,7 +1508,7 @@ public class MyClass {
     }
 
     public String doStuff() {
-        return restTemplate.getForObject("http://example.com", String.class);
+        return restTemplate.getForObject("https://example.com", String.class);
     }
 }</code></pre>
 </div>
@@ -2133,14 +2133,14 @@ at startup. For example at the top level:</p>
             team-a:
                 pattern: team-a-*
                 cloneOnStart: true
-                uri: http://git/team-a/config-repo.git
+                uri: https://git/team-a/config-repo.git
             team-b:
                 pattern: team-b-*
                 cloneOnStart: false
-                uri: http://git/team-b/config-repo.git
+                uri: https://git/team-b/config-repo.git
             team-c:
                 pattern: team-c-*
-                uri: http://git/team-a/config-repo.git</code></pre>
+                uri: https://git/team-a/config-repo.git</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2244,7 +2244,7 @@ search).</p>
 <div class="title">Warning</div>
 </td>
 <td class="content">
-With VCS based backends (git, svn) files are checked out or cloned to the local filesystem. By default they are put in the system temporary directory with a prefix of <code>config-repo-</code>. On linux, for example it could be <code>/tmp/config-repo-&lt;randomid&gt;</code>. Some operating systems <a href="http://serverfault.com/questions/377348/when-does-tmp-get-cleared/377349#377349">routinely clean out</a> temporary directories. This can lead to unexpected behaviour such as missing properties. To avoid this problem, change the directory Config Server uses, by setting <code>spring.cloud.config.server.git.basedir</code> or <code>spring.cloud.config.server.svn.basedir</code> to a directory that does not reside in the system temp structure.
+With VCS based backends (git, svn) files are checked out or cloned to the local filesystem. By default they are put in the system temporary directory with a prefix of <code>config-repo-</code>. On linux, for example it could be <code>/tmp/config-repo-&lt;randomid&gt;</code>. Some operating systems <a href="https://serverfault.com/questions/377348/when-does-tmp-get-cleared/377349#377349">routinely clean out</a> temporary directories. This can lead to unexpected behaviour such as missing properties. To avoid this problem, change the directory Config Server uses, by setting <code>spring.cloud.config.server.git.basedir</code> or <code>spring.cloud.config.server.svn.basedir</code> to a directory that does not reside in the system temp structure.
 </td>
 </tr>
 </table>
@@ -3489,7 +3489,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon).</p>
 <h3 id="netflix-eureka-client-starter">How to Include Eureka Client</h3>
 <div class="paragraph">
 <p>To include Eureka Client in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-eureka</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-eureka</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 </div>
@@ -3561,7 +3561,7 @@ fine if you ensure that your application has a
 ID, or VIP).</p>
 </div>
 <div class="paragraph">
-<p>See <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
+<p>See <a href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> and <a href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</a> for more details of the configurable options.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3734,7 +3734,7 @@ implementing your own <code>com.netflix.appinfo.HealthCheckHandler</code>.</p>
 <div class="sect3">
 <h4 id="_using_eureka_on_aws">Using Eureka on AWS</h4>
 <div class="paragraph">
-<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
+<p>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the <a href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</a> the following way:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3869,7 +3869,7 @@ assumptions about the lease renewal period.</p>
 <h3 id="netflix-eureka-server-starter">How to Include Eureka Server</h3>
 <div class="paragraph">
 <p>To include Eureka Server in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-eureka-server</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-eureka-server</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 </div>
@@ -4047,7 +4047,7 @@ IP Address rather than its hostname.</p>
 <h2 id="_circuit_breaker_hystrix_clients">Circuit Breaker: Hystrix Clients</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Netflix has created a library called <a href="https://github.com/Netflix/Hystrix">Hystrix</a> that implements the <a href="http://martinfowler.com/bliki/CircuitBreaker.html">circuit breaker pattern</a>.  In a microservice architecture it is common to have multiple layers of service calls.</p>
+<p>Netflix has created a library called <a href="https://github.com/Netflix/Hystrix">Hystrix</a> that implements the <a href="https://martinfowler.com/bliki/CircuitBreaker.html">circuit breaker pattern</a>.  In a microservice architecture it is common to have multiple layers of service calls.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -4071,7 +4071,7 @@ IP Address rather than its hostname.</p>
 <h3 id="netflix-hystrix-starter">How to Include Hystrix</h3>
 <div class="paragraph">
 <p>To include Hystrix in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-hystrix</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-hystrix</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 <div class="paragraph">
@@ -4193,7 +4193,7 @@ for details on the properties available.</p>
 <h3 id="netflix-hystrix-dashboard-starter">How to Include Hystrix Dashboard</h3>
 <div class="paragraph">
 <p>To include the Hystrix Dashboard in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-hystrix-dashboard</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-hystrix-dashboard</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 <div class="paragraph">
@@ -4227,7 +4227,7 @@ To make turbine find the Hystrix stream at the correct port, you need to add <co
 </div>
 </div>
 <div class="paragraph">
-<p>The configuration key <code>turbine.appConfig</code> is a list of eureka serviceIds that turbine will use to lookup instances.  The turbine stream is then used in the Hystrix dashboard using a url that looks like: <code><a href="http://my.turbine.sever:8080/turbine.stream?cluster=&lt;CLUSTERNAME&gt" class="bare">http://my.turbine.sever:8080/turbine.stream?cluster=&lt;CLUSTERNAME&gt</a>;</code> (the cluster parameter can be omitted if the name is "default"). The <code>cluster</code> parameter must match an entry in <code>turbine.aggregator.clusterConfig</code>. Values returned from eureka are uppercase, thus we expect this example to work if there is an app registered with Eureka called "customers":</p>
+<p>The configuration key <code>turbine.appConfig</code> is a list of eureka serviceIds that turbine will use to lookup instances.  The turbine stream is then used in the Hystrix dashboard using a url that looks like: <code><a href="https://my.turbine.sever:8080/turbine.stream?cluster=&lt;CLUSTERNAME&gt" class="bare">https://my.turbine.sever:8080/turbine.stream?cluster=&lt;CLUSTERNAME&gt</a>;</code> (the cluster parameter can be omitted if the name is "default"). The <code>cluster</code> parameter must match an entry in <code>turbine.aggregator.clusterConfig</code>. Values returned from eureka are uppercase, thus we expect this example to work if there is an app registered with Eureka called "customers":</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4317,7 +4317,7 @@ annotation). Spring Cloud creates a new ensemble as an
 <h3 id="netflix-ribbon-starter">How to Include Ribbon</h3>
 <div class="paragraph">
 <p>To include Ribbon in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-ribbon</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-ribbon</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 </div>
@@ -4592,7 +4592,7 @@ disable the use of Eureka in Ribbon.</p>
 <h3 id="netflix-feign-starter">How to Include Feign</h3>
 <div class="paragraph">
 <p>To include Feign in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-feign</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-feign</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 <div class="paragraph">
@@ -5064,7 +5064,7 @@ public class FooConfiguration {
 <h2 id="_external_configuration_archaius">External Configuration: Archaius</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://github.com/Netflix/archaius">Archaius</a> is the Netflix client side configuration library.  It is the library used by all of the Netflix OSS components for configuration.  Archaius is an extension of the <a href="http://commons.apache.org/proper/commons-configuration">Apache Commons Configuration</a> project.  It allows updates to configuration by either polling a source for changes or for a source to push changes to the client.  Archaius uses Dynamic&lt;Type&gt;Property classes as handles to properties.</p>
+<p><a href="https://github.com/Netflix/archaius">Archaius</a> is the Netflix client side configuration library.  It is the library used by all of the Netflix OSS components for configuration.  Archaius is an extension of the <a href="https://commons.apache.org/proper/commons-configuration">Apache Commons Configuration</a> project.  It allows updates to configuration by either polling a source for changes or for a source to push changes to the client.  Archaius uses Dynamic&lt;Type&gt;Property classes as handles to properties.</p>
 </div>
 <div class="listingblock">
 <div class="title">Archaius Example</div>
@@ -5092,7 +5092,7 @@ public class FooConfiguration {
 <p>Routing in an integral part of a microservice architecture.  For example, <code>/</code> may be mapped to your web application, <code>/api/users</code> is mapped to the user service and <code>/api/shop</code> is mapped to the shop service.  <a href="https://github.com/Netflix/zuul">Zuul</a> is a JVM based router and server side load balancer by Netflix.</p>
 </div>
 <div class="paragraph">
-<p><a href="http://www.slideshare.net/MikeyCohen1/edge-architecture-ieee-international-conference-on-cloud-engineering-32240146/27">Netflix uses Zuul</a> for the following:</p>
+<p><a href="https://www.slideshare.net/MikeyCohen1/edge-architecture-ieee-international-conference-on-cloud-engineering-32240146/27">Netflix uses Zuul</a> for the following:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -5159,7 +5159,7 @@ Default Hystrix isolation pattern (ExecutionIsolationStrategy) for all routes is
 <h3 id="netflix-zuul-starter">How to Include Zuul</h3>
 <div class="paragraph">
 <p>To include Zuul in your project use the starter with group <code>org.springframework.cloud</code>
-and artifact id <code>spring-cloud-starter-zuul</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
+and artifact id <code>spring-cloud-starter-zuul</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a>
 for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 </div>
@@ -5264,7 +5264,7 @@ level, but "/myusers/**" matches hierarchically.</p>
   routes:
     users:
       path: /myusers/**
-      url: http://example.com/users_service</code></pre>
+      url: https://example.com/users_service</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5543,7 +5543,7 @@ but redirect some of the requests to new ones.</p>
   routes:
     first:
       path: /first/**
-      url: http://first.example.com
+      url: https://first.example.com
     second:
       path: /second/**
       url: forward:/second
@@ -5552,7 +5552,7 @@ but redirect some of the requests to new ones.</p>
       url: forward:/3rd
     legacy:
       path: /**
-      url: http://legacy.example.com</code></pre>
+      url: https://legacy.example.com</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5813,7 +5813,7 @@ and the Sidecar is on port 5678, then it can be accessed at
 </div>
 <div class="paragraph">
 <p>Non-jvm app can take advantage of the Config Server&#8217;s ability to return YAML
-documents.  For example, a call to <a href="http://sidecar.local.spring.io:5678/configserver/default-master.yml" class="bare">http://sidecar.local.spring.io:5678/configserver/default-master.yml</a>
+documents.  For example, a call to <a href="https://sidecar.local.spring.io:5678/configserver/default-master.yml" class="bare">https://sidecar.local.spring.io:5678/configserver/default-master.yml</a>
 might result in a YAML document like the following</p>
 </div>
 <div class="listingblock">
@@ -6321,13 +6321,13 @@ Sabby Anandan; Marius Bogoevici; Eric Bottard; Mark Fisher; Ilayaperumal Gopinat
 :spring-cloud-stream-repo: snapshot
 :github-tag: master
 :spring-cloud-stream-docs-version: current
-:spring-cloud-stream-docs: <a href="http://docs.spring.io/spring-cloud-stream/docs/{spring-cloud-stream-docs-version}/reference" class="bare">http://docs.spring.io/spring-cloud-stream/docs/{spring-cloud-stream-docs-version}/reference</a>
-:spring-cloud-stream-docs-current: <a href="http://docs.spring.io/spring-cloud-stream/docs/current-SNAPSHOT/reference/html/" class="bare">http://docs.spring.io/spring-cloud-stream/docs/current-SNAPSHOT/reference/html/</a>
+:spring-cloud-stream-docs: <a href="https://docs.spring.io/spring-cloud-stream/docs/{spring-cloud-stream-docs-version}/reference" class="bare">https://docs.spring.io/spring-cloud-stream/docs/{spring-cloud-stream-docs-version}/reference</a>
+:spring-cloud-stream-docs-current: <a href="https://docs.spring.io/spring-cloud-stream/docs/current-SNAPSHOT/reference/html/" class="bare">https://docs.spring.io/spring-cloud-stream/docs/current-SNAPSHOT/reference/html/</a>
 :github-repo: spring-cloud/spring-cloud-stream
-:github-raw: <a href="http://raw.github.com/spring-cloud/spring-cloud-netflix/master" class="bare">http://raw.github.com/spring-cloud/spring-cloud-netflix/master</a>
-:github-code: <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master" class="bare">http://github.com/spring-cloud/spring-cloud-netflix/tree/master</a>
-:github-wiki: <a href="http://github.com/spring-cloud/spring-cloud-netflix/wiki" class="bare">http://github.com/spring-cloud/spring-cloud-netflix/wiki</a>
-:github-master-code: <a href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master" class="bare">http://github.com/spring-cloud/spring-cloud-netflix/tree/master</a>
+:github-raw: <a href="https://raw.github.com/spring-cloud/spring-cloud-netflix/master" class="bare">https://raw.github.com/spring-cloud/spring-cloud-netflix/master</a>
+:github-code: <a href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master" class="bare">https://github.com/spring-cloud/spring-cloud-netflix/tree/master</a>
+:github-wiki: <a href="https://github.com/spring-cloud/spring-cloud-netflix/wiki" class="bare">https://github.com/spring-cloud/spring-cloud-netflix/wiki</a>
+:github-master-code: <a href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master" class="bare">https://github.com/spring-cloud/spring-cloud-netflix/tree/master</a>
 :sc-ext: java
 </div>
 </div>
@@ -8107,7 +8107,7 @@ The <code>spring.cloud.stream.schema.server.allowSchemaDeletion</code> boolean s
 <div class="paragraph">
 <p>The schema registry server uses a relational database to store the schemas.
  By default, it uses an embedded database.
-You can customize the schema storage using the <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-sql">Spring Boot SQL database and JDBC configuration options</a>.</p>
+You can customize the schema storage using the <a href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-sql">Spring Boot SQL database and JDBC configuration options</a>.</p>
 </div>
 <div class="paragraph">
 <p>A Spring Boot application enabling the schema registry looks as follows:</p>
@@ -9050,7 +9050,7 @@ public class ManuallyAcknowdledgingConsumer {
 <h5 id="_example_security_configuration">Example: security configuration</h5>
 <div class="paragraph">
 <p>Apache Kafka 0.9 supports secure connections between client and brokers.
-To take advantage of this feature, follow the guidelines in the <a href="http://kafka.apache.org/090/documentation.html#security_configclients">Apache Kafka Documentation</a> as well as the Kafka 0.9 <a href="http://docs.confluent.io/2.0.0/kafka/security.html">security guidelines from the Confluent documentation</a>.
+To take advantage of this feature, follow the guidelines in the <a href="https://kafka.apache.org/090/documentation.html#security_configclients">Apache Kafka Documentation</a> as well as the Kafka 0.9 <a href="https://docs.confluent.io/2.0.0/kafka/security.html">security guidelines from the Confluent documentation</a>.
 Use the <code>spring.cloud.stream.kafka.binder.configuration</code> option to set security properties for all clients created by the binder.</p>
 </div>
 <div class="paragraph">
@@ -9065,7 +9065,7 @@ Use the <code>spring.cloud.stream.kafka.binder.configuration</code> option to se
 <p>All the other security properties can be set in a similar manner.</p>
 </div>
 <div class="paragraph">
-<p>When using Kerberos, follow the instructions in the <a href="http://kafka.apache.org/090/documentation.html#security_sasl_clientconfig">reference documentation</a> for creating and referencing the JAAS configuration.</p>
+<p>When using Kerberos, follow the instructions in the <a href="https://kafka.apache.org/090/documentation.html#security_sasl_clientconfig">reference documentation</a> for creating and referencing the JAAS configuration.</p>
 </div>
 <div class="paragraph">
 <p>Spring Cloud Stream supports passing JAAS configuration information to the application using a JAAS configuration file and using Spring Boot properties.</p>
@@ -9358,7 +9358,7 @@ please refer to the <a href="https://github.com/spring-cloud/spring-cloud-stream
 <h4 id="rabbit-binder-properties">RabbitMQ Binder Properties</h4>
 <div class="paragraph">
 <p>By default, the RabbitMQ binder uses Spring Boot&#8217;s <code>ConnectionFactory</code>, and it therefore supports all Spring Boot configuration options for RabbitMQ.
-(For reference, consult the <a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties">Spring Boot documentation</a>.)
+(For reference, consult the <a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties">Spring Boot documentation</a>.)
 RabbitMQ configuration options use the <code>spring.rabbitmq</code> prefix.</p>
 </div>
 <div class="paragraph">
@@ -9911,7 +9911,7 @@ source control.
 <div class="paragraph">
 <p>The projects that require middleware generally include a
 <code>docker-compose.yml</code>, so consider using
-<a href="http://compose.docker.io/">Docker Compose</a> to run the middeware servers
+<a href="https://compose.docker.io/">Docker Compose</a> to run the middeware servers
 in Docker containers. See the README in the
 <a href="https://github.com/spring-cloud-samples/scripts">scripts demo
 repository</a> for specific instructions about the common cases of mongo,
@@ -9928,15 +9928,15 @@ rabbit and redis.</p>
 <h3 id="_working_with_the_code">Working with the code</h3>
 <div class="paragraph">
 <p>If you don&#8217;t have an IDE preference we would recommend that you use
-<a href="http://www.springsource.com/developer/sts">Spring Tools Suite</a> or
-<a href="http://eclipse.org">Eclipse</a> when working with the code. We use the
-<a href="http://eclipse.org/m2e/">m2eclipe</a> eclipse plugin for maven support. Other IDEs and tools
+<a href="https://www.springsource.com/developer/sts">Spring Tools Suite</a> or
+<a href="https://eclipse.org">Eclipse</a> when working with the code. We use the
+<a href="https://eclipse.org/m2e/">m2eclipe</a> eclipse plugin for maven support. Other IDEs and tools
 should also work without issue.</p>
 </div>
 <div class="sect3">
 <h4 id="_importing_into_eclipse_with_m2eclipse">Importing into eclipse with m2eclipse</h4>
 <div class="paragraph">
-<p>We recommend the <a href="http://eclipse.org/m2e/">m2eclipe</a> eclipse plugin when working with
+<p>We recommend the <a href="https://eclipse.org/m2e/">m2eclipe</a> eclipse plugin when working with
 eclipse. If you don&#8217;t already have m2eclipse installed it is available from the "eclipse
 marketplace".</p>
 </div>
@@ -10015,7 +10015,7 @@ you can import formatter settings using the
 <code>eclipse-code-formatter.xml</code> file from the
 <a href="https://github.com/spring-cloud/build/tree/master/eclipse-coding-conventions.xml">Spring
 Cloud Build</a> project. If using IntelliJ, you can use the
-<a href="http://plugins.jetbrains.com/plugin/6546">Eclipse Code Formatter
+<a href="https://plugins.jetbrains.com/plugin/6546">Eclipse Code Formatter
 Plugin</a> to import the same file.</p>
 </li>
 <li>
@@ -10042,7 +10042,7 @@ than cosmetic changes).</p>
 other target branch in the main project).</p>
 </li>
 <li>
-<p>When writing a commit message please follow <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">these conventions</a>,
+<p>When writing a commit message please follow <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">these conventions</a>,
 if you are fixing an existing issue please add <code>Fixes gh-XXXX</code> at the end of the commit
 message (where XXXX is the issue number).</p>
 </li>
@@ -10315,14 +10315,14 @@ packages to scan.</p>
 <p><strong>Camden.SR7</strong></p>
 </div>
 <div class="paragraph">
-<p>Spring Cloud Sleuth implements a distributed tracing solution for <a href="http://cloud.spring.io">Spring Cloud</a>.</p>
+<p>Spring Cloud Sleuth implements a distributed tracing solution for <a href="https://cloud.spring.io">Spring Cloud</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_terminology">Terminology</h3>
 <div class="paragraph">
-<p>Spring Cloud Sleuth borrows <a href="http://research.google.com/pubs/pub36356.html">Dapper&#8217;s</a> terminology.</p>
+<p>Spring Cloud Sleuth borrows <a href="https://research.google.com/pubs/pub36356.html">Dapper&#8217;s</a> terminology.</p>
 </div>
 <div class="paragraph">
 <p><strong>Span:</strong> The basic unit of work. For example, sending an RPC is a new span, as is sending a response to an
@@ -10509,7 +10509,7 @@ setting proper tags on the span which Zipkin can properly colorize. You could se
 <h4 id="_live_examples">Live examples</h4>
 <div class="imageblock">
 <div class="content">
-<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.1.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+<a class="image" href="https://docssleuth-zipkin-server.cfapps.io/"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.1.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
 </div>
 <div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
@@ -10523,7 +10523,7 @@ setting proper tags on the span which Zipkin can properly colorize. You could se
 </div>
 <div class="imageblock">
 <div class="content">
-<a class="image" href="http://docssleuth-zipkin-server.cfapps.io/dependency"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.1.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
+<a class="image" href="https://docssleuth-zipkin-server.cfapps.io/dependency"><img src="https://raw.githubusercontent.com/spring-cloud/spring-cloud-sleuth/1.1.x/docs/src/main/asciidoc/images/pws.png" alt="Zipkin deployed on Pivotal Web Services" width="150" height="74"></a>
 </div>
 <div class="title">Click Pivotal Web Services icon to see it live!Click Pivotal Web Services icon to see it live!</div>
 </div>
@@ -10546,7 +10546,7 @@ service1.log:2016-02-26 11:15:48.182  INFO [service1,2485ec27856c56f4,2485ec2785
 </div>
 <div class="paragraph">
 <p>If you&#8217;re using a log aggregating tool like <a href="https://www.elastic.co/products/kibana">Kibana</a>,
-<a href="http://www.splunk.com/">Splunk</a> etc. you can order the events that took place. An example of
+<a href="https://www.splunk.com/">Splunk</a> etc. you can order the events that took place. An example of
 Kibana would look like this:</p>
 </div>
 <div class="imageblock">
@@ -11858,7 +11858,7 @@ Stream based span reporting).</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can accumulate and send span data over
-<a href="http://cloud.spring.io/spring-cloud-stream">Spring Cloud Stream</a> by
+<a href="https://cloud.spring.io/spring-cloud-stream">Spring Cloud Stream</a> by
 including the <code>spring-cloud-sleuth-stream</code> jar as a dependency, and
 adding a Channel Binder implementation
 (e.g. <code>spring-cloud-starter-stream-rabbit</code> for RabbitMQ or
@@ -11985,7 +11985,7 @@ the consumer app).
 <div class="sectionbody">
 <div class="paragraph">
 <p>Currently Spring Cloud Sleuth registers very simple metrics related to spans.
-It&#8217;s using the <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-recording-metrics">Spring Boot&#8217;s metrics support</a>
+It&#8217;s using the <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-recording-metrics">Spring Boot&#8217;s metrics support</a>
 to calculate the number of accepted and dropped spans. Each time a span gets
 sent to Zipkin the number of accepted spans will increase. If there&#8217;s an error then
 the number of dropped spans will get increased.</p>
@@ -12377,7 +12377,7 @@ static class CustomExecutorConfig extends AsyncConfigurerSupport {
 <div class="sect2">
 <h3 id="_messaging">Messaging</h3>
 <div class="paragraph">
-<p>Spring Cloud Sleuth integrates with <a href="http://projects.spring.io/spring-integration/">Spring Integration</a>. It creates spans for publish and
+<p>Spring Cloud Sleuth integrates with <a href="https://projects.spring.io/spring-integration/">Spring Integration</a>. It creates spans for publish and
 subscribe events. To disable Spring Integration instrumentation, set <code>spring.sleuth.integration.enabled</code> to false.</p>
 </div>
 <div class="paragraph">
@@ -12410,10 +12410,10 @@ To disable Zuul support set the <code>spring.sleuth.zuul.enabled</code> property
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://docssleuth-zipkin-server.cfapps.io/">Zipkin for apps presented in the samples to the top</a></p>
+<p><a href="https://docssleuth-zipkin-server.cfapps.io/">Zipkin for apps presented in the samples to the top</a></p>
 </li>
 <li>
-<p><a href="http://docsbrewing-zipkin-web.cfapps.io/">Zipkin for Brewery on PWS</a>, its <a href="https://github.com/spring-cloud-samples/brewery">Github Code</a></p>
+<p><a href="https://docsbrewing-zipkin-web.cfapps.io/">Zipkin for Brewery on PWS</a>, its <a href="https://github.com/spring-cloud-samples/brewery">Github Code</a></p>
 </li>
 </ul>
 </div>
@@ -12469,7 +12469,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon), Circuit Brea
 <div class="sect2">
 <h3 id="_how_to_activate">How to activate</h3>
 <div class="paragraph">
-<p>To activate Consul Service Discovery use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-discovery</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
+<p>To activate Consul Service Discovery use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-discovery</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 </div>
 <div class="sect2">
@@ -12634,7 +12634,7 @@ config/application/</pre>
 <div class="sect2">
 <h3 id="_how_to_activate_2">How to activate</h3>
 <div class="paragraph">
-<p>To get started with Consul Configuration use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-config</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
+<p>To get started with Consul Configuration use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-config</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 <div class="paragraph">
 <p>This will enable auto-configuration that will setup Spring Cloud Consul Config.</p>
@@ -12805,7 +12805,7 @@ Retry has a <code>RetryInterceptorBuilder</code> that makes it easy to create on
 <div class="sect2">
 <h3 id="_how_to_activate_3">How to activate</h3>
 <div class="paragraph">
-<p>To get started with the Consul Bus use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-bus</code>. See the <a href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
+<p>To get started with the Consul Bus use the starter with group <code>org.springframework.cloud</code> and artifact id <code>spring-cloud-starter-consul-bus</code>. See the <a href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</a> for details on setting up your build system with the current Spring Cloud Release Train.</p>
 </div>
 <div class="paragraph">
 <p>See the <a href="https://cloud.spring.io/spring-cloud-bus/">Spring Cloud Bus</a> documentation for the available actuator endpoints and howto send custom messages.</p>
@@ -12817,7 +12817,7 @@ Retry has a <code>RetryInterceptorBuilder</code> that makes it easy to create on
 <h2 id="spring-cloud-consul-hystrix">Circuit Breaker with Hystrix</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Applications can use the Hystrix Circuit Breaker provided by the Spring Cloud Netflix project by including this starter in the projects pom.xml: <code>spring-cloud-starter-hystrix</code>.  Hystrix doesn&#8217;t depend on the Netflix Discovery Client. The <code>@EnableHystrix</code> annotation should be placed on a configuration class (usually the main class). Then methods can be annotated with <code>@HystrixCommand</code> to be protected by a circuit breaker. See <a href="http://projects.spring.io/spring-cloud/spring-cloud.html#_circuit_breaker_hystrix_clients">the documentation</a> for more details.</p>
+<p>Applications can use the Hystrix Circuit Breaker provided by the Spring Cloud Netflix project by including this starter in the projects pom.xml: <code>spring-cloud-starter-hystrix</code>.  Hystrix doesn&#8217;t depend on the Netflix Discovery Client. The <code>@EnableHystrix</code> annotation should be placed on a configuration class (usually the main class). Then methods can be annotated with <code>@HystrixCommand</code> to be protected by a circuit breaker. See <a href="https://projects.spring.io/spring-cloud/spring-cloud.html#_circuit_breaker_hystrix_clients">the documentation</a> for more details.</p>
 </div>
 </div>
 </div>
@@ -12888,7 +12888,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon), Circuit Brea
 <h2 id="spring-cloud-zookeeper-install">Install Zookeeper</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Please see the <a href="http://zookeeper.apache.org/doc/current/zookeeperStarted.html">installation documentation</a> for instructions on how to install Zookeeper.</p>
+<p>Please see the <a href="https://zookeeper.apache.org/doc/current/zookeeperStarted.html">installation documentation</a> for instructions on how to install Zookeeper.</p>
 </div>
 </div>
 </div>
@@ -12896,7 +12896,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon), Circuit Brea
 <h2 id="spring-cloud-zookeeper-discovery">Service Discovery with Zookeeper</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle. <a href="http://curator.apache.org">Curator</a>(A java library for Zookeeper) provides Service Discovery services via <a href="http://curator.apache.org/curator-x-discovery/">Service Discovery Extension</a>. Spring Cloud Zookeeper leverages this extension for service registration and discovery.</p>
+<p>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle. <a href="https://curator.apache.org">Curator</a>(A java library for Zookeeper) provides Service Discovery services via <a href="https://curator.apache.org/curator-x-discovery/">Service Discovery Extension</a>. Spring Cloud Zookeeper leverages this extension for service registration and discovery.</p>
 </div>
 <div class="sect2">
 <h3 id="_how_to_activate_4">How to activate</h3>
@@ -13307,7 +13307,7 @@ of your dependencies.</p>
 <h2 id="spring-cloud-zookeeper-config">Distributed Configuration with Zookeeper</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Zookeeper provides a <a href="http://zookeeper.apache.org/doc/current/zookeeperOver.html#sc_dataModelNameSpace">hierarchical namespace</a> that allows clients to store arbitrary data, such as configuration data.  Spring Cloud Zookeeper Config is an alternative to the <a href="https://github.com/spring-cloud/spring-cloud-config">Config Server and Client</a>.  Configuration is loaded into the Spring Environment during the special "bootstrap" phase.  Configuration is stored in the <code>/config</code> namespace by default.  Multiple <code>PropertySource</code> instances are created based on the application&#8217;s name and the active profiles that mimicks the Spring Cloud Config order of resolving properties.  For example, an application with the name "testApp" and with the "dev" profile will have the following property sources created:</p>
+<p>Zookeeper provides a <a href="https://zookeeper.apache.org/doc/current/zookeeperOver.html#sc_dataModelNameSpace">hierarchical namespace</a> that allows clients to store arbitrary data, such as configuration data.  Spring Cloud Zookeeper Config is an alternative to the <a href="https://github.com/spring-cloud/spring-cloud-config">Config Server and Client</a>.  Configuration is loaded into the Spring Environment during the special "bootstrap" phase.  Configuration is stored in the <code>/config</code> namespace by default.  Multiple <code>PropertySource</code> instances are created based on the application&#8217;s name and the active profiles that mimicks the Spring Cloud Config order of resolving properties.  For example, an application with the name "testApp" and with the "dev" profile will have the following property sources created:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13370,7 +13370,7 @@ config/application</pre>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<p>Spring Boot CLI provides <a href="http://projects.spring.io/spring-boot">Spring
+<p>Spring Boot CLI provides <a href="https://projects.spring.io/spring-boot">Spring
 Boot</a> command line features for <a href="https://github.com/spring-cloud">Spring
 Cloud</a>. You can write Groovy scripts to run Spring Cloud component
 applications (e.g. <code>@EnableEurekaServer</code>). You can also easily do
@@ -13831,7 +13831,7 @@ class Application {
 <td class="content">
 All of the OAuth2 SSO and resource server features moved to Spring Boot
 in version 1.3. You can find documentation in the
-<a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</a>.
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</a>.
 </td>
 </tr>
 </table>
@@ -13878,7 +13878,7 @@ Spring Boot (1.4.1) does not create an
 <h4 id="_client_token_relay_in_zuul_proxy">Client Token Relay in Zuul Proxy</h4>
 <div class="paragraph">
 <p>If your app also has a
-<a href="http://cloud.spring.io/spring-cloud.html#netflix-zuul-reverse-proxy">Spring
+<a href="https://cloud.spring.io/spring-cloud.html#netflix-zuul-reverse-proxy">Spring
 Cloud Zuul</a> embedded reverse proxy (using <code>@EnableZuulProxy</code>) then you
 can ask it to forward OAuth2 access tokens downstream to the services
 it is proxying. Thus the SSO app above can be enhanced simply like
@@ -14112,7 +14112,7 @@ are configured, they default per the user&#8217;s profile in Cloud Foundry.</p>
 <td class="content">
 All of the OAuth2 SSO and resource server features moved to Spring Boot
 in version 1.3. You can find documentation in the
-<a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</a>.
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</a>.
 </td>
 </tr>
 </table>
@@ -14402,7 +14402,7 @@ public class WiremockForDocsMockServerApplicationTests {
 	public void contextLoads() throws Exception {
 		// will read stubs classpath
 		MockRestServiceServer server = WireMockRestServiceServer.with(this.restTemplate)
-				.baseUrl("http://example.org").stubs("classpath:/stubs/resource.json")
+				.baseUrl("https://example.org").stubs("classpath:/stubs/resource.json")
 				.build();
 		// We're asserting if WireMock responded properly
 		assertThat(this.service.go()).isEqualTo("Hello World");
@@ -14416,7 +14416,7 @@ public class WiremockForDocsMockServerApplicationTests {
 method takes a stub path resource pattern as an argument. So in this
 example the stub defined at <code>/stubs/resource.json</code> is loaded into the
 mock server, so if the <code>RestTemplate</code> is asked to visit
-<code><a href="http://example.org/" class="bare">http://example.org/</a></code> it will get the responses as declared
+<code><a href="https://example.org/" class="bare">https://example.org/</a></code> it will get the responses as declared
 there. More than one stub pattern can be specified, and each one can
 be a directory (for a recursive list of all ".json"), or a fixed
 filename (like in the example above) or an ant-style pattern. The JSON
@@ -14684,7 +14684,7 @@ Contract.make {
 <div class="title">Important</div>
 </td>
 <td class="content">
-<a href="http://codearte.github.io/accurest">The documentation to the deprecated Accurest project in version 1.1.0 is available here.</a>
+<a href="https://codearte.github.io/accurest">The documentation to the deprecated Accurest project in version 1.1.0 is available here.</a>
 </td>
 </tr>
 </table>
@@ -15017,9 +15017,9 @@ all the contract are present in the producer&#8217;s repository
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">repositories {
 	mavenCentral()
 	mavenLocal()
-	maven { url "http://repo.spring.io/snapshot" }
-	maven { url "http://repo.spring.io/milestone" }
-	maven { url "http://repo.spring.io/release" }
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://repo.spring.io/release" }
 }</code></pre>
 </div>
 </div>
@@ -15612,7 +15612,7 @@ example of achieving the same by changing the properties.</p>
 <div class="content">
 <pre class="highlight"><code class="language-yaml" data-lang="yaml">stubrunner:
   ids: 'com.example:http-server-dsl:+:stubs:8080'
-  repositoryRoot: http://repo.spring.io/libs-snapshot</code></pre>
+  repositoryRoot: https://repo.spring.io/libs-snapshot</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15641,7 +15641,7 @@ is under constant development.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://www.slideshare.net/MarcinGrzejszczak/stick-to-the-rules-consumer-driven-contracts-201507-confitura">Slides from Marcin Grzejszczak&#8217;s talk about Accurest</a></p>
+<p><a href="https://www.slideshare.net/MarcinGrzejszczak/stick-to-the-rules-consumer-driven-contracts-201507-confitura">Slides from Marcin Grzejszczak&#8217;s talk about Accurest</a></p>
 </li>
 <li>
 <p><a href="http://toomuchcoding.com/blog/categories/accurest/">Accurest related articles from Marcin Grzejszczak&#8217;s blog</a></p>
@@ -16020,7 +16020,7 @@ one to one to the contents of the repo.</p>
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
 	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
 	&lt;groupId&gt;com.example&lt;/groupId&gt;
@@ -16140,7 +16140,7 @@ Those poms are necessary for the consumer side to run <code>mvn clean install -D
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
 	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
 	&lt;groupId&gt;com.example.standalone&lt;/groupId&gt;
@@ -16188,7 +16188,7 @@ Those poms are necessary for the consumer side to run <code>mvn clean install -D
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
+		  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
 	&lt;id&gt;project&lt;/id&gt;
 	&lt;formats&gt;
 		&lt;format&gt;jar&lt;/format&gt;
@@ -16233,7 +16233,7 @@ and runs <code>mvn clean install -DskipTests</code> to install locally the stubs
 <div class="title">Tip</div>
 </td>
 <td class="content">
-You need to have <a href="http://maven.apache.org/download.cgi">Maven installed locally</a>
+You need to have <a href="https://maven.apache.org/download.cgi">Maven installed locally</a>
 </td>
 </tr>
 </table>
@@ -16309,7 +16309,7 @@ of either Gradle or Maven plugins.</p>
 </td>
 <td class="content">
 If you want to use Spock in your projects you have to add separately
-the <code>spock-core</code> and <code>spock-spring</code> modules. Check <a href="http://spockframework.github.io/">Spock docs for more information</a>
+the <code>spock-core</code> and <code>spock-spring</code> modules. Check <a href="https://spockframework.github.io/">Spock docs for more information</a>
 </td>
 </tr>
 </table>
@@ -16391,9 +16391,9 @@ and will modify the imports accordingly.</p>
 	repositories {
 		mavenCentral()
 		mavenLocal()
-		maven { url "http://repo.spring.io/snapshot" }
-		maven { url "http://repo.spring.io/milestone" }
-		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://repo.spring.io/release" }
 	}
 }</code></pre>
 </div>
@@ -17804,9 +17804,9 @@ automatically for you.</p>
 	repositories {
 		mavenCentral()
 		mavenLocal()
-		maven { url "http://repo.spring.io/snapshot" }
-		maven { url "http://repo.spring.io/milestone" }
-		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://repo.spring.io/release" }
 	}</code></pre>
 </div>
 </div>
@@ -17859,7 +17859,7 @@ For both Maven and Gradle the setup comes out of the box. But you can customize 
 &lt;assembly
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
 	&lt;id&gt;stubs&lt;/id&gt;
 	&lt;formats&gt;
 		&lt;format&gt;jar&lt;/format&gt;
@@ -17927,7 +17927,7 @@ publishing {
 <h3 id="_stub_runner_core">Stub Runner Core</h3>
 <div class="paragraph">
 <p>Runs stubs for service collaborators. Treating stubs as contracts of services allows to use stub-runner as an implementation of
-<a href="http://martinfowler.com/articles/consumerDrivenContracts.html">Consumer Driven Contracts</a>.</p>
+<a href="https://martinfowler.com/articles/consumerDrivenContracts.html">Consumer Driven Contracts</a>.</p>
 </div>
 <div class="paragraph">
 <p>Stub Runner allows you to automatically download the stubs of the provided dependencies, start WireMock servers for them and feed them with proper stub definitions.
@@ -18685,7 +18685,7 @@ and we want to have the stub runner feature turned on <code>@AutoConfigureStubRu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">-Dstubrunner.repositoryRoot=http://repo.spring.io/snapshots (1)
+<pre class="highlight"><code class="language-bash" data-lang="bash">-Dstubrunner.repositoryRoot=https://repo.spring.io/snapshots (1)
 -Dstubrunner.cloud.stubbed.discovery.enabled=false (2)
 -Dstubrunner.ids=org.springframework.cloud.contract.verifier.stubs:loanIssuance,org.springframework.cloud.contract.verifier.stubs:fraudDetectionServer,org.springframework.cloud.contract.verifier.stubs:bootService (3)
 -Dstubrunner.idsToServiceIds.fraudDetectionServer=someNameThatShouldMapFraudDetectionServer (4)
@@ -18949,7 +18949,7 @@ the Stub Runner to take into consideration. You can read more about the <a href=
 </table>
 </div>
 <div class="paragraph">
-<p>Taken from <a href="http://download.eclipse.org/aether/aether-core/0.9.0/apidocs/org/eclipse/aether/util/version/GenericVersionScheme.html">Aether Docs</a>:</p>
+<p>Taken from <a href="https://download.eclipse.org/aether/aether-core/0.9.0/apidocs/org/eclipse/aether/util/version/GenericVersionScheme.html">Aether Docs</a>:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -19405,9 +19405,9 @@ Remember to annotate your test class with <code>@AutoConfigureStubRunner</code>.
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:beans="http://www.springframework.org/schema/beans"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans.xsd
+			https://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/integration
-			http://www.springframework.org/schema/integration/spring-integration.xsd"&gt;
+			https://www.springframework.org/schema/integration/spring-integration.xsd"&gt;
 
 
 	&lt;!-- REQUIRED FOR TESTING --&gt;
@@ -19948,7 +19948,7 @@ a tiny subset of it (namely literals, method calls and closures). What&#8217;s m
 				"id":"01fbe706f872cb32",
 				"name":"Washington",
 				"place_type":"city",
-				"url": "http://api.twitter.com/1/geo/id/01fbe706f872cb32.json"
+				"url": "https://api.twitter.com/1/geo/id/01fbe706f872cb32.json"
 			}
 		}]
 	'''
@@ -22111,7 +22111,7 @@ then:
  locations.
 </p><p class="tableblock"> Typically the eureka server URLs carry protocol,host,port,context and version
  information if any. Example:
- <a href="http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/" class="bare">http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/</a>
+ <a href="https://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/" class="bare">https://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/</a>
 </p><p class="tableblock"> The changes are effective at runtime at the next service url refresh cycle as
  specified by eurekaServiceUrlPollIntervalSeconds.</p></td>
 </tr>

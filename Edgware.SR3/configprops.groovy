@@ -5,7 +5,7 @@
  * </pre>
  */
 
-@GrabResolver(name='milestone', root='http://repo.spring.io/milestone/')
+@GrabResolver(name='milestone', root='https://repo.spring.io/milestone/')
 @Grab('org.codehaus.groovy:groovy-json:2.4.3')
 @Grab('org.springframework.cloud:spring-cloud-stream:1.3.0.M1')
 @Grab('org.springframework.cloud:spring-cloud-starter-bus-amqp:2.0.0.M1')
