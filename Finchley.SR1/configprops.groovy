@@ -5,7 +5,7 @@
  * </pre>
  */
 
-@GrabResolver(name='milestone', root='http://repo.spring.io/milestone/')
+@GrabResolver(name='milestone', root='https://repo.spring.io/milestone/')
 @Grab('org.codehaus.groovy:groovy-json:2.5.0')
 @Grab('org.codehaus.groovy:groovy-nio:2.5.0')
 @Grab('org.codehaus.groovy:groovy-xml:2.5.0')
