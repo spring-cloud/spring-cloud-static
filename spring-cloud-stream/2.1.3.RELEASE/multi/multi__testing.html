@@ -1,0 +1,174 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>13.&nbsp;Testing</title><link rel="stylesheet" type="text/css" href="css/manual-multipage.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="multi_spring-cloud-stream.html" title="Spring Cloud Stream Reference Guide"><link rel="up" href="multi__preface.html" title="Part&nbsp;I.&nbsp;Preface"><link rel="prev" href="multi__inter_application_communication.html" title="12.&nbsp;Inter-Application Communication"><link rel="next" href="multi__health_indicator.html" title="14.&nbsp;Health Indicator"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">13.&nbsp;Testing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="multi__inter_application_communication.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;I.&nbsp;Preface</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="multi__health_indicator.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="_testing" href="#_testing"></a>13.&nbsp;Testing</h2></div></div></div><p>Spring Cloud Stream provides support for testing your microservice applications without connecting to a messaging system.
+You can do that by using the <code class="literal">TestSupportBinder</code> provided by the <code class="literal">spring-cloud-stream-test-support</code> library, which can be added as a test dependency to the application, as shown in the following example:</p><pre class="programlisting">   <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;dependency&gt;</span>
+       <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;groupId&gt;</span>org.springframework.cloud<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/groupId&gt;</span>
+       <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;artifactId&gt;</span>spring-cloud-stream-test-support<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/artifactId&gt;</span>
+       <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;scope&gt;</span>test<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/scope&gt;</span>
+   <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/dependency&gt;</span></pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The <code class="literal">TestSupportBinder</code> uses the Spring Boot autoconfiguration mechanism to supersede the other binders found on the classpath.
+Therefore, when adding a binder as a dependency, you must make sure that the <code class="literal">test</code> scope is being used.</p></td></tr></table></div><p>The <code class="literal">TestSupportBinder</code> lets you interact with the bound channels and inspect any messages sent and received by the application.</p><p>For outbound message channels, the <code class="literal">TestSupportBinder</code> registers a single subscriber and retains the messages emitted by the application in a <code class="literal">MessageCollector</code>.
+They can be retrieved during tests and have assertions made against them.</p><p>You can also send messages to inbound message channels so that the consumer application can consume the messages.
+The following example shows how to test both input and output channels on a processor:</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@RunWith(SpringRunner.class)</span></em>
+<em><span class="hl-annotation" style="color: gray">@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> ExampleTest {
+
+  <em><span class="hl-annotation" style="color: gray">@Autowired</span></em>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">private</span> Processor processor;
+
+  <em><span class="hl-annotation" style="color: gray">@Autowired</span></em>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">private</span> MessageCollector messageCollector;
+
+  <em><span class="hl-annotation" style="color: gray">@Test</span></em>
+  <em><span class="hl-annotation" style="color: gray">@SuppressWarnings("unchecked")</span></em>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> testWiring() {
+    Message&lt;String&gt; message = <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> GenericMessage&lt;&gt;(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"hello"</span>);
+    processor.input().send(message);
+    Message&lt;String&gt; received = (Message&lt;String&gt;) messageCollector.forChannel(processor.output()).poll();
+    assertThat(received.getPayload(), equalTo(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"hello world"</span>));
+  }
+
+
+  <em><span class="hl-annotation" style="color: gray">@SpringBootApplication</span></em>
+  <em><span class="hl-annotation" style="color: gray">@EnableBinding(Processor.class)</span></em>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> MyProcessor {
+
+    <em><span class="hl-annotation" style="color: gray">@Autowired</span></em>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">private</span> Processor channels;
+
+    <em><span class="hl-annotation" style="color: gray">@Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)</span></em>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> String transform(String in) {
+      <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> in + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">" world"</span>;
+    }
+  }
+}</pre><p>In the preceding example, we create an application that has an input channel and an output channel, both bound through the <code class="literal">Processor</code> interface.
+The bound interface is injected into the test so that we can have access to both channels.
+We send a message on the input channel, and we use the <code class="literal">MessageCollector</code> provided by Spring Cloud Stream&#8217;s test support to capture that the message has been sent to the output channel as a result.
+Once we have received the message, we can validate that the component functions correctly.</p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_disabling_the_test_binder_autoconfiguration" href="#_disabling_the_test_binder_autoconfiguration"></a>13.1&nbsp;Disabling the Test Binder Autoconfiguration</h2></div></div></div><p>The intent behind the test binder superseding all the other binders on the classpath is to make it easy to test your applications without making changes to your production dependencies.
+In some cases (for example, integration tests) it is useful to use the actual production binders instead, and that requires disabling the test binder autoconfiguration.
+To do so, you can exclude the <code class="literal">org.springframework.cloud.stream.test.binder.TestSupportBinderAutoConfiguration</code> class by using one of the Spring Boot autoconfiguration exclusion mechanisms, as shown in the following example:</p><pre class="programlisting">    <em><span class="hl-annotation" style="color: gray">@SpringBootApplication(exclude = TestSupportBinderAutoConfiguration.class)</span></em>
+    <em><span class="hl-annotation" style="color: gray">@EnableBinding(Processor.class)</span></em>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> MyProcessor {
+
+        <em><span class="hl-annotation" style="color: gray">@Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)</span></em>
+        <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> String transform(String in) {
+            <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> in + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">" world"</span>;
+        }
+    }</pre><p>When autoconfiguration is disabled, the test binder is available on the classpath, and its <code class="literal">defaultCandidate</code> property is set to <code class="literal">false</code> so that it does not interfere with the regular user configuration. It can be referenced under the name, <code class="literal">test</code>, as shown in the following example:</p><p><code class="literal">spring.cloud.stream.defaultBinder=test</code></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="spring_integration_test_binder" href="#spring_integration_test_binder"></a>13.2&nbsp;Spring Integration Test Binder</h2></div></div></div><p>Current test binder was specifically designed to facilitate <span class="emphasis"><em>unit testing</em></span> of the actual messaging components and thus bypasses some of the core functionality of the binder API.
+While such light-weight approach is sufficient for a lot of cases, it usually requires additional <span class="emphasis"><em>integration testing</em></span> with real binders (e.g., Rabbit, Kafka etc).</p><p>To begin bridging the gap between <span class="emphasis"><em>unit</em></span> and <span class="emphasis"><em>integration</em></span> testing we&#8217;ve developed a new test binder which uses <a class="link" href="https://spring.io/projects/spring-integration" target="_top">Spring Integration</a> framework
+as an in-JVM Message Broker essentially giving you the best of both worlds - a real binder without the networking.</p><p>To enable Spring Integration Test Binder all you need is:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Add required dependencies</li><li class="listitem">Remove the dependency for <code class="literal">spring-cloud-stream-test-support</code></li></ul></div><p><span class="strong"><strong><span class="strong"><strong>Add required dependencies</strong></span></strong></span></p><p>Below is the example of the required Maven POM entries which could be easily retrofitted into Gradle.</p><pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;dependency&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;groupId&gt;</span>org.springframework.cloud<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/groupId&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;artifactId&gt;</span>spring-cloud-stream<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/artifactId&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;version&gt;</span>${spring.cloud.strea.version}<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/version&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;type&gt;</span>test-jar<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/type&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;scope&gt;</span>test<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/scope&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;classifier&gt;</span>test-binder<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/classifier&gt;</span>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/dependency&gt;</span>
+. . .
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;plugins&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;plugin&gt;</span>
+        <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/groupId&gt;</span>
+        <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;artifactId&gt;</span>maven-jar-plugin<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/artifactId&gt;</span>
+        <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;executions&gt;</span>
+	    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;execution&gt;</span>
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;configuration&gt;</span>
+		    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;includes&gt;</span>
+			 <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;include&gt;</span>**/integration/*<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/include&gt;</span>
+		    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/includes&gt;</span>
+		    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;classifier&gt;</span>test-binder<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/classifier&gt;</span>
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/configuration&gt;</span>
+                <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;goals&gt;</span>
+                    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;goal&gt;</span>test-jar<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/goal&gt;</span>
+                <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/goals&gt;</span>
+            <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/execution&gt;</span>
+        <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/executions&gt;</span>
+    <span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/plugin&gt;</span>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/plugins&gt;</span></pre><p><span class="strong"><strong><span class="strong"><strong>Remove the dependency for <code class="literal">spring-cloud-stream-test-support</code></strong></span></strong></span></p><p>To avoid conflicts with the existing test binder you must eremove the following entry</p><pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;dependency&gt;</span>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;groupId&gt;</span>org.springframework.cloud<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/groupId&gt;</span>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;artifactId&gt;</span>spring-cloud-stream-test-support<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/artifactId&gt;</span>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;scope&gt;</span>test<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/scope&gt;</span>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-tag">&lt;/dependency&gt;</span></pre><p>Now you can test your microservice as a simple unit test</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@SpringBootApplication</span></em>
+<em><span class="hl-annotation" style="color: gray">@EnableBinding(Processor.class)</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> DemoTestBinderApplication {
+
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> main(String[] args) {
+		SpringApplication.run(DemoTestBinderApplication.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>, args);
+	}
+
+	<em><span class="hl-annotation" style="color: gray">@StreamListener(Processor.INPUT)</span></em>
+	<em><span class="hl-annotation" style="color: gray">@SendTo(Processor.OUTPUT)</span></em>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> String echo(String value) {
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> value;
+	}
+}
+
+. . .
+
+<em><span class="hl-annotation" style="color: gray">@Test</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> sampleTest() {
+	ApplicationContext context = <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> SpringApplicationBuilder(
+					TestChannelBinderConfiguration.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>,
+					DemoTestBinderApplication.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>)
+				.web(WebApplicationType.NONE).run();
+	InputDestination source = context.getBean(InputDestination.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>);
+	OutputDestination target = context.getBean(OutputDestination.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>);
+	source.send(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> GenericMessage&lt;<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">byte</span>[]&gt;(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"hello"</span>.getBytes()));
+	System.out.println(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"Result: "</span> + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> String(target.receive().getPayload()));
+}</pre><p>In the above you simply create an ApplicationContext with your configuration (your application) while additionally supplying <code class="literal">TestChannelBinderConfiguration</code>
+provided by the framework. Then you access <code class="literal">InputDestination</code> and <code class="literal">OutputDestination</code> beans to send/receive messages. In the context of this binder
+<code class="literal">InputDestination</code> and <code class="literal">OutputDestination</code> emulate remote destinations such as Rabbit <span class="emphasis"><em>exchange/queue</em></span> or Kafka <span class="emphasis"><em>topic</em></span>.</p><p>In the future we plan to simplify the API.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>In its current state Spring Integration Test Binder only supports the three bindings provided by the framework (Source, Processor, Sink) specifically to promote
+light-weight microservices architectures rather then general purpose messaging applications.</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_spring_integration_test_binder_and_pollablemessagesource" href="#_spring_integration_test_binder_and_pollablemessagesource"></a>13.2.1&nbsp;Spring Integration Test Binder and PollableMessageSource</h3></div></div></div><p>Spring Integration Test Binder also allows you to write tests when working with <code class="literal">PollableMessageSource</code> (see <a class="xref" href="multi__programming_model.html#spring-cloud-streams-overview-using-polled-consumers" title="7.3.5&nbsp;Using Polled Consumers">Section&nbsp;7.3.5, &#8220;Using Polled Consumers&#8221;</a> for more details).</p><p>The important thing that needs to be understood though is that polling is not event-driven, and that <code class="literal">PollableMessageSource</code> is a strategy which exposes operation to produce (poll for) a Message (singular).
+How often you poll or how many threads you use or where you&#8217;re polling from (message queue or file system) is entirely up to you;
+In other words it is your responsibility to configure Poller or Threads or the actual source of Message. Luckily Spring has plenty of abstractions to configure exactly that.</p><p>Let&#8217;s look at the example:</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Test</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> samplePollingTest() {
+	ApplicationContext context = <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> SpringApplicationBuilder(SamplePolledConfiguration.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>)
+				.web(WebApplicationType.NONE)
+				.run(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"--spring.jmx.enabled=false"</span>);
+	OutputDestination destination = context.getBean(OutputDestination.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>);
+	System.out.println(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"Message 1: "</span> + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> String(destination.receive().getPayload()));
+	System.out.println(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"Message 2: "</span> + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> String(destination.receive().getPayload()));
+	System.out.println(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"Message 3: "</span> + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> String(destination.receive().getPayload()));
+}
+
+<em><span class="hl-annotation" style="color: gray">@EnableBinding(SamplePolledConfiguration.PolledConsumer.class)</span></em>
+<em><span class="hl-annotation" style="color: gray">@Import(TestChannelBinderConfiguration.class)</span></em>
+<em><span class="hl-annotation" style="color: gray">@EnableAutoConfiguration</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> SamplePolledConfiguration {
+	<em><span class="hl-annotation" style="color: gray">@Bean</span></em>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> ApplicationRunner poller(PollableMessageSource polledMessageSource, MessageChannel output, TaskExecutor taskScheduler) {
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> args -&gt; {
+			taskScheduler.execute(() -&gt; {
+				<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">for</span> (<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">3</span>; i++) {
+					<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">try</span> {
+						<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">if</span> (!polledMessageSource.poll(m -&gt; {
+							String newPayload = ((String) m.getPayload()).toUpperCase();
+							output.send(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> GenericMessage&lt;&gt;(newPayload));
+						})) {
+							Thread.sleep(<span class="hl-number">2000</span>);
+						}
+					}
+					<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">catch</span> (Exception e) {
+						<span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// handle failure</span>
+					}
+				}
+			});
+		};
+	}
+
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">interface</span> PolledConsumer <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">extends</span> Source {
+		<em><span class="hl-annotation" style="color: gray">@Input</span></em>
+		PollableMessageSource pollableSource();
+	}
+}</pre><p>The above (very rudimentary) example will produce 3 messages in 2 second intervals sending them to the output destination of <code class="literal">Source</code>
+which this binder sends to <code class="literal">OutputDestination</code> where we retrieve them (for any assertions).
+Currently it prints the following:</p><pre class="programlisting">Message 1: POLLED DATA
+Message 2: POLLED DATA
+Message 3: POLLED DATA</pre><p>As you can see the data is the same. That is because this binder defines a default implementation of the actual <code class="literal">MessageSource</code> - the source
+from which the Messages are polled using <code class="literal">poll()</code> operation. While sufficient for most testing scenarios, there are cases where you may want
+to define your own <code class="literal">MessageSource</code>. To do so simply configure a bean of type <code class="literal">MessageSource</code> in your test configuration providing your own
+implementation of Message sourcing.</p><p>Here is the example:</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Bean</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> MessageSource&lt;?&gt; source() {
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> () -&gt; <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> GenericMessage&lt;&gt;(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"My Own Data "</span> + UUID.randomUUID());
+}</pre><p>rendering the following output;</p><pre class="programlisting">Message 1: MY OWN DATA 1C180A91-E79F-494F-ABF4-BA3F993710DA
+Message 2: MY OWN DATA D8F3A477-5547-41B4-9434-E69DA7616FEE
+Message 3: MY OWN DATA 20BF2E64-7FF4-4CB6-A823-4053D30B5C74</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>DO NOT name this bean <code class="literal">messageSource</code> as it is going to be in conflict with the bean of the same name (different type)
+provided by Spring Boot for unrelated reasons.</p></td></tr></table></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="multi__inter_application_communication.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="multi__preface.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="multi__health_indicator.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">12.&nbsp;Inter-Application Communication&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="multi_spring-cloud-stream.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;14.&nbsp;Health Indicator</td></tr></table></div></body></html>
