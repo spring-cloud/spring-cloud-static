@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Spring Cloud Kubernetes</title>
-<date>2019-06-11</date>
+<date>2019-06-20</date>
 </info>
 <preface>
 <title></title>
@@ -271,6 +271,48 @@ data:
     message: Say Goodbye</programlisting>
 </informalexample>
 <simpara>If both profiles are active, the property that appears last within the <literal>ConfigMap</literal> overwrites any preceding values.</simpara>
+<simpara>Another option is to create a different config map per profile and spring boot will automatically fetch it based
+on active profiles</simpara>
+<informalexample>
+<programlisting language="yaml" linenumbering="unnumbered">kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: demo
+data:
+  application.yml: |-
+    greeting:
+      message: Say Hello to the World
+    farewell:
+      message: Say Goodbye</programlisting>
+</informalexample>
+<informalexample>
+<programlisting language="yaml" linenumbering="unnumbered">kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: demo-development
+data:
+  application.yml: |-
+    spring:
+      profiles: development
+    greeting:
+      message: Say Hello to the Developers
+    farewell:
+      message: Say Goodbye to the Developers</programlisting>
+</informalexample>
+<informalexample>
+<programlisting language="yaml" linenumbering="unnumbered">kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: demo-production
+data:
+  application.yml: |-
+    spring:
+      profiles: production
+    greeting:
+      message: Say Hello to the Ops
+    farewell:
+      message: Say Goodbye</programlisting>
+</informalexample>
 <simpara>To tell Spring Boot which <literal>profile</literal> should be enabled at bootstrap, you can pass a system property to the Java
 command. To do so, you can launch your Spring Boot application with an environment variable that you can define with the OpenShift
 <literal>DeploymentConfig</literal> or Kubernetes <literal>ReplicationConfig</literal> resource file, as follows:</simpara>
