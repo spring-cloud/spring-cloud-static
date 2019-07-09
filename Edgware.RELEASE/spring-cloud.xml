@@ -50,18 +50,18 @@ and extensibility mechanism to cover others.</simpara>
 <part xml:id="_cloud_native_applications">
 <title>Cloud Native Applications</title>
 <partintro>
-<simpara><link xl:href="http://pivotal.io/platform-as-a-service/migrating-to-cloud-native-application-architectures-ebook">Cloud Native</link> is a style of application development that encourages easy adoption of best practices in the areas of continuous delivery and value-driven development. A related discipline is that of building <link xl:href="http://12factor.net/">12-factor Apps</link> in which development practices are aligned with delivery and operations goals, for instance by using declarative programming and management and monitoring. Spring Cloud facilitates these styles of development in a number of specific ways and the starting point is a set of features that all components in a distributed system either need or need easy access to when required.</simpara>
-<simpara>Many of those features are covered by <link xl:href="http://projects.spring.io/spring-boot">Spring Boot</link>, which we build on in Spring Cloud. Some more are delivered by Spring Cloud as two libraries: Spring Cloud Context and Spring Cloud Commons. Spring Cloud Context provides utilities and special services for the <literal>ApplicationContext</literal> of a Spring Cloud application (bootstrap context, encryption, refresh scope and environment endpoints). Spring Cloud Commons is a set of abstractions and common classes used in different Spring Cloud implementations (eg. Spring Cloud Netflix vs. Spring Cloud Consul).</simpara>
+<simpara><link xl:href="https://pivotal.io/platform-as-a-service/migrating-to-cloud-native-application-architectures-ebook">Cloud Native</link> is a style of application development that encourages easy adoption of best practices in the areas of continuous delivery and value-driven development. A related discipline is that of building <link xl:href="https://12factor.net/">12-factor Apps</link> in which development practices are aligned with delivery and operations goals, for instance by using declarative programming and management and monitoring. Spring Cloud facilitates these styles of development in a number of specific ways and the starting point is a set of features that all components in a distributed system either need or need easy access to when required.</simpara>
+<simpara>Many of those features are covered by <link xl:href="https://projects.spring.io/spring-boot">Spring Boot</link>, which we build on in Spring Cloud. Some more are delivered by Spring Cloud as two libraries: Spring Cloud Context and Spring Cloud Commons. Spring Cloud Context provides utilities and special services for the <literal>ApplicationContext</literal> of a Spring Cloud application (bootstrap context, encryption, refresh scope and environment endpoints). Spring Cloud Commons is a set of abstractions and common classes used in different Spring Cloud implementations (eg. Spring Cloud Netflix vs. Spring Cloud Consul).</simpara>
 <simpara>If you are getting an exception due to "Illegal key size" and you are using Sun&#8217;s JDK, you need to install the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files. See the following links for more information:</simpara>
 <itemizedlist>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</link></simpara>
 </listitem>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</link></simpara>
 </listitem>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</link></simpara>
 </listitem>
 </itemizedlist>
 <simpara>Extract files into JDK/jre/lib/security folder (whichever version of JRE/JDK x64/x86 you are using).</simpara>
@@ -340,13 +340,13 @@ the full strength JCE extensions in your JVM.</simpara>
 <simpara>If you are getting an exception due to "Illegal key size" and you are using Sun&#8217;s JDK, you need to install the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files. See the following links for more information:</simpara>
 <itemizedlist>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html">Java 6 JCE</link></simpara>
 </listitem>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html">Java 7 JCE</link></simpara>
 </listitem>
 <listitem>
-<simpara><link xl:href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</link></simpara>
+<simpara><link xl:href="https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java 8 JCE</link></simpara>
 </listitem>
 </itemizedlist>
 <simpara>Extract files into JDK/jre/lib/security folder (whichever version of JRE/JDK x64/x86 you are using).</simpara>
@@ -375,7 +375,7 @@ the full strength JCE extensions in your JVM.</simpara>
 <simpara>Patterns such as service discovery, load balancing and circuit breakers lend themselves to a common abstraction layer that can be consumed by all Spring Cloud clients, independent of the implementation (e.g. discovery via Eureka or Consul).</simpara>
 <section xml:id="__enablediscoveryclient">
 <title>@EnableDiscoveryClient</title>
-<simpara>Commons provides the <literal>@EnableDiscoveryClient</literal> annotation. This looks for implementations of the <literal>DiscoveryClient</literal> interface via <literal>META-INF/spring.factories</literal>. Implementations of Discovery Client will add a configuration class to <literal>spring.factories</literal> under the <literal>org.springframework.cloud.client.discovery.EnableDiscoveryClient</literal> key. Examples of <literal>DiscoveryClient</literal> implementations: are <link xl:href="http://cloud.spring.io/spring-cloud-netflix/">Spring Cloud Netflix Eureka</link>, <link xl:href="http://cloud.spring.io/spring-cloud-consul/">Spring Cloud Consul Discovery</link> and <link xl:href="http://cloud.spring.io/spring-cloud-zookeeper/">Spring Cloud Zookeeper Discovery</link>.</simpara>
+<simpara>Commons provides the <literal>@EnableDiscoveryClient</literal> annotation. This looks for implementations of the <literal>DiscoveryClient</literal> interface via <literal>META-INF/spring.factories</literal>. Implementations of Discovery Client will add a configuration class to <literal>spring.factories</literal> under the <literal>org.springframework.cloud.client.discovery.EnableDiscoveryClient</literal> key. Examples of <literal>DiscoveryClient</literal> implementations: are <link xl:href="https://cloud.spring.io/spring-cloud-netflix/">Spring Cloud Netflix Eureka</link>, <link xl:href="https://cloud.spring.io/spring-cloud-consul/">Spring Cloud Consul Discovery</link> and <link xl:href="https://cloud.spring.io/spring-cloud-zookeeper/">Spring Cloud Zookeeper Discovery</link>.</simpara>
 <simpara>By default, implementations of <literal>DiscoveryClient</literal> will auto-register the local Spring Boot server with the remote discovery server. This can be disabled by setting <literal>autoRegister=false</literal> in <literal>@EnableDiscoveryClient</literal>.</simpara>
 <note>
 <simpara>The use of <literal>@EnableDiscoveryClient</literal> is no longer required.  It is enough to just have a <literal>DiscoveryClient</literal> implementation
@@ -512,7 +512,7 @@ public class MyClass {
     }
 
     public String doStuff() {
-        return restTemplate.getForObject("http://example.com", String.class);
+        return restTemplate.getForObject("https://example.com", String.class);
     }
 }</programlisting>
 <tip>
@@ -963,14 +963,14 @@ at startup. For example at the top level:</simpara>
             team-a:
                 pattern: team-a-*
                 cloneOnStart: true
-                uri: http://git/team-a/config-repo.git
+                uri: https://git/team-a/config-repo.git
             team-b:
                 pattern: team-b-*
                 cloneOnStart: false
-                uri: http://git/team-b/config-repo.git
+                uri: https://git/team-b/config-repo.git
             team-c:
                 pattern: team-c-*
-                uri: http://git/team-a/config-repo.git</programlisting>
+                uri: https://git/team-a/config-repo.git</programlisting>
 <simpara>In this example the server clones team-a&#8217;s config-repo on startup before it
 accepts any requests. All other repositories will not be cloned until
 configuration from the repository is requested.</simpara>
@@ -1013,20 +1013,20 @@ http.sslVerify false</literal>).</simpara>
 </section>
 <section xml:id="_authentication_with_aws_codecommit">
 <title>Authentication with AWS CodeCommit</title>
-<simpara><link xl:href="http://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html">AWS CodeCommit</link> authentication can also be
+<simpara><link xl:href="https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html">AWS CodeCommit</link> authentication can also be
 done. AWS CodeCommit uses an authentication helper when using Git from the command line. This helper is not
 used with the JGit library, so a JGit CredentialProvider for AWS CodeCommit will be created if the Git
 URI matches the AWS CodeCommit pattern. AWS CodeCommit URIs always look like
 <link xl:href="https://git-codecommit.${AWS_REGION}.amazonaws.com/${repopath}">https://git-codecommit.${AWS_REGION}.amazonaws.com/${repopath}</link>.</simpara>
 <simpara>If you provide a username and password with an AWS CodeCommit URI, then these must be
-the <link xl:href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html">AWS accessKeyId and secretAccessKey</link>
+the <link xl:href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html">AWS accessKeyId and secretAccessKey</link>
 to be used to access the repository. If you do not specify a username and password,
 then the accessKeyId and secretAccessKey will be retrieved using the
-<link xl:href="http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html">AWS Default Credential Provider Chain</link>.</simpara>
+<link xl:href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html">AWS Default Credential Provider Chain</link>.</simpara>
 <simpara>If your Git URI matches the CodeCommit URI pattern (above) then you must provide
 valid AWS credentials in the username and password, or in one of the locations supported
 by the default credential provider chain. AWS EC2 instances may use
-<link xl:href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html">IAM Roles for EC2 Instances</link>.</simpara>
+<link xl:href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html">IAM Roles for EC2 Instances</link>.</simpara>
 <simpara>Note: The aws-java-sdk-core jar is an optional dependency. If the aws-java-sdk-core jar is not on your
 classpath, then the AWS Code Commit credential provider will not be created regardless of the git server URI.</simpara>
 </section>
@@ -1162,15 +1162,15 @@ Example:</simpara>
           repos:
             team-a:
                 pattern: team-a-*
-                uri: http://git/team-a/config-repo.git
+                uri: https://git/team-a/config-repo.git
                 force-pull: true
             team-b:
                 pattern: team-b-*
-                uri: http://git/team-b/config-repo.git
+                uri: https://git/team-b/config-repo.git
                 force-pull: true
             team-c:
                 pattern: team-c-*
-                uri: http://git/team-a/config-repo.git</programlisting>
+                uri: https://git/team-a/config-repo.git</programlisting>
 <note>
 <simpara>The default value for <literal>force-pull</literal> property is <literal>false</literal>.</simpara>
 </note>
@@ -1179,7 +1179,7 @@ Example:</simpara>
 <section xml:id="_version_control_backend_filesystem_use">
 <title>Version Control Backend Filesystem Use</title>
 <warning>
-<simpara>With VCS based backends (git, svn) files are checked out or cloned to the local filesystem. By default they are put in the system temporary directory with a prefix of <literal>config-repo-</literal>. On linux, for example it could be <literal>/tmp/config-repo-&lt;randomid&gt;</literal>. Some operating systems <link xl:href="http://serverfault.com/questions/377348/when-does-tmp-get-cleared/377349#377349">routinely clean out</link> temporary directories. This can lead to unexpected behaviour such as missing properties. To avoid this problem, change the directory Config Server uses, by setting <literal>spring.cloud.config.server.git.basedir</literal> or <literal>spring.cloud.config.server.svn.basedir</literal> to a directory that does not reside in the system temp structure.</simpara>
+<simpara>With VCS based backends (git, svn) files are checked out or cloned to the local filesystem. By default they are put in the system temporary directory with a prefix of <literal>config-repo-</literal>. On linux, for example it could be <literal>/tmp/config-repo-&lt;randomid&gt;</literal>. Some operating systems <link xl:href="https://serverfault.com/questions/377348/when-does-tmp-get-cleared/377349#377349">routinely clean out</link> temporary directories. This can lead to unexpected behaviour such as missing properties. To avoid this problem, change the directory Config Server uses, by setting <literal>spring.cloud.config.server.git.basedir</literal> or <literal>spring.cloud.config.server.svn.basedir</literal> to a directory that does not reside in the system temp structure.</simpara>
 </warning>
 </section>
 <section xml:id="_file_system_backend">
@@ -2078,7 +2078,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon).</simpara>
 <section xml:id="netflix-eureka-client-starter">
 <title>How to Include Eureka Client</title>
 <simpara>To include Eureka Client in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-netflix-eureka-client</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-netflix-eureka-client</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 </section>
 <section xml:id="_registering_with_eureka">
@@ -2131,7 +2131,7 @@ by <literal>eureka.instance.*</literal> configuration keys, but the defaults wil
 fine if you ensure that your application has a
 <literal>spring.application.name</literal> (this is the default for the Eureka service
 ID, or VIP).</simpara>
-<simpara>See <link xl:href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</link> and <link xl:href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</link> for more details of the configurable options.</simpara>
+<simpara>See <link xl:href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</link> and <link xl:href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaClientConfigBean.java">EurekaClientConfigBean</link> for more details of the configurable options.</simpara>
 <simpara>To disable the Eureka Discovery Client you can set <literal>eureka.client.enabled</literal> to <literal>false</literal>.</simpara>
 </section>
 <section xml:id="_authenticating_with_the_eureka_server">
@@ -2254,7 +2254,7 @@ implementing your own <literal>com.netflix.appinfo.HealthCheckHandler</literal>.
 </section>
 <section xml:id="_using_eureka_on_aws">
 <title>Using Eureka on AWS</title>
-<simpara>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be AWS aware and this can be done by customizing the <link xl:href="http://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</link> the following way:</simpara>
+<simpara>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be AWS aware and this can be done by customizing the <link xl:href="https://github.com/spring-cloud/spring-cloud-netflix/tree/master/spring-cloud-netflix-eureka-client/src/main/java/org/springframework/cloud/netflix/eureka/EurekaInstanceConfigBean.java">EurekaInstanceConfigBean</link> the following way:</simpara>
 <programlisting language="java" linenumbering="unnumbered">@Bean
 @Profile("!default")
 public EurekaInstanceConfigBean eurekaInstanceConfig(InetUtils inetUtils) {
@@ -2391,7 +2391,7 @@ eureka.client.preferSameZoneEureka = true</screen>
 <section xml:id="netflix-eureka-server-starter">
 <title>How to Include Eureka Server</title>
 <simpara>To include Eureka Server in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-netflix-eureka-server</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-netflix-eureka-server</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 </section>
 <section xml:id="spring-cloud-running-eureka-server">
@@ -2532,7 +2532,7 @@ example <literal>eureka.instance.hostname=${HOST_NAME}</literal>.</simpara>
 </chapter>
 <chapter xml:id="_circuit_breaker_hystrix_clients">
 <title>Circuit Breaker: Hystrix Clients</title>
-<simpara>Netflix has created a library called <link xl:href="https://github.com/Netflix/Hystrix">Hystrix</link> that implements the <link xl:href="http://martinfowler.com/bliki/CircuitBreaker.html">circuit breaker pattern</link>.  In a microservice architecture it is common to have multiple layers of service calls.</simpara>
+<simpara>Netflix has created a library called <link xl:href="https://github.com/Netflix/Hystrix">Hystrix</link> that implements the <link xl:href="https://martinfowler.com/bliki/CircuitBreaker.html">circuit breaker pattern</link>.  In a microservice architecture it is common to have multiple layers of service calls.</simpara>
 <figure>
 <title>Microservice Graph</title>
 <mediaobject>
@@ -2556,7 +2556,7 @@ example <literal>eureka.instance.hostname=${HOST_NAME}</literal>.</simpara>
 <section xml:id="netflix-hystrix-starter">
 <title>How to Include Hystrix</title>
 <simpara>To include Hystrix in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-netflix-hystrix</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-netflix-hystrix</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 <simpara>Example boot app:</simpara>
 <screen>@SpringBootApplication
@@ -2651,7 +2651,7 @@ be slightly more than three seconds.</simpara>
 <section xml:id="netflix-hystrix-dashboard-starter">
 <title>How to Include Hystrix Dashboard</title>
 <simpara>To include the Hystrix Dashboard in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-hystrix-netflix-dashboard</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-hystrix-netflix-dashboard</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 <simpara>To run the Hystrix Dashboard annotate your Spring Boot main class with <literal>@EnableHystrixDashboard</literal>.  You then visit <literal>/hystrix</literal> and point the dashboard to an individual instances <literal>/hystrix.stream</literal> endpoint in a Hystrix client application.</simpara>
 <note>
@@ -2672,7 +2672,7 @@ By default, metadata entry <literal>management.port</literal> is equal to the <l
   instance:
     metadata-map:
       management.port: ${management.port:8081}</screen>
-<simpara>The configuration key <literal>turbine.appConfig</literal> is a list of eureka serviceIds that turbine will use to lookup instances.  The turbine stream is then used in the Hystrix dashboard using a url that looks like: <literal><link xl:href="http://my.turbine.sever:8080/turbine.stream?cluster=CLUSTERNAME">http://my.turbine.sever:8080/turbine.stream?cluster=CLUSTERNAME</link></literal> (the cluster parameter can be omitted if the name is "default"). The <literal>cluster</literal> parameter must match an entry in <literal>turbine.aggregator.clusterConfig</literal>. Values returned from eureka are uppercase, thus we expect this example to work if there is an app registered with Eureka called "customers":</simpara>
+<simpara>The configuration key <literal>turbine.appConfig</literal> is a list of eureka serviceIds that turbine will use to lookup instances.  The turbine stream is then used in the Hystrix dashboard using a url that looks like: <literal><link xl:href="https://my.turbine.sever:8080/turbine.stream?cluster=CLUSTERNAME">https://my.turbine.sever:8080/turbine.stream?cluster=CLUSTERNAME</link></literal> (the cluster parameter can be omitted if the name is "default"). The <literal>cluster</literal> parameter must match an entry in <literal>turbine.aggregator.clusterConfig</literal>. Values returned from eureka are uppercase, thus we expect this example to work if there is an app registered with Eureka called "customers":</simpara>
 <screen>turbine:
   aggregator:
     clusterConfig: CUSTOMERS
@@ -2719,7 +2719,7 @@ annotation). Spring Cloud creates a new ensemble as an
 <section xml:id="netflix-ribbon-starter">
 <title>How to Include Ribbon</title>
 <simpara>To include Ribbon in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-netflix-ribbon</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-netflix-ribbon</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 </section>
 <section xml:id="_customizing_the_ribbon_client">
@@ -3015,7 +3015,7 @@ method.</simpara>
 <section xml:id="netflix-feign-starter">
 <title>How to Include Feign</title>
 <simpara>To include Feign in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-openfeign</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-openfeign</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 <simpara>Example spring boot app</simpara>
 <programlisting language="java" linenumbering="unnumbered">@Configuration
@@ -3375,7 +3375,7 @@ public class FooConfiguration {
 </chapter>
 <chapter xml:id="_external_configuration_archaius">
 <title>External Configuration: Archaius</title>
-<simpara><link xl:href="https://github.com/Netflix/archaius">Archaius</link> is the Netflix client side configuration library.  It is the library used by all of the Netflix OSS components for configuration.  Archaius is an extension of the <link xl:href="http://commons.apache.org/proper/commons-configuration">Apache Commons Configuration</link> project.  It allows updates to configuration by either polling a source for changes or for a source to push changes to the client.  Archaius uses Dynamic&lt;Type&gt;Property classes as handles to properties.</simpara>
+<simpara><link xl:href="https://github.com/Netflix/archaius">Archaius</link> is the Netflix client side configuration library.  It is the library used by all of the Netflix OSS components for configuration.  Archaius is an extension of the <link xl:href="https://commons.apache.org/proper/commons-configuration">Apache Commons Configuration</link> project.  It allows updates to configuration by either polling a source for changes or for a source to push changes to the client.  Archaius uses Dynamic&lt;Type&gt;Property classes as handles to properties.</simpara>
 <formalpara>
 <title>Archaius Example</title>
 <para>
@@ -3395,7 +3395,7 @@ public class FooConfiguration {
 <chapter xml:id="_router_and_filter_zuul">
 <title>Router and Filter: Zuul</title>
 <simpara>Routing in an integral part of a microservice architecture.  For example, <literal>/</literal> may be mapped to your web application, <literal>/api/users</literal> is mapped to the user service and <literal>/api/shop</literal> is mapped to the shop service.  <link xl:href="https://github.com/Netflix/zuul">Zuul</link> is a JVM based router and server side load balancer by Netflix.</simpara>
-<simpara><link xl:href="http://www.slideshare.net/MikeyCohen1/edge-architecture-ieee-international-conference-on-cloud-engineering-32240146/27">Netflix uses Zuul</link> for the following:</simpara>
+<simpara><link xl:href="https://www.slideshare.net/MikeyCohen1/edge-architecture-ieee-international-conference-on-cloud-engineering-32240146/27">Netflix uses Zuul</link> for the following:</simpara>
 <itemizedlist>
 <listitem>
 <simpara>Authentication</simpara>
@@ -3438,7 +3438,7 @@ public class FooConfiguration {
 <section xml:id="netflix-zuul-starter">
 <title>How to Include Zuul</title>
 <simpara>To include Zuul in your project use the starter with group <literal>org.springframework.cloud</literal>
-and artifact id <literal>spring-cloud-starter-netflix-zuul</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
+and artifact id <literal>spring-cloud-starter-netflix-zuul</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link>
 for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 </section>
 <section xml:id="netflix-zuul-reverse-proxy">
@@ -3515,7 +3515,7 @@ level, but "/myusers/**" matches hierarchically.</simpara>
   routes:
     users:
       path: /myusers/**
-      url: http://example.com/users_service</programlisting>
+      url: https://example.com/users_service</programlisting>
 </para>
 </formalpara>
 <simpara>These simple url-routes don&#8217;t get executed as a <literal>HystrixCommand</literal> nor do they loadbalance multiple URLs with Ribbon.
@@ -3541,7 +3541,7 @@ hystrix:
 myusers-service:
   ribbon:
     NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
-    ListOfServers: http://example1.com,http://example2.com
+    ListOfServers: https://example1.com,http://example2.com
     ConnectTimeout: 1000
     ReadTimeout: 3000
     MaxTotalHttpConnections: 500
@@ -3810,7 +3810,7 @@ but redirect some of the requests to new ones.</simpara>
   routes:
     first:
       path: /first/**
-      url: http://first.example.com
+      url: https://first.example.com
     second:
       path: /second/**
       url: forward:/second
@@ -3819,7 +3819,7 @@ but redirect some of the requests to new ones.</simpara>
       url: forward:/3rd
     legacy:
       path: /**
-      url: http://legacy.example.com</programlisting>
+      url: https://legacy.example.com</programlisting>
 </para>
 </formalpara>
 <simpara>In this example we are strangling the "legacy" app which is mapped to
@@ -4421,7 +4421,7 @@ it via the Zuul proxy.  If the serviceId of the ConfigServer is <literal>configs
 and the Sidecar is on port 5678, then it can be accessed at
 <link xl:href="http://localhost:5678/configserver">http://localhost:5678/configserver</link></simpara>
 <simpara>Non-jvm app can take advantage of the Config Server&#8217;s ability to return YAML
-documents.  For example, a call to <link xl:href="http://sidecar.local.spring.io:5678/configserver/default-master.yml">http://sidecar.local.spring.io:5678/configserver/default-master.yml</link>
+documents.  For example, a call to <link xl:href="https://sidecar.local.spring.io:5678/configserver/default-master.yml">https://sidecar.local.spring.io:5678/configserver/default-master.yml</link>
 might result in a YAML document like the following</simpara>
 <programlisting language="yaml" linenumbering="unnumbered">eureka:
   client:
@@ -6317,7 +6317,7 @@ The <literal>spring.cloud.stream.schema.server.path</literal> setting can be use
 The <literal>spring.cloud.stream.schema.server.allowSchemaDeletion</literal> boolean setting enables the deletion of schema. By default this is disabled.</simpara>
 <simpara>The schema registry server uses a relational database to store the schemas.
  By default, it uses an embedded database.
-You can customize the schema storage using the <link xl:href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-sql">Spring Boot SQL database and JDBC configuration options</link>.</simpara>
+You can customize the schema storage using the <link xl:href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-sql">Spring Boot SQL database and JDBC configuration options</link>.</simpara>
 <simpara>A Spring Boot application enabling the schema registry looks as follows:</simpara>
 <programlisting language="java" linenumbering="unnumbered">@SpringBootApplication
 @EnableSchemaRegistryServer
@@ -6987,7 +6987,7 @@ hello world 1458595080735</screen>
 <section xml:id="_deploying_stream_applications_on_cloudfoundry">
 <title>Deploying Stream applications on CloudFoundry</title>
 <simpara>On CloudFoundry services are usually exposed via a special environment variable called <link xl:href="https://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES">VCAP_SERVICES</link>.</simpara>
-<simpara>When configuring your binder connections, you can use the values from an environment variable as explained on the <link xl:href="http://docs.spring.io/spring-cloud-dataflow-server-cloudfoundry/docs/current-SNAPSHOT/reference/htmlsingle/#getting-started-ups">dataflow cloudfoundry server</link> docs.</simpara>
+<simpara>When configuring your binder connections, you can use the values from an environment variable as explained on the <link xl:href="https://docs.spring.io/spring-cloud-dataflow-server-cloudfoundry/docs/current-SNAPSHOT/reference/htmlsingle/#getting-started-ups">dataflow cloudfoundry server</link> docs.</simpara>
 </section>
 </chapter>
 </part>
@@ -7311,12 +7311,12 @@ public class ManuallyAcknowdledgingConsumer {
 <section xml:id="_example_security_configuration">
 <title>Example: security configuration</title>
 <simpara>Apache Kafka 0.9 supports secure connections between client and brokers.
-To take advantage of this feature, follow the guidelines in the <link xl:href="http://kafka.apache.org/090/documentation.html#security_configclients">Apache Kafka Documentation</link> as well as the Kafka 0.9 <link xl:href="http://docs.confluent.io/2.0.0/kafka/security.html">security guidelines from the Confluent documentation</link>.
+To take advantage of this feature, follow the guidelines in the <link xl:href="https://kafka.apache.org/090/documentation.html#security_configclients">Apache Kafka Documentation</link> as well as the Kafka 0.9 <link xl:href="https://docs.confluent.io/2.0.0/kafka/security.html">security guidelines from the Confluent documentation</link>.
 Use the <literal>spring.cloud.stream.kafka.binder.configuration</literal> option to set security properties for all clients created by the binder.</simpara>
 <simpara>For example, for setting <literal>security.protocol</literal> to <literal>SASL_SSL</literal>, set:</simpara>
 <screen>spring.cloud.stream.kafka.binder.configuration.security.protocol=SASL_SSL</screen>
 <simpara>All the other security properties can be set in a similar manner.</simpara>
-<simpara>When using Kerberos, follow the instructions in the <link xl:href="http://kafka.apache.org/090/documentation.html#security_sasl_clientconfig">reference documentation</link> for creating and referencing the JAAS configuration.</simpara>
+<simpara>When using Kerberos, follow the instructions in the <link xl:href="https://kafka.apache.org/090/documentation.html#security_sasl_clientconfig">reference documentation</link> for creating and referencing the JAAS configuration.</simpara>
 <simpara>Spring Cloud Stream supports passing JAAS configuration information to the application using a JAAS configuration file and using Spring Boot properties.</simpara>
 <section xml:id="_using_jaas_configuration_files">
 <title>Using JAAS configuration files</title>
@@ -7467,7 +7467,7 @@ On the other hand, if auto topic creation is disabled on the server, then care m
 <simpara>Spring Cloud Stream Kafka support also includes a binder specifically designed for Kafka Streams binding.
 Using this binder, applications can be written that leverage the Kafka Streams API.
 For more information on Kafka Streams, see <link xl:href="https://kafka.apache.org/documentation/streams/developer-guide">Kafka Streams API Developer Manual</link></simpara>
-<simpara>Kafka Streams support in Spring Cloud Stream is based on the foundations provided by the Spring Kafka project. For details on that support, see <link xl:href="http://docs.spring.io/spring-kafka/reference/html/_reference.html#kafka-streams">Kafaka Streams Support in Spring Kafka</link>.</simpara>
+<simpara>Kafka Streams support in Spring Cloud Stream is based on the foundations provided by the Spring Kafka project. For details on that support, see <link xl:href="https://docs.spring.io/spring-kafka/reference/html/_reference.html#kafka-streams">Kafaka Streams Support in Spring Kafka</link>.</simpara>
 <simpara>Here are the maven coordinates for the Spring Cloud Stream KStream binder artifact.</simpara>
 <programlisting language="xml" linenumbering="unnumbered">&lt;dependency&gt;
   &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
@@ -7758,7 +7758,7 @@ please refer to the <link xl:href="https://github.com/spring-cloud/spring-cloud-
 <section xml:id="rabbit-binder-properties">
 <title>RabbitMQ Binder Properties</title>
 <simpara>By default, the RabbitMQ binder uses Spring Boot&#8217;s <literal>ConnectionFactory</literal>, and it therefore supports all Spring Boot configuration options for RabbitMQ.
-(For reference, consult the <link xl:href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties">Spring Boot documentation</link>.)
+(For reference, consult the <link xl:href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties">Spring Boot documentation</link>.)
 RabbitMQ configuration options use the <literal>spring.rabbitmq</literal> prefix.</simpara>
 <simpara>In addition to Spring Boot options, the RabbitMQ binder supports the following properties:</simpara>
 <variablelist>
@@ -8895,10 +8895,10 @@ packages to scan.</simpara>
 </partintro>
 <chapter xml:id="_introduction">
 <title>Introduction</title>
-<simpara>Spring Cloud Sleuth implements a distributed tracing solution for <link xl:href="http://cloud.spring.io">Spring Cloud</link>.</simpara>
+<simpara>Spring Cloud Sleuth implements a distributed tracing solution for <link xl:href="https://cloud.spring.io">Spring Cloud</link>.</simpara>
 <section xml:id="_terminology">
 <title>Terminology</title>
-<simpara>Spring Cloud Sleuth borrows <link xl:href="http://research.google.com/pubs/pub36356.html">Dapper&#8217;s</link> terminology.</simpara>
+<simpara>Spring Cloud Sleuth borrows <link xl:href="https://research.google.com/pubs/pub36356.html">Dapper&#8217;s</link> terminology.</simpara>
 <simpara><emphasis role="strong">Span:</emphasis> The basic unit of work. For example, sending an RPC is a new span, as is sending a response to an
 RPC. Span&#8217;s are identified by a unique 64-bit ID for the span and another 64-bit ID for the trace the span
 is a part of.  Spans also have other data, such as descriptions, timestamped events, key-value
@@ -9077,7 +9077,7 @@ service4.log:2016-02-26 11:15:48.134  INFO [service4,2485ec27856c56f4,1b1845262f
 service2.log:2016-02-26 11:15:48.156  INFO [service2,2485ec27856c56f4,9aa10ee6fbde75fa,true] 68059 --- [nio-8082-exec-1] i.s.c.sleuth.docs.service2.Application   : Got response from service4 [Hello from service4]
 service1.log:2016-02-26 11:15:48.182  INFO [service1,2485ec27856c56f4,2485ec27856c56f4,true] 68058 --- [nio-8081-exec-1] i.s.c.sleuth.docs.service1.Application   : Got response from service2 [Hello from service2, response from service3 [Hello from service3] and from service4 [Hello from service4]]</screen>
 <simpara>If you&#8217;re using a log aggregating tool like <link xl:href="https://www.elastic.co/products/kibana">Kibana</link>,
-<link xl:href="http://www.splunk.com/">Splunk</link> etc. you can order the events that took place. An example of
+<link xl:href="https://www.splunk.com/">Splunk</link> etc. you can order the events that took place. An example of
 Kibana would look like this:</simpara>
 <informalfigure>
 <mediaobject>
@@ -10171,7 +10171,7 @@ Stream based span reporting).</simpara>
 when the span is closed, it will be sent to Zipkin over HTTP. The communication
 is asynchronous. You can configure the URL by setting the <literal>spring.zipkin.baseUrl</literal>
 property as follows:</simpara>
-<programlisting language="yaml" linenumbering="unnumbered">spring.zipkin.baseUrl: http://192.168.99.100:9411/</programlisting>
+<programlisting language="yaml" linenumbering="unnumbered">spring.zipkin.baseUrl: https://192.168.99.100:9411/</programlisting>
 <simpara>If you want to find Zipkin via service discovery it&#8217;s enough to pass the
 Zipkin&#8217;s service id inside the URL (example for <literal>zipkinserver</literal> service id)</simpara>
 <programlisting language="yaml" linenumbering="unnumbered">spring.zipkin.baseUrl: http://zipkinserver/</programlisting>
@@ -10179,7 +10179,7 @@ Zipkin&#8217;s service id inside the URL (example for <literal>zipkinserver</lit
 <chapter xml:id="_span_data_as_messages">
 <title>Span Data as Messages</title>
 <simpara>You can accumulate and send span data over
-<link xl:href="http://cloud.spring.io/spring-cloud-stream">Spring Cloud Stream</link> by
+<link xl:href="https://cloud.spring.io/spring-cloud-stream">Spring Cloud Stream</link> by
 including the <literal>spring-cloud-sleuth-stream</literal> jar as a dependency, and
 adding a Channel Binder implementation
 (e.g. <literal>spring-cloud-starter-stream-rabbit</literal> for RabbitMQ or
@@ -10271,7 +10271,7 @@ public static class CustomPollerConfiguration {
 <chapter xml:id="_metrics">
 <title>Metrics</title>
 <simpara>Currently Spring Cloud Sleuth registers very simple metrics related to spans.
-It&#8217;s using the <link xl:href="http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-recording-metrics">Spring Boot&#8217;s metrics support</link>
+It&#8217;s using the <link xl:href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-recording-metrics">Spring Boot&#8217;s metrics support</link>
 to calculate the number of accepted and dropped spans. Each time a span gets
 sent to Zipkin the number of accepted spans will increase. If there&#8217;s an error then
 the number of dropped spans will get increased.</simpara>
@@ -10460,7 +10460,7 @@ static class Config {
 </section>
 <section xml:id="_traverson">
 <title>Traverson</title>
-<simpara>If you&#8217;re using the <link xl:href="http://docs.spring.io/spring-hateoas/docs/current/reference/html/#client.traverson">Traverson</link> library
+<simpara>If you&#8217;re using the <link xl:href="https://docs.spring.io/spring-hateoas/docs/current/reference/html/#client.traverson">Traverson</link> library
 it&#8217;s enough for you to inject a <literal>RestTemplate</literal> as a bean into your Traverson object. Since <literal>RestTemplate</literal>
 is already intercepted, you will get full support of tracing in your client. Below you can find a pseudo code
 of how to do that:</simpara>
@@ -10562,7 +10562,7 @@ static class CustomExecutorConfig extends AsyncConfigurerSupport {
 </section>
 <section xml:id="_messaging">
 <title>Messaging</title>
-<simpara>Spring Cloud Sleuth integrates with <link xl:href="http://projects.spring.io/spring-integration/">Spring Integration</link>. It creates spans for publish and
+<simpara>Spring Cloud Sleuth integrates with <link xl:href="https://projects.spring.io/spring-integration/">Spring Integration</link>. It creates spans for publish and
 subscribe events. To disable Spring Integration instrumentation, set <literal>spring.sleuth.integration.enabled</literal> to false.</simpara>
 <simpara>You can provide the <literal>spring.sleuth.integration.patterns</literal> pattern to explicitly
 provide the names of channels that you want to include for tracing. By default all channels
@@ -10583,10 +10583,10 @@ To disable Zuul support set the <literal>spring.sleuth.zuul.enabled</literal> pr
 <simpara>You can find the running examples deployed in the <link xl:href="https://run.pivotal.io/">Pivotal Web Services</link>. Check them out in the following links:</simpara>
 <itemizedlist>
 <listitem>
-<simpara><link xl:href="http://docssleuth-zipkin-server.cfapps.io/">Zipkin for apps presented in the samples to the top</link></simpara>
+<simpara><link xl:href="https://docssleuth-zipkin-server.cfapps.io/">Zipkin for apps presented in the samples to the top</link></simpara>
 </listitem>
 <listitem>
-<simpara><link xl:href="http://docsbrewing-zipkin-server.cfapps.io/">Zipkin for Brewery on PWS</link>, its <link xl:href="https://github.com/spring-cloud-samples/brewery">Github Code</link></simpara>
+<simpara><link xl:href="https://docsbrewing-zipkin-server.cfapps.io/">Zipkin for Brewery on PWS</link>, its <link xl:href="https://github.com/spring-cloud-samples/brewery">Github Code</link></simpara>
 </listitem>
 </itemizedlist>
 </chapter>
@@ -10618,7 +10618,7 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon), Circuit Brea
 <simpara>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle.  Consul provides Service Discovery services via an <link xl:href="https://www.consul.io/docs/agent/http.html">HTTP API</link> and <link xl:href="https://www.consul.io/docs/agent/dns.html">DNS</link>.  Spring Cloud Consul leverages the HTTP API for service registration and discovery.  This does not prevent non-Spring Cloud applications from leveraging the DNS interface.  Consul Agents servers are run in a <link xl:href="https://www.consul.io/docs/internals/architecture.html">cluster</link> that communicates via a <link xl:href="https://www.consul.io/docs/internals/gossip.html">gossip protocol</link> and uses the <link xl:href="https://www.consul.io/docs/internals/consensus.html">Raft consensus protocol</link>.</simpara>
 <section xml:id="_how_to_activate">
 <title>How to activate</title>
-<simpara>To activate Consul Service Discovery use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-discovery</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
+<simpara>To activate Consul Service Discovery use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-discovery</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 </section>
 <section xml:id="_registering_with_consul">
 <title>Registering with Consul</title>
@@ -10706,7 +10706,7 @@ public class Application {
 <section xml:id="_using_ribbon">
 <title>Using Ribbon</title>
 <simpara>Spring Cloud has support for <link xl:href="https://github.com/spring-cloud/spring-cloud-netflix/blob/master/docs/src/main/asciidoc/spring-cloud-netflix.adoc#spring-cloud-feign">Feign</link> (a REST client builder) and also <link xl:href="https://github.com/spring-cloud/spring-cloud-netflix/blob/master/docs/src/main/asciidoc/spring-cloud-netflix.adoc#spring-cloud-ribbon">Spring <literal>RestTemplate</literal></link>
-for looking up services using the logical service names/ids instead of physical URLs. Both Feign and the discovery-aware RestTemplate utilize <link xl:href="http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-ribbon">Ribbon</link> for client-side load balancing.</simpara>
+for looking up services using the logical service names/ids instead of physical URLs. Both Feign and the discovery-aware RestTemplate utilize <link xl:href="https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-ribbon">Ribbon</link> for client-side load balancing.</simpara>
 <simpara>If you want to access service STORES using the RestTemplate simply declare:</simpara>
 <screen>@LoadBalanced
 @Bean
@@ -10751,7 +10751,7 @@ config/application/</screen>
 <simpara>Configuration is currently read on startup of the application.  Sending a HTTP POST to <literal>/refresh</literal> will cause the configuration to be reloaded. <xref linkend="spring-cloud-consul-config-watch"/> will also automatically detect changes and reload the application context.</simpara>
 <section xml:id="_how_to_activate_2">
 <title>How to activate</title>
-<simpara>To get started with Consul Configuration use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-config</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
+<simpara>To get started with Consul Configuration use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-config</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 <simpara>This will enable auto-configuration that will setup Spring Cloud Consul Config.</simpara>
 </section>
 <section xml:id="_customizing">
@@ -10863,13 +10863,13 @@ Retry has a <literal>RetryInterceptorBuilder</literal> that makes it easy to cre
 <title>Spring Cloud Bus with Consul</title>
 <section xml:id="_how_to_activate_3">
 <title>How to activate</title>
-<simpara>To get started with the Consul Bus use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-bus</literal>. See the <link xl:href="http://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
+<simpara>To get started with the Consul Bus use the starter with group <literal>org.springframework.cloud</literal> and artifact id <literal>spring-cloud-starter-consul-bus</literal>. See the <link xl:href="https://projects.spring.io/spring-cloud/">Spring Cloud Project page</link> for details on setting up your build system with the current Spring Cloud Release Train.</simpara>
 <simpara>See the <link xl:href="https://cloud.spring.io/spring-cloud-bus/">Spring Cloud Bus</link> documentation for the available actuator endpoints and howto send custom messages.</simpara>
 </section>
 </chapter>
 <chapter xml:id="spring-cloud-consul-hystrix">
 <title>Circuit Breaker with Hystrix</title>
-<simpara>Applications can use the Hystrix Circuit Breaker provided by the Spring Cloud Netflix project by including this starter in the projects pom.xml: <literal>spring-cloud-starter-hystrix</literal>.  Hystrix doesn&#8217;t depend on the Netflix Discovery Client. The <literal>@EnableHystrix</literal> annotation should be placed on a configuration class (usually the main class). Then methods can be annotated with <literal>@HystrixCommand</literal> to be protected by a circuit breaker. See <link xl:href="http://projects.spring.io/spring-cloud/spring-cloud.html#_circuit_breaker_hystrix_clients">the documentation</link> for more details.</simpara>
+<simpara>Applications can use the Hystrix Circuit Breaker provided by the Spring Cloud Netflix project by including this starter in the projects pom.xml: <literal>spring-cloud-starter-hystrix</literal>.  Hystrix doesn&#8217;t depend on the Netflix Discovery Client. The <literal>@EnableHystrix</literal> annotation should be placed on a configuration class (usually the main class). Then methods can be annotated with <literal>@HystrixCommand</literal> to be protected by a circuit breaker. See <link xl:href="https://projects.spring.io/spring-cloud/spring-cloud.html#_circuit_breaker_hystrix_clients">the documentation</link> for more details.</simpara>
 </chapter>
 <chapter xml:id="spring-cloud-consul-turbine">
 <title>Hystrix metrics aggregation with Turbine and Consul</title>
@@ -10927,11 +10927,11 @@ Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon), Circuit Brea
 </partintro>
 <chapter xml:id="spring-cloud-zookeeper-install">
 <title>Install Zookeeper</title>
-<simpara>Please see the <link xl:href="http://zookeeper.apache.org/doc/current/zookeeperStarted.html">installation documentation</link> for instructions on how to install Zookeeper.</simpara>
+<simpara>Please see the <link xl:href="https://zookeeper.apache.org/doc/current/zookeeperStarted.html">installation documentation</link> for instructions on how to install Zookeeper.</simpara>
 </chapter>
 <chapter xml:id="spring-cloud-zookeeper-discovery">
 <title>Service Discovery with Zookeeper</title>
-<simpara>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle. <link xl:href="http://curator.apache.org">Curator</link>(A java library for Zookeeper) provides Service Discovery services via <link xl:href="http://curator.apache.org/curator-x-discovery/">Service Discovery Extension</link>. Spring Cloud Zookeeper leverages this extension for service registration and discovery.</simpara>
+<simpara>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle. <link xl:href="https://curator.apache.org">Curator</link>(A java library for Zookeeper) provides Service Discovery services via <link xl:href="https://curator.apache.org/curator-x-discovery/">Service Discovery Extension</link>. Spring Cloud Zookeeper leverages this extension for service registration and discovery.</simpara>
 <section xml:id="_how_to_activate_4">
 <title>How to activate</title>
 <simpara>Including a dependency on <literal>org.springframework.cloud:spring-cloud-starter-zookeeper-discovery</literal> will enable auto-configuration that will setup Spring Cloud Zookeeper Discovery.</simpara>
@@ -11227,7 +11227,7 @@ of your dependencies.</simpara>
 </chapter>
 <chapter xml:id="spring-cloud-zookeeper-config">
 <title>Distributed Configuration with Zookeeper</title>
-<simpara>Zookeeper provides a <link xl:href="http://zookeeper.apache.org/doc/current/zookeeperOver.html#sc_dataModelNameSpace">hierarchical namespace</link> that allows clients to store arbitrary data, such as configuration data.  Spring Cloud Zookeeper Config is an alternative to the <link xl:href="https://github.com/spring-cloud/spring-cloud-config">Config Server and Client</link>.  Configuration is loaded into the Spring Environment during the special "bootstrap" phase.  Configuration is stored in the <literal>/config</literal> namespace by default.  Multiple <literal>PropertySource</literal> instances are created based on the application&#8217;s name and the active profiles that mimicks the Spring Cloud Config order of resolving properties.  For example, an application with the name "testApp" and with the "dev" profile will have the following property sources created:</simpara>
+<simpara>Zookeeper provides a <link xl:href="https://zookeeper.apache.org/doc/current/zookeeperOver.html#sc_dataModelNameSpace">hierarchical namespace</link> that allows clients to store arbitrary data, such as configuration data.  Spring Cloud Zookeeper Config is an alternative to the <link xl:href="https://github.com/spring-cloud/spring-cloud-config">Config Server and Client</link>.  Configuration is loaded into the Spring Environment during the special "bootstrap" phase.  Configuration is stored in the <literal>/config</literal> namespace by default.  Multiple <literal>PropertySource</literal> instances are created based on the application&#8217;s name and the active profiles that mimicks the Spring Cloud Config order of resolving properties.  For example, an application with the name "testApp" and with the "dev" profile will have the following property sources created:</simpara>
 <screen>config/testApp,dev
 config/testApp
 config/application,dev
@@ -11446,7 +11446,7 @@ class Application {
 <note>
 <simpara>All of the OAuth2 SSO and resource server features moved to Spring Boot
 in version 1.3. You can find documentation in the
-<link xl:href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</link>.</simpara>
+<link xl:href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</link>.</simpara>
 </note>
 </section>
 <section xml:id="_token_relay">
@@ -11476,7 +11476,7 @@ Security and Spring Boot.)</simpara>
 <section xml:id="_client_token_relay_in_zuul_proxy">
 <title>Client Token Relay in Zuul Proxy</title>
 <simpara>If your app also has a
-<link xl:href="http://cloud.spring.io/spring-cloud.html#netflix-zuul-reverse-proxy">Spring
+<link xl:href="https://cloud.spring.io/spring-cloud.html#netflix-zuul-reverse-proxy">Spring
 Cloud Zuul</link> embedded reverse proxy (using <literal>@EnableZuulProxy</literal>) then you
 can ask it to forward OAuth2 access tokens downstream to the services
 it is proxying. Thus the SSO app above can be enhanced simply like
@@ -11653,7 +11653,7 @@ are configured, they default per the user&#8217;s profile in Cloud Foundry.</sim
 <note>
 <simpara>All of the OAuth2 SSO and resource server features moved to Spring Boot
 in version 1.3. You can find documentation in the
-<link xl:href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</link>.</simpara>
+<link xl:href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot user guide</link>.</simpara>
 </note>
 <simpara>This project provides automatic binding from CloudFoundry service
 credentials to the Spring Boot features. If you have a CloudFoundry
@@ -12027,9 +12027,9 @@ following section to your build:</simpara>
 <programlisting language="groovy" linenumbering="unnumbered">repositories {
 	mavenCentral()
 	mavenLocal()
-	maven { url "http://repo.spring.io/snapshot" }
-	maven { url "http://repo.spring.io/milestone" }
-	maven { url "http://repo.spring.io/release" }
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://repo.spring.io/release" }
 }</programlisting>
 </para>
 </formalpara>
@@ -12459,7 +12459,7 @@ the <literal>workOffline</literal> parameter in your annotation. The following c
 achieving the same thing by changing the properties.</simpara>
 <programlisting language="yaml" linenumbering="unnumbered">stubrunner:
   ids: 'com.example:http-server-dsl:+:stubs:8080'
-  repositoryRoot: http://repo.spring.io/libs-snapshot</programlisting>
+  repositoryRoot: https://repo.spring.io/libs-snapshot</programlisting>
 <simpara>That&#8217;s it!</simpara>
 </section>
 </section>
@@ -12483,7 +12483,7 @@ constant development.</simpara>
 <title>Readings</title>
 <itemizedlist>
 <listitem>
-<simpara><link xl:href="http://www.slideshare.net/MarcinGrzejszczak/stick-to-the-rules-consumer-driven-contracts-201507-confitura">Slides from Marcin Grzejszczak&#8217;s talk about Accurest</link></simpara>
+<simpara><link xl:href="https://www.slideshare.net/MarcinGrzejszczak/stick-to-the-rules-consumer-driven-contracts-201507-confitura">Slides from Marcin Grzejszczak&#8217;s talk about Accurest</link></simpara>
 </listitem>
 <listitem>
 <simpara><link xl:href="http://toomuchcoding.com/blog/categories/accurest/">Accurest related articles from Marcin Grzejszczak&#8217;s blog</link></simpara>
@@ -12710,7 +12710,7 @@ one to one to the contents of the repo.</simpara>
 <simpara>Example of a <literal>pom.xml</literal> inside the <literal>server</literal> folder.</simpara>
 <programlisting language="xml" linenumbering="unnumbered">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
 	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
 	&lt;groupId&gt;com.example&lt;/groupId&gt;
@@ -12822,7 +12822,7 @@ Those poms are necessary for the consumer side to run <literal>mvn clean install
 <simpara>The <literal>pom.xml</literal> in the root folder can look like this:</simpara>
 <programlisting language="xml" linenumbering="unnumbered">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
 	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
 	&lt;groupId&gt;com.example.standalone&lt;/groupId&gt;
@@ -12864,7 +12864,7 @@ Those poms are necessary for the consumer side to run <literal>mvn clean install
 <simpara>It&#8217;s using the assembly plugin in order to build the JAR with all the contracts. Example of such setup is here:</simpara>
 <programlisting language="xml" linenumbering="unnumbered">&lt;assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
+		  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
 	&lt;id&gt;project&lt;/id&gt;
 	&lt;formats&gt;
 		&lt;format&gt;jar&lt;/format&gt;
@@ -12898,7 +12898,7 @@ Those poms are necessary for the consumer side to run <literal>mvn clean install
 consumer team clones the common repository, goes to the required producer&#8217;s folder (e.g. <literal>com/example/server</literal>)
 and runs <literal>mvn clean install -DskipTests</literal> to install locally the stubs converted from the contracts.</simpara>
 <tip>
-<simpara>You need to have <link xl:href="http://maven.apache.org/download.cgi">Maven installed locally</link></simpara>
+<simpara>You need to have <link xl:href="https://maven.apache.org/download.cgi">Maven installed locally</link></simpara>
 </tip>
 </section>
 <section xml:id="_producer">
@@ -13019,7 +13019,7 @@ following sections:</simpara>
 Gradle or a Maven plugin.</simpara>
 <warning>
 <simpara>If you want to use Spock in your projects, you must add separately the
-<literal>spock-core</literal> and <literal>spock-spring</literal> modules. Check <link xl:href="http://spockframework.github.io/">Spock
+<literal>spock-core</literal> and <literal>spock-spring</literal> modules. Check <link xl:href="https://spockframework.github.io/">Spock
 docs for more information</link></simpara>
 </warning>
 </section>
@@ -13086,9 +13086,9 @@ which are automatically uploaded after every successful build, as shown here:</s
 	repositories {
 		mavenCentral()
 		mavenLocal()
-		maven { url "http://repo.spring.io/snapshot" }
-		maven { url "http://repo.spring.io/milestone" }
-		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://repo.spring.io/release" }
 	}
 }</programlisting>
 </section>
@@ -14361,9 +14361,9 @@ versions, which are automatically uploaded after every successful build:</simpar
 	repositories {
 		mavenCentral()
 		mavenLocal()
-		maven { url "http://repo.spring.io/snapshot" }
-		maven { url "http://repo.spring.io/milestone" }
-		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://repo.spring.io/release" }
 	}</programlisting>
 </para>
 </formalpara>
@@ -14408,7 +14408,7 @@ it if you want to.</simpara>
 &lt;assembly
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
 	&lt;id&gt;stubs&lt;/id&gt;
 	&lt;formats&gt;
 		&lt;format&gt;jar&lt;/format&gt;
@@ -14474,7 +14474,7 @@ publishing {
 <section xml:id="_stub_runner_core">
 <title>Stub Runner Core</title>
 <simpara>Runs stubs for service collaborators. Treating stubs as contracts of services allows to use stub-runner as an implementation of
-<link xl:href="http://martinfowler.com/articles/consumerDrivenContracts.html">Consumer Driven Contracts</link>.</simpara>
+<link xl:href="https://martinfowler.com/articles/consumerDrivenContracts.html">Consumer Driven Contracts</link>.</simpara>
 <simpara>Stub Runner allows you to automatically download the stubs of the provided dependencies (or pick those from the classpath), start WireMock servers for them and feed them with proper stub definitions.
 For messaging, special stub routes are defined.</simpara>
 <section xml:id="_retrieving_stubs">
@@ -14499,7 +14499,7 @@ to <literal>true</literal> then Stub Runner will connect to the given server and
 It will then unpack the JAR to a temporary folder and reference those files in further
 contract processing.</simpara>
 <simpara>Example:</simpara>
-<programlisting language="java" linenumbering="unnumbered">@AutoConfigureStubRunner(repositoryRoot="http://foo.bar", ids = "com.example:beer-api-producer:+:stubs:8095")</programlisting>
+<programlisting language="java" linenumbering="unnumbered">@AutoConfigureStubRunner(repositoryRoot="https://foo.bar", ids = "com.example:beer-api-producer:+:stubs:8095")</programlisting>
 </section>
 <section xml:id="_classpath_scanning">
 <title>Classpath scanning</title>
@@ -15049,7 +15049,7 @@ project for more information.</simpara>
 </section>
 <section xml:id="_spring_cloud_cli">
 <title>Spring Cloud CLI</title>
-<simpara>Starting from <literal>1.4.0.RELEASE</literal> version of the <link xl:href="http://cloud.spring.io/spring-cloud-cli">Spring Cloud CLI</link>
+<simpara>Starting from <literal>1.4.0.RELEASE</literal> version of the <link xl:href="https://cloud.spring.io/spring-cloud-cli">Spring Cloud CLI</link>
 project you can start Stub Runner Boot by executing <literal>spring cloud stubrunner</literal>.</simpara>
 <simpara>In order to pass the configuration just create a <literal>stubrunner.yml</literal> file in the current working directory
 or a subdirectory called <literal>config</literal> or in <literal>~/.spring-cloud</literal>. The file could look like this
@@ -15215,7 +15215,7 @@ and we want to have the stub runner feature turned on <literal>@AutoConfigureStu
 <simpara>Now let&#8217;s assume that we want to start this application so that the stubs get automatically registered.
  We can do it by running the app <literal>java -jar ${SYSTEM_PROPS} stub-runner-boot-eureka-example.jar</literal> where
  <literal>${SYSTEM_PROPS}</literal> would contain the following list of properties</simpara>
-<programlisting language="bash" linenumbering="unnumbered">-Dstubrunner.repositoryRoot=http://repo.spring.io/snapshots (1)
+<programlisting language="bash" linenumbering="unnumbered">-Dstubrunner.repositoryRoot=https://repo.spring.io/snapshots (1)
 -Dstubrunner.cloud.stubbed.discovery.enabled=false (2)
 -Dstubrunner.ids=org.springframework.cloud.contract.verifier.stubs:loanIssuance,org.springframework.cloud.contract.verifier.stubs:fraudDetectionServer,org.springframework.cloud.contract.verifier.stubs:bootService (3)
 -Dstubrunner.idsToServiceIds.fraudDetectionServer=someNameThatShouldMapFraudDetectionServer (4)
@@ -15721,9 +15721,9 @@ classpath. Remember to annotate your test class with <literal>@AutoConfigureStub
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:beans="http://www.springframework.org/schema/beans"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans.xsd
+			https://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/integration
-			http://www.springframework.org/schema/integration/spring-integration.xsd"&gt;
+			https://www.springframework.org/schema/integration/spring-integration.xsd"&gt;
 
 
 	&lt;!-- REQUIRED FOR TESTING --&gt;
@@ -16110,7 +16110,7 @@ Cloud Contract Verifier repository</link>.</simpara>
 				"id":"01fbe706f872cb32",
 				"name":"Washington",
 				"place_type":"city",
-				"url": "http://api.twitter.com/1/geo/id/01fbe706f872cb32.json"
+				"url": "https://api.twitter.com/1/geo/id/01fbe706f872cb32.json"
 			}
 		}]
 	'''
@@ -18764,7 +18764,7 @@ public class WiremockForDocsMockServerApplicationTests {
 	public void contextLoads() throws Exception {
 		// will read stubs classpath
 		MockRestServiceServer server = WireMockRestServiceServer.with(this.restTemplate)
-				.baseUrl("http://example.org").stubs("classpath:/stubs/resource.json")
+				.baseUrl("https://example.org").stubs("classpath:/stubs/resource.json")
 				.build();
 		// We're asserting if WireMock responded properly
 		assertThat(this.service.go()).isEqualTo("Hello World");
@@ -18774,7 +18774,7 @@ public class WiremockForDocsMockServerApplicationTests {
 <simpara>The <literal>baseUrl</literal> value is prepended to all mock calls, and the <literal>stubs()</literal> method takes a stub
 path resource pattern as an argument. In the preceding example, the stub defined at
 <literal>/stubs/resource.json</literal> is loaded into the mock server. If the <literal>RestTemplate</literal> is asked to
-visit <literal><link xl:href="http://example.org/">http://example.org/</link></literal>, it gets the responses as being declared at that URL. More
+visit <literal><link xl:href="https://example.org/">https://example.org/</link></literal>, it gets the responses as being declared at that URL. More
 than one stub pattern can be specified, and each one can be a directory (for a recursive
 list of all ".json"), a fixed filename (as in the example above), or an Ant-style
 pattern. The JSON format is the normal WireMock format, which you can read about in the
@@ -19026,7 +19026,7 @@ structure presented in the previous snippet.</simpara>
 &lt;assembly
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd"&gt;
 	&lt;id&gt;stubs&lt;/id&gt;
 	&lt;formats&gt;
 		&lt;format&gt;jar&lt;/format&gt;
@@ -19347,8 +19347,8 @@ Supported schemes are <literal>http</literal> and <literal>https</literal>.</sim
 <simpara>Enabling further integrations requires additional dependencies and
 configuration. Depending on how you have set up Vault you might need
 additional configuration like
-<link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.ssl">SSL</link> and
-<link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication</link>.</simpara>
+<link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.ssl">SSL</link> and
+<link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication</link>.</simpara>
 <simpara>If the application imports the <literal>spring-boot-starter-actuator</literal> project, the
 status of the vault server will be available via the <literal>/health</literal> endpoint.</simpara>
 <simpara>The vault health indicator can be enabled or disabled through the
@@ -19356,7 +19356,7 @@ property <literal>health.vault.enabled</literal> (default <literal>true</literal
 <section xml:id="_authentication_2">
 <title>Authentication</title>
 <simpara>Vault requires an <link xl:href="https://www.vaultproject.io/docs/concepts/auth.html">authentication mechanism</link> to <link xl:href="https://www.vaultproject.io/docs/concepts/tokens.html">authorize client requests</link>.</simpara>
-<simpara>Spring Cloud Vault supports multiple <link xl:href="http://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication mechanisms</link> to authenticate applications with Vault.</simpara>
+<simpara>Spring Cloud Vault supports multiple <link xl:href="https://cloud.spring.io/spring-cloud-vault/spring-cloud-vault.html#vault.config.authentication">authentication mechanisms</link> to authenticate applications with Vault.</simpara>
 <simpara>For a quickstart, use the root token printed by the <link linkend="quickstart.vault.start">Vault initialization</link>.</simpara>
 <example>
 <title>bootstrap.yml</title>
@@ -20817,7 +20817,7 @@ after application shutdown.</simpara>
  locations.
 </simpara><simpara> Typically the eureka server URLs carry protocol,host,port,context and version
  information if any. Example:
- <link xl:href="http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/">http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/</link>
+ <link xl:href="https://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/">https://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/</link>
 </simpara><simpara> The changes are effective at runtime at the next service url refresh cycle as
  specified by eurekaServiceUrlPollIntervalSeconds.</simpara></entry>
 </row>
