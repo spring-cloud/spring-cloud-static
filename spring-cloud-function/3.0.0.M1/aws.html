@@ -91,12 +91,10 @@ $(addBlockSwitches);
 <li><a href="#_introduction">Introduction</a></li>
 <li><a href="#_notes_on_jar_layout">Notes on JAR Layout</a></li>
 <li><a href="#_build_file_setup">Build file setup</a>
-	<ul class="sectlevel3">
-		<li><a href="#_maven">Maven</a></li>
-	</ul>
-	<ul class="sectlevel3">
-		<li><a href="#_gradle">Gradle</a></li>
-	</ul>
+<ul class="sectlevel2">
+<li><a href="#_maven">Maven</a></li>
+<li><a href="#_gradle">Gradle</a></li>
+</ul>
 </li>
 <li><a href="#_upload">Upload</a></li>
 <li><a href="#_type_conversion">Type Conversion</a>
@@ -147,7 +145,7 @@ $(addBlockSwitches);
 need to exclude those before you create the JAR you send to AWS. A Lambda application has to be
 shaded, but a Spring Boot standalone application does not, so you can run the same app using 2
 separate jars (as per the sample). The sample app creates 2 jar files, one with an <code>aws</code>
-classifier for deploying in Lambda, and one executable (thin) jar that includes <code>spring-cloud-function-web</code>
+classifier for deploying in Lambda, and one <a id="thin-jar"></a> executable (thin) jar that includes <code>spring-cloud-function-web</code>
 at runtime. Spring Cloud Function will try and locate a "main class" for you from the JAR file
 manifest, using the <code>Start-Class</code> attribute (which will be added for you by the Spring Boot
 tooling if you use the starter parent). If there is no <code>Start-Class</code> in your manifest you can
@@ -157,7 +155,7 @@ use an environment variable or system property <code>MAIN_CLASS</code> when you 
 <p>If you are not using the functional bean definitions but relying on Spring Boot&#8217;s auto-configuration,
 then additional transformers must be configured as part of the maven-shade-plugin execution.</p>
 </div>
-<div class="listingblock">
+<div id="shade-plugin-setup" class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;plugin&gt;
 	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
@@ -191,12 +189,13 @@ then additional transformers must be configured as part of the maven-shade-plugi
 </div>
 <div class="sect1">
 <h2 id="_build_file_setup"><a class="link" href="#_build_file_setup">Build file setup</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In order to run Spring Cloud Function applications on AWS Lambda, you can leverage Maven or Gradle
  plugins offered by the cloud platform provider.</p>
 </div>
-<div class="sect3">
-<h4 id="_maven"><a class="link" href="#_maven">Maven</a></h4>
+<div class="sect2">
+<h3 id="_maven"><a class="link" href="#_maven">Maven</a></h3>
 <div class="paragraph">
 <p>In order to use the adapter plugin for Maven, add the plugin dependency to your <code>pom.xml</code>
 file:</p>
@@ -236,11 +235,11 @@ The example of the <a href="#shade-plugin-setup">setup</a> can be found above.</
 </div>
 <div class="paragraph">
 <p>You can find the entire sample <code>pom.xml</code> file for deploying Spring Cloud Function
-applications to AWS Lambda with Maven <a href="https://github.com/spring-cloud/spring-cloud-function/blob/master/spring-cloud-function-samples/function-sample-aws/pom.xml">here</a>.</p>
+applications to AWS Lambda with Maven <a href="https://github.com/spring-cloud/spring-cloud-function/blob/2.1.x/spring-cloud-function-samples/function-sample-aws/pom.xml">here</a>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_gradle"><a class="link" href="#_gradle">Gradle</a></h4>
+<div class="sect2">
+<h3 id="_gradle"><a class="link" href="#_gradle">Gradle</a></h3>
 <div class="paragraph">
 <p>In order to use the adapter plugin for Gradle, add the dependency to your <code>build.gradle</code> file:</p>
 </div>
@@ -305,11 +304,11 @@ assemble.dependsOn = [thinJar]</code></pre>
 </div>
 <div class="paragraph">
 <p>You can find the entire sample <code>build.gradle</code> file for deploying Spring Cloud Function
-applications to AWS Lambda with Gradle <a href="https://github.com/spring-cloud/spring-cloud-function/blob/master/spring-cloud-function-samples/function-sample-aws/build.gradle">here</a>.</p>
+applications to AWS Lambda with Gradle <a href="https://github.com/spring-cloud/spring-cloud-function/blob/2.1.x/spring-cloud-function-samples/function-sample-aws/build.gradle">here</a>.</p>
 </div>
 </div>
 </div>
-
+</div>
 <div class="sect1">
 <h2 id="_upload"><a class="link" href="#_upload">Upload</a></h2>
 <div class="sectionbody">
