@@ -1,0 +1,42 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>5.&nbsp;Introducing Spring Cloud Stream</title><link rel="stylesheet" type="text/css" href="css/manual-multipage.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="multi_spring-cloud-stream.html" title="Spring Cloud Stream Reference Guide"><link rel="up" href="multi__preface.html" title="Part&nbsp;I.&nbsp;Preface"><link rel="prev" href="multi__notes_on_migrating_from_1_x_to_2_x.html" title="4.&nbsp;Notes on migrating from 1.x to 2.x?"><link rel="next" href="multi__main_concepts.html" title="6.&nbsp;Main Concepts"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.&nbsp;Introducing Spring Cloud Stream</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="multi__notes_on_migrating_from_1_x_to_2_x.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;I.&nbsp;Preface</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="multi__main_concepts.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="spring-cloud-stream-overview-introducing" href="#spring-cloud-stream-overview-introducing"></a>5.&nbsp;Introducing Spring Cloud Stream</h2></div></div></div><p>Spring Cloud Stream is a framework for building message-driven microservice applications.
+Spring Cloud Stream builds upon Spring Boot to create standalone, production-grade Spring applications and uses Spring Integration to provide connectivity to message brokers.
+It provides opinionated configuration of middleware from several vendors, introducing the concepts of persistent publish-subscribe semantics, consumer groups, and partitions.</p><p>You can add the <code class="literal">@EnableBinding</code> annotation to your application to get immediate connectivity to a message broker, and you can add <code class="literal">@StreamListener</code> to a method to cause it to receive events for stream processing.
+The following example shows a sink application that receives external messages:</p><pre class="programlisting"><xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@SpringBootApplication</xslthl:annotation>
+<xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@EnableBinding(Sink.class)</xslthl:annotation>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> VoteRecordingSinkApplication {
+
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">static</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> main(String[] args) {
+    SpringApplication.run(VoteRecordingSinkApplication.<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span>, args);
+  }
+
+  <xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@StreamListener(Sink.INPUT)</xslthl:annotation>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> processVote(Vote vote) {
+      votingService.recordVote(vote);
+  }
+}</pre><p>The <code class="literal">@EnableBinding</code> annotation takes one or more interfaces as parameters (in this case, the parameter is a single <code class="literal">Sink</code> interface).
+An interface declares input and output channels.
+Spring Cloud Stream provides the <code class="literal">Source</code>, <code class="literal">Sink</code>, and <code class="literal">Processor</code> interfaces. You can also define your own interfaces.</p><p>The following listing shows the definition of the <code class="literal">Sink</code> interface:</p><pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">interface</span> Sink {
+  String INPUT = <span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"input"</span>;
+
+  <xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@Input(Sink.INPUT)</xslthl:annotation>
+  SubscribableChannel input();
+}</pre><p>The <code class="literal">@Input</code> annotation identifies an input channel, through which received messages enter the application.
+The <code class="literal">@Output</code> annotation identifies an output channel, through which published messages leave the application.
+The <code class="literal">@Input</code> and <code class="literal">@Output</code> annotations can take a channel name as a parameter.
+If a name is not provided, the name of the annotated method is used.</p><p>Spring Cloud Stream creates an implementation of the interface for you.
+You can use this in the application by autowiring it, as shown in the following example (from a test case):</p><pre class="programlisting"><xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@RunWith(SpringJUnit4ClassRunner.class)</xslthl:annotation>
+<xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@SpringApplicationConfiguration(classes = VoteRecordingSinkApplication.class)</xslthl:annotation>
+<xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@WebAppConfiguration</xslthl:annotation>
+<xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@DirtiesContext</xslthl:annotation>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> StreamApplicationTests {
+
+  <xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@Autowired</xslthl:annotation>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">private</span> Sink sink;
+
+  <xslthl:annotation xmlns:xslthl="http://xslthl.sourceforge.net/">@Test</xslthl:annotation>
+  <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> contextLoads() {
+    assertThat(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">this</span>.sink.input()).isNotNull();
+  }
+}</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="multi__notes_on_migrating_from_1_x_to_2_x.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="multi__preface.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="multi__main_concepts.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.&nbsp;Notes on migrating from 1.x to 2.x?&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="multi_spring-cloud-stream.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;6.&nbsp;Main Concepts</td></tr></table></div></body></html>
