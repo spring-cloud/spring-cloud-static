@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.8">
+<title>Running Locally</title>
+<link rel="stylesheet" href="css/spring.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.hidden {
+	display: none;
+}
+
+.switch {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #7a2518;
+	display: inline-block;
+}
+
+.switch--item {
+	padding: 10px;
+	background-color: #ffffff;
+	color: #7a2518;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.switch--item:not(:first-child) {
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: #7a2518;
+}
+
+.switch--item.selected {
+	background-color: #7a2519;
+	color: #ffffff;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<script type="text/javascript">
+function addBlockSwitches() {
+	$('.primary').each(function() {
+		primary = $(this);
+		createSwitchItem(primary, createBlockSwitch(primary)).item.addClass("selected");
+		primary.children('.title').remove();
+	});
+	$('.secondary').each(function(idx, node) {
+		secondary = $(node);
+		primary = findPrimary(secondary);
+		switchItem = createSwitchItem(secondary, primary.children('.switch'));
+		switchItem.content.addClass('hidden');
+		findPrimary(secondary).append(switchItem.content);
+		secondary.remove();
+	});
+}
+
+function createBlockSwitch(primary) {
+	blockSwitch = $('<div class="switch"></div>');
+	primary.prepend(blockSwitch);
+	return blockSwitch;
+}
+
+function findPrimary(secondary) {
+	candidate = secondary.prev();
+	while (!candidate.is('.primary')) {
+		candidate = candidate.prev();
+	}
+	return candidate;
+}
+
+function createSwitchItem(block, blockSwitch) {
+	blockName = block.children('.title').text();
+	content = block.children('.content').first().append(block.next('.colist'));
+	item = $('<div class="switch--item">' + blockName + '</div>');
+	item.on('click', '', content, function(e) {
+		$(this).addClass('selected');
+		$(this).siblings().removeClass('selected');
+		e.data.siblings('.content').addClass('hidden');
+		e.data.removeClass('hidden');
+	});
+	blockSwitch.append(item);
+	return {'item': item, 'content': content};
+}
+
+$(addBlockSwitches);
+</script>
+
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel2">
+<li><a href="#running-locally">Running Locally</a></li>
+<li><a href="#running-on-cloud-foundry">Running on Cloud Foundry</a></li>
+<li><a href="#build-documentation">Build documentation</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="https://github.com/spring-cloud-samples">spring-cloud-samples</a> can be
+run as a demo locally by just cloning the individual projects and
+running them. This project can be used to manage updating and deploying
+the sample apps to cloudfoundry.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-locally"><a class="link" href="#running-locally">Running Locally</a></h3>
+<div class="paragraph">
+<p>Pre-requisites: Maven (3) and Java (1.7). To run the Customers UI you
+also need the Spring Boot CLI. Clone the repository and initialize
+submodules:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone https://github.com/spring-cloud-samples/scripts
+$ cd scripts
+$ ./build.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(You can add `-DskipTests' if you like, or just use `./mvnw' directly,
+once the submodules are initialized. If you are starting from scratch,
+the <code>build'' module needs to be installed first, followed by the
+</code>starters''.)</p>
+</div>
+<div class="paragraph">
+<p>You also nee Mongodb and RabbitMQ and Redis. If you don’t have those,
+and you do have Docker, you can run them in Docker (via
+<a href="http://docs.docker.com/compose/">docker-compose</a>):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker-compose up
+...
+&lt;mongo starts up&gt;
+&lt;rabbit starts up&gt;
+&lt;redis starts up&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>the containers for the server processes write their data locally in
+<code>./data_*</code>. Those files will be owned by root, so watch out when it
+comes to remove them.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong>: Docker version 1.5 and Compose version 1.1.0 are confirmed to
+work. The latest versions have not been tested and may have problems.</p>
+</div>
+<div class="sect3">
+<h4 id="docker-on-a-mac"><a class="link" href="#docker-on-a-mac">Docker on a mac</a></h4>
+<div class="paragraph">
+<p>Docker on a mac requires boot2docker. Because docker is running in a
+virtual machine, The ip addresses of mongo, rabbit and redis are not
+127.0.0.1. You can use virtualbox port forwarding to address this issue
+with the following commands (from
+<a href="https://github.com/boot2docker/boot2docker/blob/master/doc/WORKAROUNDS.md">here</a>):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># vm must be powered off
+VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port27017,tcp,,27017,,27017"
+VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port6379,tcp,,6379,,6379"
+VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port15672,tcp,,15672,,15672"
+VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port5672,tcp,,5672,,5672"</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="docker-alternative-on-a-mac"><a class="link" href="#docker-alternative-on-a-mac">Docker alternative on a mac</a></h4>
+<div class="paragraph">
+<p>If you prefer not to use docker-compose you can install mongo, rabbit
+and redis:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>brew install mongodb rabbitmq redis</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run the apps (each in a different terminal)</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ rabbitmq-server
+$ mongod --config /usr/local/etc/mongod.conf
+$ redis-server /usr/local/etc/redis.conf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the apps:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./run.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can kill the processes using <code>./kill.sh</code>, and both scripts know how
+to operate on individual apps or subsets, e.g. (the default):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./run.sh configserver eureka customers stores</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run the UI with the maps, get the Spring Boot CLI, and install the
+platform CLI plugin, e.g. with GVM:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ gvm install springboot 1.2.0.RC1
+$ gvm use springboot 1.2.0.RC1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and finally install the Spring Cloud plugin:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ spring install org.springframework.cloud:spring-cloud-cli:1.0.0.BUILD-SNAPSHOT</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then run the app</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ (cd customers-stores/customers-ui; spring run app.groovy)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-on-cloud-foundry"><a class="link" href="#running-on-cloud-foundry">Running on Cloud Foundry</a></h3>
+<div class="paragraph">
+<p>Pre-requisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Maven (3)</p>
+</li>
+<li>
+<p>Java (1.8)</p>
+</li>
+<li>
+<p>the <code>cf</code> CLI</p>
+</li>
+<li>
+<p>Cloud Foundry with Java buildpack version 2.5 or greater (for Java 1.8
+support)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Clone the repository and initialize submodules:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone https://github.com/spring-cloud-samples/scripts
+$ cd scripts
+$ ./build.sh
+$ ./services_deploy.sh
+$ ./demo_deploy.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result should be a bunch of apps running in the default space for
+your default org, with names prefixed by your local userid, e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cf apps
+...
+dsyerconfigserver      started  1/1  512M  1G    dsyerconfigserver.cfapps.io
+dsyereureka            started  1/1  512M  1G    dsyereureka.cfapps.io
+dsyercustomers         started  1/1  512M  1G    dsyercustomers.cfapps.io
+dsyerstores            started  1/1  512M  1G    dsyerstores.cfappps.io
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>configserver</code> and <code>eureka</code> apps will have been registered as user
+provided services, and bound to the other apps:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cf services
+...
+name                 service        plan  bound apps
+dsyerconfigserver   user-provided        dsyercustomers, dsyereureka, dsyerstores
+dsyereureka         user-provided        dsyerconfigserver, dsyercustomers, dsyerstores
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can check that it is all working by pinging the <code>eureka</code> app
+endpoints and seeing the other apps registered. E.g. visit
+<a href="http://dsyereureka.cfapps.io/eureka/apps" class="bare">http://dsyereureka.cfapps.io/eureka/apps</a> in a browser. Other useful
+links for diagnosis and investigating what’s going on:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://dsyerconfigserver.cfapps.io/customers/cloud" class="bare">http://dsyerconfigserver.cfapps.io/customers/cloud</a></p>
+</li>
+<li>
+<p><a href="http://dsyercustomers.cfapps.io/env" class="bare">http://dsyercustomers.cfapps.io/env</a></p>
+</li>
+<li>
+<p><a href="http://dsyerstores.cfapps.io/env" class="bare">http://dsyerstores.cfapps.io/env</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The stores app comes pre-populated with a Mongo database full of
+Starbucks locations. The customers app is empty to start (and uses an
+in-memory database) so you have to POST some data into it, e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ curl -i -H "Content-Type: application/json" http://dsyercustomers.cfapps.io/customers -d @customers-stores/rest-microservices-customers/src/test/resources/customers.json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then when you visit the customers app at
+<a href="http://dsyercustomers.cfapps.io/customers" class="bare">http://dsyercustomers.cfapps.io/customers</a> you should see a customer
+(Ollie) and a link to nearby stores. If the stores app did not register
+with eureka, or if you stop the the stores app intentionally
+(<code>cf stop &#8230;&#8203;</code>), then the stores link will be missing in the customers
+app (simple example of a circuit breaker).</p>
+</div>
+<div class="paragraph">
+<p>Sometimes it is also useful to undeploy the services (and unbind them
+from apps etc.), and redeploy them:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./services_undeploy.sh
+$ ./services_deploy.sh
+$ ./demo_deploy.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It should all work on <a href="https://run.pivotal.io">Pivotal Web Services</a>, by
+default, or on any Cloudfoundry instance (e.g. PCF or a local single VM
+instance) if you set the <code>DOMAIN</code> environment variable to the DNS domain
+that the service is running in.</p>
+</div>
+<div class="paragraph">
+<p>To run on <a href="https://github.com/cloudfoundry/bosh-lite">bosh-lite</a></p>
+</div>
+<div class="paragraph">
+<p>Deploy mongodb using
+<a href="https://github.com/cloudfoundry-community/cf-services-contrib-release" class="bare">https://github.com/cloudfoundry-community/cf-services-contrib-release</a></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>export DOMAIN=10.244.0.34.xip.io
+export PLATFORM_HOME=/Users/sgibb/workspace/spring/spring-cloud-samples #where all spring-cloud-samples are checked out
+export MONGO_URI=mongodb://192.168.50.1/stores #mongo running on host #TODO install mongo as a service</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="build-documentation"><a class="link" href="#build-documentation">Build documentation</a></h3>
+<div class="paragraph">
+<p>You can easily create the documentation for a particular release train
+using the <code>release_train.sh</code> script. You can run it in an interactive
+mode - then you’ll get prompted for all entries, or you can provide the
+values of the name of the release train together with the names and
+versions of modules. You can run <code>./release_train -h</code> for more
+information.</p>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="js/tocbot/tocbot.min.js"></script>
+<script type="text/javascript" src="js/toc.js"></script>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>
