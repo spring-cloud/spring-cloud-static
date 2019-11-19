@@ -1,0 +1,101 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>61.&nbsp;Customizations</title><link rel="stylesheet" type="text/css" href="css/manual-multipage.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="multi_spring-cloud.html" title="Spring Cloud"><link rel="up" href="multi__spring_cloud_sleuth.html" title="Part&nbsp;VIII.&nbsp;Spring Cloud Sleuth"><link rel="prev" href="multi__managing_spans_with_annotations.html" title="60.&nbsp;Managing Spans with Annotations"><link rel="next" href="multi__sending_spans_to_zipkin.html" title="62.&nbsp;Sending Spans to Zipkin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">61.&nbsp;Customizations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="multi__managing_spans_with_annotations.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VIII.&nbsp;Spring Cloud Sleuth</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="multi__sending_spans_to_zipkin.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="_customizations" href="#_customizations"></a>61.&nbsp;Customizations</h2></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_customizers" href="#_customizers"></a>61.1&nbsp;Customizers</h2></div></div></div><p>With Brave 5.7 you have various options of providing customizers for your project. Brave ships with</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">TracingCustomizer</code> - allows configuration plugins to collaborate on building an instance of <code class="literal">Tracing</code>.</li><li class="listitem"><code class="literal">CurrentTraceContextCustomizer</code> - allows configuration plugins to collaborate on building an instance of <code class="literal">CurrentTraceContext</code>.</li><li class="listitem"><code class="literal">ExtraFieldCustomizer</code> - allows configuration plugins to collaborate on building an instance of <code class="literal">ExtraFieldPropagation.Factory</code>.</li></ul></div><p>Sleuth will search for beans of those types and automatically apply customizations.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_http" href="#_http"></a>61.2&nbsp;HTTP</h2></div></div></div><p>If a customization of client / server parsing of the HTTP related spans is
+required,  just register a bean of type <code class="literal">brave.http.HttpClientParser</code> or
+<code class="literal">brave.http.HttpServerParser</code>. If client /server sampling is required, just
+register a bean of type <code class="literal">brave.sampler.SamplerFunction&lt;HttpRequest&gt;</code> and name
+the bean <code class="literal">sleuthHttpClientSampler</code> for client sampler and
+<code class="literal">sleuthHttpServerSampler</code> for server  sampler.</p><p>For your convenience the <code class="literal">@HttpClientSampler</code> and <code class="literal">@HttpServerSampler</code>
+annotations can be used to inject the proper beans or to  reference the bean
+names via their static String <code class="literal">NAME</code> fields.</p><p>Check out Brave&#8217;s code to see an example of how to make a path-based sampler
+<a class="link" href="https://github.com/openzipkin/brave/tree/master/instrumentation/http#sampling-policy" target="_top">https://github.com/openzipkin/brave/tree/master/instrumentation/http#sampling-policy</a></p><p>If you want to completely rewrite the <code class="literal">HttpTracing</code> bean you can use the <code class="literal">SkipPatternProvider</code>
+interface to retrieve the URL <code class="literal">Pattern</code> for spans that should be not sampled. Below you can see
+an example of usage of <code class="literal">SkipPatternProvider</code> inside a server side, <code class="literal">Sampler&lt;HttpRequest&gt;</code>.</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Configuration</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> Config {
+  <em><span class="hl-annotation" style="color: gray">@Bean(name = HttpServerSampler.NAME)</span></em>
+  SamplerFunction&lt;HttpRequest&gt; myHttpSampler(SkipPatternProvider provider) {
+  	Pattern pattern = provider.skipPattern();
+  	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> request -&gt; {
+  		String url = request.path();
+  		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">boolean</span> shouldSkip = pattern.matcher(url).matches();
+  		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">if</span> (shouldSkip) {
+  			<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> false;
+  		}
+  		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> null;
+  	};
+  }
+}</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_tracingfilter" href="#_tracingfilter"></a>61.3&nbsp;<code class="literal">TracingFilter</code></h2></div></div></div><p>You can also modify the behavior of the <code class="literal">TracingFilter</code>, which is the component that is responsible for processing the input HTTP request and adding tags basing on the HTTP response.
+You can customize the tags or modify the response headers by registering your own instance of the <code class="literal">TracingFilter</code> bean.</p><p>In the following example, we register the <code class="literal">TracingFilter</code> bean, add the <code class="literal">ZIPKIN-TRACE-ID</code> response header containing the current Span&#8217;s trace id, and add a tag with key <code class="literal">custom</code> and a value <code class="literal">tag</code> to the span.</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Component</span></em>
+<em><span class="hl-annotation" style="color: gray">@Order(TraceWebServletAutoConfiguration.TRACING_FILTER_ORDER + 1)</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> MyFilter <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">extends</span> GenericFilterBean {
+
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">private</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">final</span> Tracer tracer;
+
+	MyFilter(Tracer tracer) {
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">this</span>.tracer = tracer;
+	}
+
+	<em><span class="hl-annotation" style="color: gray">@Override</span></em>
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">void</span> doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">throws</span> IOException, ServletException {
+		Span currentSpan = <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">this</span>.tracer.currentSpan();
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">if</span> (currentSpan == null) {
+			chain.doFilter(request, response);
+			<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span>;
+		}
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// for readability we're returning trace id in a hex form</span>
+		((HttpServletResponse) response).addHeader(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"ZIPKIN-TRACE-ID"</span>,
+				currentSpan.context().traceIdString());
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// we can also add some custom tags</span>
+		currentSpan.tag(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"custom"</span>, <span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"tag"</span>);
+		chain.doFilter(request, response);
+	}
+
+}</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_rpc" href="#_rpc"></a>61.4&nbsp;RPC</h2></div></div></div><p>Sleuth automatically configures the <code class="literal">RpcTracing</code> bean which serves as a
+foundation for RPC instrumentation such as gRPC or Dubbo.</p><p>If a customization of client / server sampling of the RPC traces is required,
+just register a bean of type <code class="literal">brave.sampler.SamplerFunction&lt;RpcRequest&gt;</code> and
+name the bean <code class="literal">sleuthRpcClientSampler</code> for client sampler and
+<code class="literal">sleuthRpcServerSampler</code> for server sampler.</p><p>For your convenience the <code class="literal">@RpcClientSampler</code> and <code class="literal">@RpcServerSampler</code>
+annotations can  be used to inject the proper beans or to reference the bean
+names via their  static String <code class="literal">NAME</code> fields.</p><p>Ex. Here&#8217;s a sampler that traces 100 "GetUserToken" server requests per second.
+This  doesn&#8217;t start new traces for requests to the health check service. Other
+requests will use the global sampling configuration.</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Configuration</span></em>
+<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">class</span> Config {
+  <em><span class="hl-annotation" style="color: gray">@Bean(name = RpcServerSampler.NAME)</span></em>
+  SamplerFunction&lt;RpcRequest&gt; myRpcSampler() {
+  	Matcher&lt;RpcRequest&gt; userAuth = and(serviceEquals(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"users.UserService"</span>),
+  			methodEquals(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"GetUserToken"</span>));
+  	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> RpcRuleSampler.newBuilder()
+  			.putRule(serviceEquals(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"grpc.health.v1.Health"</span>), Sampler.NEVER_SAMPLE)
+  			.putRule(userAuth, RateLimitingSampler.create(<span class="hl-number">100</span>)).build();
+  }
+}</pre><p>For more, see <a class="link" href="https://github.com/openzipkin/brave/tree/master/instrumentation/rpc#sampling-policy" target="_top">https://github.com/openzipkin/brave/tree/master/instrumentation/rpc#sampling-policy</a></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_custom_service_name" href="#_custom_service_name"></a>61.5&nbsp;Custom service name</h2></div></div></div><p>By default, Sleuth assumes that, when you send a span to Zipkin, you want the span&#8217;s service name to be equal to the value of the <code class="literal">spring.application.name</code> property.
+That is not always the case, though.
+There are situations in which you want to explicitly provide a different service name for all spans coming from your application.
+To achieve that, you can pass the following property to your application to override that value (the example is for a service named <code class="literal">myService</code>):</p><pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">spring.zipkin.service.name</span>: myService</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_customization_of_reported_spans" href="#_customization_of_reported_spans"></a>61.6&nbsp;Customization of Reported Spans</h2></div></div></div><p>Before reporting spans (for example, to Zipkin) you may want to modify that span in some way.
+You can do so by using the <code class="literal">FinishedSpanHandler</code> interface.</p><p>In Sleuth, we generate spans with a fixed name.
+Some users want to modify the name depending on values of tags.
+You can implement the <code class="literal">FinishedSpanHandler</code> interface to alter that name.</p><p>The following example shows how to register two beans that implement <code class="literal">FinishedSpanHandler</code>:</p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Bean</span></em>
+FinishedSpanHandler handlerOne() {
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> FinishedSpanHandler() {
+		<em><span class="hl-annotation" style="color: gray">@Override</span></em>
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">boolean</span> handle(TraceContext traceContext, MutableSpan span) {
+			span.name(<span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">"foo"</span>);
+			<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> true; <span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// keep this span</span>
+		}
+	};
+}
+
+<em><span class="hl-annotation" style="color: gray">@Bean</span></em>
+FinishedSpanHandler handlerTwo() {
+	<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">new</span> FinishedSpanHandler() {
+		<em><span class="hl-annotation" style="color: gray">@Override</span></em>
+		<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">public</span> <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">boolean</span> handle(TraceContext traceContext, MutableSpan span) {
+			span.name(span.name() + <span xmlns:d="http://docbook.org/ns/docbook" class="hl-string">" bar"</span>);
+			<span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">return</span> true; <span xmlns:d="http://docbook.org/ns/docbook" class="hl-comment">// keep this span</span>
+		}
+	};
+}</pre><p>The preceding example results in changing the name of the reported span to <code class="literal">foo bar</code>, just before it gets reported (for example, to Zipkin).</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="_host_locator" href="#_host_locator"></a>61.7&nbsp;Host Locator</h2></div></div></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></td><th align="left">Important</th></tr><tr><td align="left" valign="top"><p>This section is about defining <span class="strong"><strong>host</strong></span> from service discovery.
+It is <span class="strong"><strong>NOT</strong></span> about finding Zipkin through service discovery.</p></td></tr></table></div><p>To define the host that corresponds to a particular span, we need to resolve the host name and port.
+The default approach is to take these values from server properties.
+If those are not set, we try to retrieve the host name from the network interfaces.</p><p>If you have the discovery client enabled and prefer to retrieve the host address from the registered instance in a service registry, you have to set the <code class="literal">spring.zipkin.locator.discovery.enabled</code> property (it is applicable for both HTTP-based and Stream-based span reporting), as follows:</p><pre class="programlisting"><span xmlns:d="http://docbook.org/ns/docbook" class="hl-attribute">spring.zipkin.locator.discovery.enabled</span>: <span xmlns:d="http://docbook.org/ns/docbook" class="hl-keyword">true</span></pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="multi__managing_spans_with_annotations.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="multi__spring_cloud_sleuth.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="multi__sending_spans_to_zipkin.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">60.&nbsp;Managing Spans with Annotations&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="multi_spring-cloud.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;62.&nbsp;Sending Spans to Zipkin</td></tr></table></div></body></html>
