@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.8">
+<title>Spring Cloud Post MVP</title>
+<link rel="stylesheet" href="css/spring.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.hidden {
+	display: none;
+}
+
+.switch {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #7a2518;
+	display: inline-block;
+}
+
+.switch--item {
+	padding: 10px;
+	background-color: #ffffff;
+	color: #7a2518;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.switch--item:not(:first-child) {
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: #7a2518;
+}
+
+.switch--item.selected {
+	background-color: #7a2519;
+	color: #ffffff;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<script type="text/javascript">
+function addBlockSwitches() {
+	$('.primary').each(function() {
+		primary = $(this);
+		createSwitchItem(primary, createBlockSwitch(primary)).item.addClass("selected");
+		primary.children('.title').remove();
+	});
+	$('.secondary').each(function(idx, node) {
+		secondary = $(node);
+		primary = findPrimary(secondary);
+		switchItem = createSwitchItem(secondary, primary.children('.switch'));
+		switchItem.content.addClass('hidden');
+		findPrimary(secondary).append(switchItem.content);
+		secondary.remove();
+	});
+}
+
+function createBlockSwitch(primary) {
+	blockSwitch = $('<div class="switch"></div>');
+	primary.prepend(blockSwitch);
+	return blockSwitch;
+}
+
+function findPrimary(secondary) {
+	candidate = secondary.prev();
+	while (!candidate.is('.primary')) {
+		candidate = candidate.prev();
+	}
+	return candidate;
+}
+
+function createSwitchItem(block, blockSwitch) {
+	blockName = block.children('.title').text();
+	content = block.children('.content').first().append(block.next('.colist'));
+	item = $('<div class="switch--item">' + blockName + '</div>');
+	item.on('click', '', content, function(e) {
+		$(this).addClass('selected');
+		$(this).siblings().removeClass('selected');
+		e.data.siblings('.content').addClass('hidden');
+		e.data.removeClass('hidden');
+	});
+	blockSwitch.append(item);
+	return {'item': item, 'content': content};
+}
+
+$(addBlockSwitches);
+</script>
+
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Spring Cloud Post MVP</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_mvp_recap">MVP Recap</a></li>
+<li><a href="#_stateful_patterns_and_spring_cloud_cluster">Stateful Patterns and Spring Cloud Cluster</a></li>
+<li><a href="#_switch_patterns">Switch Patterns</a></li>
+<li><a href="#_messaging_and_asynchronous_patterns">Messaging and Asynchronous Patterns</a>
+<ul class="sectlevel2">
+<li><a href="#_messaging_for_business_applications">Messaging for Business Applications</a></li>
+<li><a href="#_building_on_the_bus">Building on the Bus</a></li>
+<li><a href="#_reactive_patterns">Reactive Patterns</a></li>
+</ul>
+</li>
+<li><a href="#_miscellaneous">Miscellaneous</a>
+<ul class="sectlevel2">
+<li><a href="#_alternative_stacks">Alternative Stacks</a></li>
+<li><a href="#_integration_testing">Integration Testing</a></li>
+<li><a href="#_developer_workflow">Developer Workflow</a></li>
+<li><a href="#_demonstrate_cloud_native">Demonstrate Cloud Native</a></li>
+<li><a href="#_more_security_options">More Security Options</a></li>
+<li><a href="#_multi_tenancy">Multi-tenancy</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document pulls together some ideas and sets relative priorities for Spring Cloud beyond the MVP stage (which is available as version 1.0).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mvp_recap"><a class="link" href="#_mvp_recap">MVP Recap</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Config server with git backend</p>
+</li>
+<li>
+<p>Config client featuring refresh and encryption/decryption as well as the bootstrap phase in Spring application lifecycle</p>
+</li>
+<li>
+<p>Common abstractions for load balancer, service discovery and circuit breaker</p>
+</li>
+<li>
+<p>Security integrations: declarative SSO and proxy authentication strategies</p>
+</li>
+<li>
+<p>Eureka for service discovery: client and server (with UI)</p>
+</li>
+<li>
+<p>Eureka sidecar for non-JVM clients</p>
+</li>
+<li>
+<p>Automatic reverse proxy using Zuul</p>
+</li>
+<li>
+<p>Spring configuration model for Zuul filters</p>
+</li>
+<li>
+<p>Spring configuration model for Ribbon load balancer</p>
+</li>
+<li>
+<p>Feign declarative web service clients (with Ribbon integration)</p>
+</li>
+<li>
+<p>RestTemplate integration with Ribbon</p>
+</li>
+<li>
+<p>Hystrix for circuit breaker: client and dashboard (UI)</p>
+</li>
+<li>
+<p>Turbine for circuit breaker aggregation, pull over HTTP and push over AMQP</p>
+</li>
+<li>
+<p>AWS integration: relational databases, messaging and EC2 metadata</p>
+</li>
+<li>
+<p>AMQP bus for a defined set of operational events like config changes</p>
+</li>
+<li>
+<p>Groovy CLI with support for most of the above</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stateful_patterns_and_spring_cloud_cluster"><a class="link" href="#_stateful_patterns_and_spring_cloud_cluster">Stateful Patterns and Spring Cloud Cluster</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Cron server</p>
+</li>
+<li>
+<p>API hooks</p>
+</li>
+<li>
+<p>Event sequencing</p>
+</li>
+<li>
+<p>One-time tokens</p>
+</li>
+<li>
+<p>Global lock service (possibly a building block for other patterns)</p>
+</li>
+<li>
+<p>Global generic state machine</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_switch_patterns"><a class="link" href="#_switch_patterns">Switch Patterns</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Feature switches</p>
+</li>
+<li>
+<p>A/B testing</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_messaging_and_asynchronous_patterns"><a class="link" href="#_messaging_and_asynchronous_patterns">Messaging and Asynchronous Patterns</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_messaging_for_business_applications"><a class="link" href="#_messaging_for_business_applications">Messaging for Business Applications</a></h3>
+<div class="paragraph">
+<p>Microservices lend themselves to messaging and other asynchronous patterns, but so far Spring Cloud has mainly been concerned with HTTP as a transport. AMQP and Websockets are lightweight and awesomely easy to set up with Spring and Spring Boot, so those would be the obvious building blocks for anything concrete. Building some sample systems, and publishing some documentation or articles would be a good start to see where it might lead.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_on_the_bus"><a class="link" href="#_building_on_the_bus">Building on the Bus</a></h3>
+<div class="paragraph">
+<p>The role of Spring Cloud Bus can be expanded in various ways.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some messages might need to be audited or brokered in some way, e.g. to ensure delivery to all members of a cluster, not just the ones that are available at the time the message is sent.</p>
+</li>
+<li>
+<p>Telemetry and monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration. Publishing metrics: OpenTSDB (see <a href="https://github.com/Ticketmaster" class="bare">https://github.com/Ticketmaster</a>), redis, zookeeper, netflix atlas or <a href="http://influxdb.com" class="bare">http://influxdb.com</a>.</p>
+</li>
+<li>
+<p>Messages can already be addressed to all the instances of a service, but no use is made of that feature in Spring Cloud itself (users are left to use it if they feel they need to).</p>
+</li>
+<li>
+<p>Publishing more events, and publishing automatically (instead of waiting to be poked on an Actuator <code>Endpoint</code>).</p>
+</li>
+<li>
+<p>Alternative implementations: Consul, Redis, kafka, AWS (SQS + SNS), Gemfire</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reactive_patterns"><a class="link" href="#_reactive_patterns">Reactive Patterns</a></h3>
+<div class="paragraph">
+<p>Integrating more with <a href="http://projectreactor.org">Project Reactor</a>, e.g. publishing Hystrix metrics from a circuit breaker in a Reactor stream.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_miscellaneous"><a class="link" href="#_miscellaneous">Miscellaneous</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_alternative_stacks"><a class="link" href="#_alternative_stacks">Alternative Stacks</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Consul: provide an alternative implementation of the discovery abstraction in Spring Cloud Commons. Consul uses a distributed datastore and cluster manager, so it has an emphasis on consistency (so availability is only an option, while is the main focus of Eureka).</p>
+</li>
+<li>
+<p>Maybe other discovery and service registry solutions (Gemfire, redis, etcd, Zookeeper, Spring Cloud Cluster, airbnb/synapse).</p>
+</li>
+<li>
+<p>The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. These changes will probably end up requiring a new major version of Spring Cloud Netflix.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_testing"><a class="link" href="#_integration_testing">Integration Testing</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Have a full env that is spun up to run full tests against (Eureka, Config Server, Turbine, Hystrix Dashboard and clients of various kinds).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_developer_workflow"><a class="link" href="#_developer_workflow">Developer Workflow</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Developer deploys a component locally and it joins a remote distributed system (to save from having to deploy the whole system for an integration test of one of its components).</p>
+</li>
+<li>
+<p>Tooling for containers.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_demonstrate_cloud_native"><a class="link" href="#_demonstrate_cloud_native">Demonstrate Cloud Native</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Multi-Zone and Multi-Region demos on CF and AWS using a Mutli-Region DB like Cassandra.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_more_security_options"><a class="link" href="#_more_security_options">More Security Options</a></h3>
+<div class="paragraph">
+<p>Securing business services as well as the platform (Spring Cloud features) itself is bound to be an area of expansion. So far we only make it easy to add HTTP basic security to the Config Server and Eureka. More options, even if it&#8217;s only documentation, are needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_multi_tenancy"><a class="link" href="#_multi_tenancy">Multi-tenancy</a></h3>
+<div class="paragraph">
+<p>From a discusion with @joshlong about Hystrix, Config Server and Discovery in a multi-tennant system: see <a href="https://github.com/spring-cloud/spring-cloud-commons/issues/20">spring-cloud-commons #20</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="js/tocbot/tocbot.min.js"></script>
+<script type="text/javascript" src="js/toc.js"></script>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>
