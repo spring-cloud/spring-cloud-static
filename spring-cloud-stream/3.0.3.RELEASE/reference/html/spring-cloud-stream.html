@@ -158,7 +158,7 @@ $(addBlockSwitches);
 </li>
 <li><a href="#_foreign_event_driven_sources">Foreign event-driven sources</a>
 <ul class="sectlevel5">
-<li><a href="#_using_streambridgeutils">Using StreamBridgeUtils</a></li>
+<li><a href="#_using_streambridgeutils">Using StreamBridge</a></li>
 <li><a href="#_using_reactor_api">Using reactor API</a></li>
 </ul>
 </li>
@@ -1417,10 +1417,10 @@ source of the data may be a classic REST endpoint. How do we bridge such source 
 <div class="paragraph">
 <p>Here, for both samples we&#8217;ll use a standard MVC endpoint method called <code>delegateToSupplier</code> bound to the root web context,
 delegating incoming requests to stream via two different mechanisms -
-imperative (via StreamBridgeUtils) and reactive (via EmitterProcessor).</p>
+imperative (via StreamBridge) and reactive (via EmitterProcessor).</p>
 </div>
 <div class="sect5">
-<h6 id="_using_streambridgeutils"><a class="link" href="#_using_streambridgeutils">Using StreamBridgeUtils</a></h6>
+<h6 id="_using_streambridgeutils"><a class="link" href="#_using_streambridgeutils">Using StreamBridge</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@SpringBootApplication
@@ -1432,7 +1432,7 @@ public class WebSourceApplication {
 	}
 
 	@Autowired
-	private StreamBridgeUtils streamBridge;
+	private StreamBridge streamBridge;
 
 	@RequestMapping
 	@ResponseStatus(HttpStatus.ACCEPTED)
@@ -1444,7 +1444,7 @@ public class WebSourceApplication {
 </div>
 </div>
 <div class="paragraph">
-<p>Here we autowire a <code>StreamBridgeUtils</code> bean which allows us to send data to an output binding effectively
+<p>Here we autowire a <code>StreamBridge</code> bean which allows us to send data to an output binding effectively
 bridging non-stream application with spring-cloud-stream. Note that preceding example does not have any
 source functions defined (e.g., Supplier bean) leaving the framework with no trigger to create source bindings, which would be typical for cases where
 configuration contains function beans.
