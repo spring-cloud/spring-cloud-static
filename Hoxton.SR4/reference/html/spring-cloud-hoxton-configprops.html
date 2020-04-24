@@ -396,6 +396,16 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the service-registry endpoint.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">management.endpoint.topology.cache.time-to-live</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0ms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum time that a response can be cached.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">management.endpoint.topology.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable the topology endpoint.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">management.health.binders.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Allows to enable/disable binder&#8217;s' health indicators. If you want to disable health indicator completely, then set it to <code>false</code>.</p></td>
@@ -497,6 +507,11 @@ $(addBlockSwitches);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">maven.update-policy</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven.use-wagon</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1061,6 +1076,81 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Username for authentication with remote repository.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.app-role.app-role-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">approle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the AppRole authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.app-role.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role, optional, used for pull-mode.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.app-role.role-id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The RoleId.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.app-role.secret-id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SecretId.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.authentication</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-ec2.aws-ec2-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aws-ec2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the AWS-EC2 authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-ec2.identity-document</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://169.254.169.254/latest/dynamic/instance-identity/pkcs7" class="bare">http://169.254.169.254/latest/dynamic/instance-identity/pkcs7</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL of the AWS-EC2 PKCS7 identity document.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-ec2.nonce</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nonce used for AWS-EC2 authentication. An empty nonce defaults to nonce generation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-ec2.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role, optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-iam.aws-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aws</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the AWS authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-iam.endpoint-uri</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STS server URI. @since 2.2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-iam.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role, optional. Defaults to the friendly IAM name if not set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.aws-iam.server-name</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the server used to set {@code X-Vault-AWS-IAM-Server-ID} header in the headers of login requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.azure-msi.azure-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">azure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the Azure MSI authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.azure-msi.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.backend</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">secret</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Vault backend. Defaults to secret.</p></td>
@@ -1071,9 +1161,74 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">The key in vault shared by all applications. Defaults to application. Set to empty to disable.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-gce.gcp-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gcp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the Kubernetes authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-gce.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role against which the login is being attempted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-gce.service-account</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional service account id. Using the default id if left unconfigured.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.credentials.encoded-key</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The base64 encoded contents of an OAuth2 account private key in JSON format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.credentials.location</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location of the OAuth2 credentials private key. &lt;p&gt; Since this is a Resource, the private key can be in a multitude of locations, such as a local file system, classpath, URL, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.gcp-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gcp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the Kubernetes authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.jwt-validity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validity of the JWT token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.project-id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the GCP project Id.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role against which the login is being attempted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.gcp-iam.service-account-id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the GCP service account Id.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.host</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">127.0.0.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Vault host. Defaults to 127.0.0.1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.kubernetes.kubernetes-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kubernetes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the Kubernetes authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.kubernetes.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role against which the login is being attempted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.kubernetes.service-account-token-file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/var/run/secrets/kubernetes.io/serviceaccount/token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the service account token file.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.kv-version</p></td>
@@ -1089,6 +1244,26 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.order</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.pcf.instance-certificate</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the instance certificate (PEM). Defaults to {@code CF_INSTANCE_CERT} env variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.pcf.instance-key</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the instance key (PEM). Defaults to {@code CF_INSTANCE_KEY} env variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.pcf.pcf-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pcf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the Kubernetes authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.pcf.role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the role against which the login is being attempted.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.port</p></td>
@@ -1116,9 +1291,39 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Flag to indicate that SSL certificate validation should be bypassed when communicating with a repository served over an HTTPS connection.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.ssl.cert-auth-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mount path of the TLS cert authentication backend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.ssl.key-store</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trust store that holds certificates and private keys.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.ssl.key-store-password</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password used to access the key store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.ssl.trust-store</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trust store that holds SSL certificates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.ssl.trust-store-password</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password used to access the trust store.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.timeout</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timeout (in seconds) for obtaining HTTP connection, defaults to 5 seconds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.server.vault.token</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Static vault token. Required if {@link #authentication} is {@code TOKEN}.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.config.token</p></td>
@@ -1581,6 +1786,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Flag to enable the export of a supplier.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.function.web.export.sink.content-type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content type to use when serializing source&#8217;s output for transport (default 'application/json`).</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.function.web.export.sink.headers</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Additional headers to append to the outgoing HTTP requests.</p></td>
@@ -1691,6 +1901,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enables gateway functionality.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.fail-on-route-definition-error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Option to fail on route definition errors, defaults to true. Otherwise, a warning is logged.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.filter.remove-hop-by-hop.headers</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1761,6 +1976,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enables the ForwardedHeadersFilter.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.globalcors.add-to-simple-url-handler-mapping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If global CORS config should be added to the URL handler.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.globalcors.cors-configurations</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1771,6 +1991,16 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">The connect timeout in millis, the default is 45s.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.max-header-size</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The max response header size.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.max-initial-line-length</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The max initial line length.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.pool.acquire-timeout</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Only for type FIXED, the maximum time in millis to wait for aquiring.</p></td>
@@ -1779,6 +2009,16 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.pool.max-connections</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Only for type FIXED, the maximum number of connections before starting pending acquisition on existing ones.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.pool.max-idle-time</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time in millis after which the channel will be closed. If NULL, there is no max idle time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.pool.max-life-time</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Duration after which the channel will be closed. If NULL, there is no max life time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.pool.name</p></td>
@@ -1896,6 +2136,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Max frame payload length.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.websocket.proxy-ping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy ping frames to downstream services, defaults to true.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.httpclient.wiretap</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enables wiretap debugging for Netty HttpClient.</p></td>
@@ -1919,6 +2164,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.metrics.tags</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Tags map that added to metrics.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.proxy.auto-forward</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A set of header names that should be send downstream by default.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.proxy.headers</p></td>
@@ -1954,6 +2204,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.redis-rate-limiter.replenish-rate-header</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X-RateLimit-Replenish-Rate</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of the header that returns the replenish rate configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.redis-rate-limiter.requested-tokens-header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-RateLimit-Requested-Tokens</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the header that returns the requested tokens configuration.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gateway.routes</p></td>
@@ -2099,6 +2354,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.config.timeout-millis</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">60000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timeout for Google Runtime Configuration API calls.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.core.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auto-configure Google Cloud Core components.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.credentials.encoded-key</p></td>
@@ -2419,6 +2679,36 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.pubsub.subscriber.retry.total-timeout-seconds</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TotalTimeout has ultimate control over how long the logic should keep trying the remote call until it gives up completely. The higher the total timeout, the more retries can be attempted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.secretmanager.credentials.encoded-key</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.secretmanager.credentials.location</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.secretmanager.credentials.scopes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.secretmanager.project-id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the GCP Project ID specified in the Core module.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.secretmanager.secret-name-prefix</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a prefix String that will be prepended to the environment property names of secrets in Secret Manager.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.security.firebase.public-keys-endpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com" class="bare">https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link to Google&#8217;s public endpoint containing Firebase public keys.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.gcp.security.iap.algorithm</p></td>
@@ -3026,6 +3316,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">The service name of the local instance.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If Kubernetes integration is enabled.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.reload.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enables the Kubernetes configuration reload on change.</p></td>
@@ -3059,21 +3354,6 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.reload.strategy</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the reload strategy for Kubernetes configuration reload on change.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.ribbon.cluster-domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cluster.local</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cluster domain.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.ribbon.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ribbon enabled,default true.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.ribbon.mode</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{@link KubernetesRibbonMode} setting ribbon server list with ip of pod or service name. default value is POD.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.kubernetes.secrets.enable-api</p></td>
@@ -3116,9 +3396,29 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">The spec to use to create caches. See CaffeineSpec for more details on the spec format.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.cache.capacity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial cache capacity expressed as int.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.cache.ttl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">30s</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Time To Live - time counted from writing of the record, after which cache entries are expired, expressed as a {@link Duration}. The property {@link String} has to be in keeping with the appropriate syntax as specified in Spring Boot &lt;code&gt;StringToDurationConverter&lt;/code&gt;. @see &lt;a href= "https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/convert/StringToDurationConverter.java"&gt;StringToDurationConverter.java&lt;/a&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.health-check.initial-delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial delay value for the HealthCheck scheduler.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.health-check.interval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interval for rerunning the HealthCheck scheduler.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.health-check.path</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.loadbalancer.retry.enabled</p></td>
@@ -3139,6 +3439,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.refresh.extra-refreshable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Additional class names for beans to post process into refresh scope.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.refresh.never-refreshable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of class names for beans to never be refreshed or rebound.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.service-registry.auto-registration.enabled</p></td>
@@ -3219,6 +3524,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.integration.message-handler-not-propagated-headers</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Message header names that will NOT be copied from the inbound message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.binder.authorization-exception-retry-interval</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time between retries after AuthorizationException is caught in the ListenerContainer; defalt is null which disables retries. For more info see: {@link org.springframework.kafka.listener.ConsumerProperties#setAuthorizationExceptionRetryInterval(java.time.Duration)}</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.binder.auto-add-partitions</p></td>
@@ -3386,6 +3696,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.authorization-exception-retry-interval</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.auto-add-partitions</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -3476,6 +3791,96 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.batch-timeout</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.buffer-size</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.compression-type</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.configuration</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.error-channel-enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.header-mode</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.header-patterns</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.message-key-expression</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.partition-count</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.partition-key-expression</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.partition-key-extractor-name</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.partition-selector-expression</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.partition-selector-name</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.required-groups</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.sync</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.topic</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.producer.use-native-encoding</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.binder.transaction.transaction-id-prefix</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.kafka.streams.bindings</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -3511,9 +3916,19 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">This property is only applicable when the cloud profile is active and Spring Cloud Connectors are provided with the application. If the property is false (the default), the binder detects a suitable bound service (for example, a RabbitMQ service bound in Cloud Foundry for the RabbitMQ binder) and uses it for creating connections (usually through Spring Cloud Connectors). When set to true, this property instructs binders to completely ignore the bound services and rely on Spring Boot properties (for example, relying on the spring.rabbitmq.* properties provided in the environment for the RabbitMQ binder). The typical usage of this property is to be nested in a customized environment when connecting to multiple systems.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.poller.cron</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cron expression value for the Cron Trigger.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.poller.fixed-delay</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Fixed delay for default poller.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.poller.initial-delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial delay for periodic triggers.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.poller.max-messages-per-poll</p></td>
@@ -3554,6 +3969,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.sendto.destination</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of the header used to determine the name of the output destination</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.stream.source</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A colon delimited string representing the names of the sources based on which source bindings will be created.  This is primarily to support cases where source binding may be required without providing a corresponding Supplier.  (e.g., for cases where the actual source of data is outside of scope of spring-cloud-stream - HTTP &#8594; Stream)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.cloud.task.batch.command-line-runner-order</p></td>
@@ -4406,6 +4826,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">List of baggage key names that should be propagated out of process. These keys will be prefixed with <code>baggage</code> before the actual key. This property is set in order to be backward compatible with previous Sleuth versions. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addPrefixedFields(String, java.util.Collection)</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.circuitbreaker.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable Spring Cloud CircuitBreaker instrumentation.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -4452,8 +4877,8 @@ $(addBlockSwitches);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.integration.patterns</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[!hystrixStreamOutput*, *]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array of patterns against which channel names will be matched. @see org.springframework.integration.config.GlobalChannelInterceptor#patterns() Defaults to any channel name not matching the Hystrix Stream channel name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[!hystrixStreamOutput*, <strong>, !channel</strong>]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of patterns against which channel names will be matched. @see org.springframework.integration.config.GlobalChannelInterceptor#patterns() Defaults to any channel name not matching the Hystrix Stream and functional Stream channel names.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.integration.websockets.enabled</p></td>
@@ -4761,9 +5186,9 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable stubs registration in Eureka.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">stubrunner.cloud.ribbon.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stubrunner.cloud.loadbalancer.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable Stub Runner&#8217;s Ribbon integration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable Stub Runner&#8217;s Spring Cloud Load Balancer integration.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">stubrunner.cloud.stubbed.discovery.enabled</p></td>
@@ -4889,6 +5314,11 @@ $(addBlockSwitches);
 <td class="tableblock halign-left valign-top"><p class="tableblock">wiremock.placeholders.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Flag to indicate that http URLs in generated wiremock stubs should be filtered to add or resolve a placeholder for a dynamic port.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wiremock.reset-mappings-after-each-test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">wiremock.rest-template-ssl-enabled</p></td>
