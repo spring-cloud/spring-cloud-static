@@ -211,8 +211,8 @@ Also, you can define your own properties.
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.integration.patterns</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[!hystrixStreamOutput*, *]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array of patterns against which channel names will be matched. @see org.springframework.integration.config.GlobalChannelInterceptor#patterns() Defaults to any channel name not matching the Hystrix Stream channel name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[!hystrixStreamOutput*, <strong>, !channel</strong>]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of patterns against which channel names will be matched. @see org.springframework.integration.config.GlobalChannelInterceptor#patterns() Defaults to any channel name not matching the Hystrix Stream and functional Stream channel names.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.integration.websockets.enabled</p></td>
@@ -297,7 +297,7 @@ Also, you can define your own properties.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.propagation.tag.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables a {@link TagPropagationSpanHandler} that adds extra propagated fields to span tags.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables a {@link TagPropagationFinishedSpanHandler} that adds extra propagated fields to span tags.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.propagation.tag.whitelisted-keys</p></td>
@@ -323,6 +323,11 @@ Also, you can define your own properties.
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.redis.remote-service-name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">redis</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Service name for the remote Redis endpoint.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.rpc.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable tracing of RPC.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.sleuth.rxjava.schedulers.hook.enabled</p></td>
